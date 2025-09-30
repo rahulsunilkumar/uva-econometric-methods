@@ -1,0 +1,428 @@
+---
+title: "ECON 4720: HA03"
+author: "Rahul Sunilkumar"
+date: today
+format: 
+  pdf:
+    toc: true
+    toc-title: Problems
+    pdf-engine: pdflatex
+    fontfamily: erewhon
+---
+
+\newpage
+
+# Problem 1
+Suppose that $Y_1, Y_2, \dots, Y_n$ are random variables with a common mean $\mu_Y$, a common variance $\sigma_Y^2$, and the same correlation $\rho$ (so that the correlation between $Y_i$ and $Y_j$ is equal to $\rho$ for all pairs $i \neq j$).
+
+## 1a
+Show that $\text{Cov}(Y_i, Y_j) = \rho\sigma_Y^2$ for $i \neq j$.
+
+**Solution Attempt:**  We know that correlation is defined as 
+$$
+Corr(Y_i, Y_j) = \frac{Cov(Y_i, Y_j)}{\sqrt{Var(Y_i)Var(Y_j)}}
+$$
+and from our preamble we also know that "the correlation between $Y_i$ and $Y_j$ is equal to $\rho$ for all pairs $i \neq j$" and common variance implying $Var(Y_i) + Var(Y_j) = \sigma_Y^2$. Thus, 
+\begin{align*}
+  \rho &= \frac{Cov(Y_i, Y_j)}{\sqrt{\sigma_Y^2\sigma_Y^2}} \\[0.5em]
+  &= \frac{Cov(Y_i, Y_j)}{\sigma_Y^2} \\[0.5em]
+  \rho \sigma_Y^2 &= Cov(Y_i, Y_j)
+\end{align*}
+which shows what the question asks.
+
+\hfill $\square$
+
+## 1b
+Suppose that $n=2$. Show that $\text{E}(\bar{Y}) = \mu_Y$ and $\text{Var}(\bar{Y}) = \tfrac{1}{2}\sigma_Y^2 + \tfrac{1}{2}\rho\sigma_Y^2$.
+
+**Solution Attempt:**  This change brings our random variable set to $\{Y_1, Y_2\}$. First, we find $E(\bar Y)$. Note that $\bar Y$ is 
+$$
+\bar Y = \frac1n \sum_{i=1}^n Y_i = \frac12 (Y_1 + Y_2)
+$$
+Thus,
+$$
+E(\bar Y) = E\left(\frac12(Y_1 + Y_2)\right) = \frac12(E(Y_1) + E(Y_2))
+$$
+From the preamble, we know that $E(Y_i) = E(Y_j) = \mu_Y$, thus,
+$$
+E(\bar Y) = \frac12(2\mu_Y) = \mu_Y
+$$
+Now, for the variance, $Var(\bar Y)$. From earlier, we know
+\begin{align*}
+  Var(\bar Y) &= Var\left( \frac12(Y_1 + Y_2) \right) = \frac14 Var(Y_1 + Y_2) \\[0.5em]
+  &= \frac14 ( Var(Y_1) + Var(Y_2) + 2Cov(Y_1, Y_2) ) && \text{Expansion} \\[0.5em]
+  &= \frac14 ( 2\sigma_Y^2  + 2\rho\sigma_Y^2 ) && \text{From preamble and (a)} \\[0.5em]
+  &= \frac12 \mu_Y^2 + \frac12 \rho \sigma_Y^2 && \text{Shows what we want}
+\end{align*}
+
+\hfill $\square$
+
+## 1c
+For $n \ge 2$, show that $\text{E}(\bar{Y}) = \mu_Y$ and $\text{Var}(\bar{Y}) = \tfrac{\sigma_Y^2}{n} + \left(\tfrac{n-1}{n}\right)\rho\sigma_Y^2$.
+
+**Solution Attempt:**  Now our set of random variables is \{Y_1, Y_2, \dots, Y_n\}. The expectation of $\bar Y$ follows a similar process as with (b).
+\begin{align*}
+   \bar Y &= \frac1n\left(Y_1 + Y_2 + \dots + Y_n \right) = \frac1n \cdot n\mu_Y = \mu_Y \\[0.5em]
+   E(\bar Y) &= E \left( \frac1n (Y_1 + Y_2 + \dots + Y_n) \right) = \frac1n(\underbrace{E(Y_1) + E(Y_2) + \dots + E(Y_n)}_{\text{$n$ terms}}) \\[0.5em]
+   &= \frac1n(n \cdot \mu_Y) = \mu_Y
+\end{align*}
+Note that we used the same principle that $E(Y_i) = E(Y_j) = \mu_Y$ to accomplish the above. Now to show the variance of $\bar Y$. 
+\begin{align*}
+  Var(\bar Y) &= Var\left( \frac1n(Y_1 + Y_2 + \dots + Y_n) \right) = \frac1{n^2}Var(Y_1 + Y_2 + \dots + Y_n) \\[0.5em]
+  &= \frac1{n^2} \Big( \overbrace{Var(Y_1) + Var(Y_2) + \dots + Var(Y_n)}^{\text{$n$ terms}} + \overbrace{2Cov(Y_1, Y_2) + \dots + 2Cov(Y_1, Y_n)}^{\text{$n$ choose 2 terms}} \Big) \\[0.5em]
+  &= \frac1{n^2} \cdot n \sigma_Y^2 + \frac1{n^2} \binom n2 2\rho\sigma_Y^2 \\[0.5em]
+  &= \frac{\sigma_Y^2}{n} + \frac{1}{n^2}\cdot\frac{n(n-1)}{2} 2\rho\sigma_Y^2 \\[0.5em]
+  &= \frac{\sigma_Y^2}{n} + \frac{n-1}n \rho\sigma_Y^2
+\end{align*}
+We have $n$ choose 2 terms because this is every pairwise correlation and that's how many there exist. Otherwise, the rest is straightforward and we showcase what we are looking for.
+
+\hfill $\square$
+
+## 1d
+When $n$ is very large, show that $\text{Var}(\bar{Y}) \approx \rho\sigma_Y^2$.
+
+**Solution Attempt:** Take our expression from above,
+\begin{align*}
+  Var(\bar Y) &= \frac{\sigma_Y^2}n + \left(\frac{n-1}n\right) \rho \sigma_Y^2 \\[0.5em]
+  \frac{\sigma_Y^2}n \to 0 \quad &\text{as} \quad n \to \infty \\[0.5em]
+  \frac{n-1}{n} \to 1 \quad &\text{as} \quad n \to \infty
+\end{align*}
+$Var(\bar Y) \to \rho \sigma_Y^2$ for large $n$ and $Var(\bar Y) \approx \rho \sigma_Y^2$.
+
+\hfill $\square$
+\newpage
+
+# Problem 2 
+On the companion website, you will find the spreadsheet `Age_HourlyEarnings`, which contains the joint distribution of age (`Age`) and average hourly earnings (`AHE`) for 25-to-34 year old full-time workers in 2012 with an education level that exceeds a high school diploma. Use this joint distribution to carry out the following exercises.
+
+## 2a
+Compute the marginal distribution of `Age`.
+
+**Solution Attempt:** For this part and future parts, I've converted the dataset into a clean `.csv` file and saved it as `df`.
+
+```{python}
+#| echo: false
+import pandas as pd
+df = pd.read_csv("data/Age and Hourly Earnings (EE 2.1)/age-ahe-clean.csv", index_col="AHE")
+```
+```{python}
+df.sum(axis=0)
+```
+This above shows us the values of the `Age` marginal distribution. Notice that this sums to one.
+```{python}
+age_marginal = df.sum(axis=0)
+age_marginal.sum()
+```
+
+\hfill $\square$
+
+## 2b
+Compute the mean of `AHE` for each value of `Age`; that is, compute $E(\texttt{AHE} \mid \texttt{Age} = 25)$ and so forth.
+
+**Solution Attempt:** For each age $a \in \{25, \dots, 34\}$ 
+$$
+E(\texttt{AHE} \mid \texttt{Age} = a) = \sum_y y \cdot P(\texttt{AHE} = y \mid \texttt{Age} = a) = \frac{\sum_y y \cdot P(\texttt{AHE} = y, \texttt{Age} = a)}{\sum_y P(\texttt{AHE} = y, \texttt{Age} = a)}
+$$
+```{python}
+means = {}
+for age in df.columns:
+  col = df[age]
+  num = (col.index * col).sum()
+  den = col.sum()
+  means[age] = num / den
+
+age_means = pd.DataFrame(
+  list(means.items()),
+  columns = ['Age', 'E(AHE | Age)']
+)
+print(age_means)
+```
+
+\hfill $\square$
+
+## 2c
+Compute and plot the mean of `AHE` versus `Age`. Are average hourly earnings and age related? Explain.
+
+**Solution Attempt:**
+```{python}
+age_means.plot(
+  xlabel = 'Age  (n + 25)',
+  ylabel = 'AHE'
+)
+```
+
+\hfill $\square$
+
+## 2d
+Use the law of iterated expectations to compute the mean of `AHE`; that is, compute $E(\texttt{AHE})$. 
+
+**Solution Attempt:** Here is what we are looking for, 
+$$
+E(\texttt{AHE}) = E(E(\texttt{AHE} \mid \texttt{Age})) = \sum_a \underbrace{E(\texttt{AHE} \mid \texttt{Age} = a)}_{m(a)}\underbrace{P(\texttt{Age} = a)}_{P_A}
+$$
+where
+$$
+m(a) = \frac{\sigma_y y \cdot P(\texttt{AHE} = y, \texttt{Age} = a)}{\sum_y P(\texttt{AHE} = y, \texttt{Age} = a)} \quad \text{and} \quad P_a = \sum_y P(\texttt{AHE} = y, \texttt{Age} = a)
+$$
+And, we can verify directly that
+$$
+E(\texttt{AHE}) = \sum_a\sum_y y \cdot P(\texttt{AHE} = y, \texttt{Age} = a)
+$$
+```{python}
+# P(Age=a)
+P_age = df.sum(axis=0)
+
+# m(a) = E[AHE | Age=a]
+means = {}
+for a in df.columns:
+    col = df[a]
+    means[a] = (col.index * col).sum() / col.sum()
+m = pd.Series(means)
+
+# E[AHE] via law of iterated expectations
+E_AHE = (m * P_age).sum()
+print("E[AHE] via LIE =", E_AHE)
+```
+```{python}
+E_AHE_direct = (df.mul(df.index, axis=0)).sum().sum()
+print("E[AHE] direct  =", E_AHE_direct)
+```
+Great, we get the same things.
+
+\hfill $\square$
+
+## 2e
+Compute the variance of `AHE`.
+
+**Solution Attempt:** The direct definition,
+$$
+\mu = E(\texttt{AHE}), \quad E(\texttt{AHE}^2) = \sum_y y^2 \cdot P(\texttt{AHE} = y), \quad \boxed{Var(\texttt{AHE}) = E(\texttt{AHE}^2) - \mu^2}
+$$
+Law of total variance says,
+$$
+\boxed{Var(\texttt{AHE}) = E(Var(\texttt{AHE} \mid \texttt{Age})) = Var(E(\texttt{AHE} \mid \texttt{Age}))}
+$$
+We can do this directly, or with the law of total variance. Let's try both see if we get the same.
+```{python}
+# P(AHE = y)
+P_ahe = df.sum(axis=1)
+
+# mean and second moment
+mu = (P_ahe.index * P_ahe).sum()
+E2 = ((P_ahe.index**2) * P_ahe).sum()
+
+var_ahe = E2 - mu**2
+print('Var(AHE) =', var_ahe)
+```
+And now with law of total variance,
+```{python}
+# weights over Age
+P_age = df.sum(axis=0)
+
+m, v = {}, {}
+for a in df.columns:
+  col = df[a]               
+  p = col / col.sum()               # P(AHE | Age=a)
+  ma = (p.index * p).sum()          # E(AHE | Age=a)
+  E2a = ((p.index**2) * p).sum()    # E(AHE^2 | Age=a)
+  m[a] = ma
+  v[a] = E2a - ma**2                # Var(AHE | Age=a)
+
+m = pd.Series(m)
+v = pd.Series(v) 
+
+mu = (m * P_age).sum()              # E(AHE)
+var_ahe_LTV = (v * P_age).sum() + ((m - mu)**2 * P_age).sum()
+print('Var(AHE) via LTV =', var_ahe_LTV)
+```
+There seems to be some error in rounding, truncating, or data types but we get essentially the same thing. For grading purposes, go with the first one.
+
+\hfill $\square$
+
+## 2f
+Compute the covariance between `AHE` and `Age`.
+
+**Solution Attempt:** Let $Y = \texttt{AHE}$ and $A = \texttt{Age}$.
+$$
+Cov(Y, A) = E(YA) - E(Y)E(A)
+$$
+From the joint table $P(Y = y, A = a)$,
+$$
+E(Y) = \sum_y y P_Y(y), \quad E(A) = \sum_a aP_A(a), \quad E(YA) = \sum_y\sum_a ya P(y,a)
+$$
+```{python}
+# I'm going to try to fix the previous data type issue.
+# Ensure numeric Age labels
+df.columns = df.columns.astype(int)
+
+# marginals
+P_ahe = df.sum(1)     # P(Y)
+P_age = df.sum(0)     # P(A)
+
+# means
+E_Y = (P_ahe.index * P_ahe).sum()
+E_A = (P_age.index * P_age).sum()
+
+# cross-moment E(YA) from joint
+E_YA = df.mul(df.columns, 1).mul(df.index, 0).to_numpy().sum()
+
+# covariance
+cov_YA = E_YA - E_Y * E_A
+print('Cov(AHE, Age) =', cov_YA)
+```
+
+\hfill $\square$
+
+## 2g
+Compute the correlation between `AHE` and `Age`.
+
+**Solution Attempt:** 
+```{python}
+Var_Y = ((P_ahe.index ** 2) * P_ahe).sum() - E_Y ** 2
+Var_A = ((P_age.index ** 2) * P_age).sum() - E_A ** 2
+corr = cov_YA / (Var_Y ** 0.5 * Var_A ** 0.5)
+print('Corr(AHE, Age) =', corr)
+```
+
+\hfill $\square$
+
+## 2h
+Relate your answers in parts (f) and (g) to the plot you constructed in (c).
+
+**Solution Attempt:**  The plot in (c) shows $E(\texttt{AHE} \mid \texttt{Age})$ rising roughly from \$18 at 25 to roughly \$24 at 34, so `AHE` and `Age` (and a positive correlation, albeit not huge). 
+
+Your variance result and the law of total variance say 
+$$
+Var(\texttt{AHE}) = E(Var(\texttt{AHE} \mid \texttt{Age})) + Var(E(\texttt{AHE} \mid \texttt{Age})). 
+$$
+The plot reflects the second term (the between-age spread of the conditional means), which is small relative to the total variance— so most dispersion in `AHE` within age groups, not across ages.
+
+So, basically, the plot explains the direction (positive association), while the variance/cov explaisn the magnitude.
+
+\hfill $\square$.
+
+# Problem 3
+Let $X_1, \dots, X_n$ be a random sample from the Bernoulli distribution with parameter $p = 0.78$ and $n = 25$. Generate $M = 100$ such random draws (there will be $M \times n = 2500$ random variables generated). For each random draw calculate a sample mean $\bar X^{(j)}$, where $j = 1,\dots, M$.
+
+## 3a
+Draw a histogram $\bar X^{(1)}, \dots \bar X^{(M)}$. Repeat the same for $n = 100$. Discuss the Law of Large Numbers.
+
+**Solution Attempt:** 
+```{python}
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# parameters
+p = 0.78
+M = 100
+rng = np.random.default_rng(42)
+
+def simulate_means(n, M, p, rng):
+  draws = rng.binomial(1, p, size = (M, n))
+  return draws.mean(1)
+
+mean_25 = simulate_means(25, M, p, rng)
+mean_100 = simulate_means(100, M, p, rng)
+
+plt.figure(figsize = (7,4))
+plt.hist(mean_25, bins = 10, )
+plt.xlabel('Sample mean (n = 25)')
+plt.ylabel('Frequency')
+plt.title('Hist of Sample Means (Ber: p = 0.78, n = 25, M = 100)')
+
+plt.figure(figsize = (7,4))
+plt.hist(mean_100, bins = 10)
+plt.xlabel('Sample mean (n = 100)')
+plt.ylabel('Frequency')
+plt.title('Hist of Sample Means (Ber: p = 0.78, n = 100, M = 100)')
+```
+
+\hfill $\square$
+
+## 3b
+For $n = 25$ and $n = 100$ draw corresponding histograms to illustrate the Central Limit Theorem. Dicuss.
+
+**Solution Attempt:**
+```{python}
+from math import sqrt, pi, exp
+
+p = 0.78
+M = 100
+rng = np.random.default_rng(7)
+
+def simulate_means(n):
+    x = rng.binomial(1, p, size=(M, n)).mean(1)
+    return x
+
+def normal_pdf(x, mu, sd):
+    return (1 / (sd * sqrt(2 * pi))) * np.exp(-(x - mu)**2 / (2 * sd**2))
+
+for n in (25, 100):
+    means = simulate_means(n)
+    mu = p
+    sd = sqrt(p * (1 - p) / n)
+    
+    plt.figure(figsize = (6, 4))
+    # histogram of sample means (density so total area ~1)
+    plt.hist(means, bins = 10, density = True)
+    # theoretical normal curve
+    xs = np.linspace(min(means) - 0.05, max(means) + 0.05, 200)
+    plt.plot(xs, normal_pdf(xs, mu, sd))
+    plt.xlabel(f"Sample mean (n = {n})")
+    plt.ylabel("Density")
+    plt.title(f"CLT: (p = {p}, n = {n}, M = {M})")
+```
+
+\hfill $\square$
+
+## 3c
+Repeat (a) and (b) for the random draw from the standard normal distribution.
+
+**Solution Attempt:**
+```{python}
+M = 100
+rng = np.random.default_rng(7)
+
+def simulate_means_normal(n):
+    # M x n draws from N(0,1); take sample means
+    return rng.standard_normal(size=(M, n)).mean(axis=1)
+
+def normal_pdf(x, mu, sd):
+    return (1 / (sd * sqrt(2 * pi))) * np.exp(-(x - mu)**2 / (2 * sd**2))
+
+for n in (25, 100):
+    means = simulate_means_normal(n)
+    mu, sd = 0.0, 1.0 / sqrt(n)           # exact: mean 0, Var = 1/n
+
+    plt.figure(figsize = (6, 4))
+    plt.hist(means, bins = 10, density = True)
+    xs = np.linspace(means.min() - 0.2, means.max() + 0.2, 200)
+    plt.plot(xs, normal_pdf(xs, mu, sd))
+    plt.xlabel(f"Sample mean (n = {n})")
+    plt.ylabel("Density")
+    plt.title(f"Standard Normal source: LLN/CLT (n = {n}, M = {M})")
+    plt.show()
+
+```
+
+\hfill $\square$
+
+## 3d
+Compare your answers for the Bernoulli and the standard normal distribution for the LLN and the CLT.
+
+**Solution Attempt:** 
+
+LLN (convergence of $\bar X$ to the true mean)
+
+- $Ber(p = 0.78)$: $\bar X \to 0.78$. Spread is approx. $\sqrt{p(1-p)/n} = \sqrt{0.1716/n}$. 
+
+- Stadard Normal: $\bar X \to 0$. Spread is approx. $\sqrt{1/n}$.
+
+Both concentrate at their means and shrink like $1/\sqrt n$. Normal shrinks from a larger variance (1 vs. 0.1716), so its histogram are wider for the same $n$.
+
+CLT (shape of the sampling distribution):
+
+- $Ber(p = 0.78)$: Approx. normal for moderate $n$; with $p = 0.78$ the $n = 25$ histogram can show mild skew effects (bounded in $[0,1]$), but by $n = 100$ it's close to normal.
+
+- Standard Normal: $\bar X$ is exactly $\mathcal N(0,1/n)$ for any $n$ so the curve matches quickly.

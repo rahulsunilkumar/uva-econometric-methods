@@ -426,3 +426,10 @@ CLT (shape of the sampling distribution):
 - $Ber(p = 0.78)$: Approx. normal for moderate $n$; with $p = 0.78$ the $n = 25$ histogram can show mild skew effects (bounded in $[0,1]$), but by $n = 100$ it's close to normal.
 
 - Standard Normal: $\bar X$ is exactly $\mathcal N(0,1/n)$ for any $n$ so the curve matches quickly.
+
+\hfill $\square$
+
+# Problem 4
+
+# 4a
+$\bar Y$ is an unbiased estimator of $\mu_Y$. Is $\bar Y^2$ an unbiased estimator of $\mu^2_Y$?

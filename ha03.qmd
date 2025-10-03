@@ -434,10 +434,589 @@ CLT (shape of the sampling distribution):
 ## 4a
 $\bar Y$ is an unbiased estimator of $\mu_Y$. Is $\bar Y^2$ an unbiased estimator of $\mu^2_Y$?
 
-**Solution Attempt:**
+**Solution Attempt:** Let $Y_1,\dots,Y_n$ be i.i.d. with $E(Y_i)=\mu_Y$ and $Var(Y_i)=\sigma_Y^2$. Then
+$$
+E(\bar Y) = \mu_Y
+\quad\text{and}\quad
+Var(\bar Y) = \frac{\sigma_Y^2}n.
+$$
+Using $E(X^2) = Var(X) + (E(X))^2$,
+$$
+E(\bar Y^2) = Var(\bar Y) + \big(E(\bar Y)\big)^2 = \frac{\sigma_Y^2}{n} + \mu_Y^2.
+$$
+Hence
+$$
+E(\bar Y^2) - \mu_Y^2 = \frac{\sigma_Y^2}{n} \neq 0
+$$
+unless $\sigma_Y^2 = 0$ (degenerate case). Therefore, $\bar Y^2$ is \emph{not} an unbiased estimator of $\mu_Y^2$ (it is biased upward by $\sigma_Y^2/n$). It is, however, consistent since the bias $\to 0$ as $n\to\infty$.
+
+\hfill $\square$
 
 ## 4a
 $\bar Y$ is an unbiased estimator of $\mu_Y$. Is $\bar Y^2$ an unbiased estimator of $\mu_Y^2$?
 
+**Solution Attempt:** No. Both denote the same quantity, the square of the mean: $\mu_Y^2 = (\mu_Y)^2$. The notation change is cosmetic and does not alter the mathematics.
+
+\hfill $\square$
+
+# Problem 5
+Show that the sample covariance between $X$ and $Y$ can be defined by 
+$$
+\frac1{n-1}\sum_{i=1}^n (X_i - \bar X)(Y_i - \bar Y)
+$$
+or
+$$
+\frac1{n-1}\sum_{i=1}^n X_iY_i - \frac n{n-1}\,\bar X\,\bar Y.
+$$
+
+**Solution Attempt:** Expand and simplify:
+\begin{align*}
+  \sum_{i=1}^n (X_i-\bar X)(Y_i-\bar Y)
+  &= \sum_{i=1}^n \big(X_iY_i - \bar X Y_i - \bar Y X_i + \bar X\bar Y\big) \\
+  &= \sum_{i=1}^n X_iY_i - \bar X\sum_{i=1}^n Y_i - \bar Y\sum_{i=1}^n X_i + n\bar X\bar Y \\
+  &= \sum_{i=1}^n X_iY_i - \bar X\,(n\bar Y) - \bar Y\,(n\bar X) + n\bar X\bar Y \\
+  &= \sum_{i=1}^n X_iY_i - n\bar X\bar Y.
+\end{align*}
+Divide both sides by $n-1$ to obtain
+$$
+\frac1{n-1}\sum_{i=1}^n (X_i-\bar X)(Y_i-\bar Y)
+= \frac1{n-1}\sum_{i=1}^n X_iY_i - \frac n{n-1}\,\bar X\,\bar Y,
+$$
+which shows the two formulas are equivalent.
+
+\hfill $\square$
+
+# Problem 6
+Grades on a standardized test are known to have a mean of 1000 for students in the United States. The test is administered to 453 randomly selected students in Florida; in this sample, the mean is 1013, and the standard deviation is 108.
+
+## 6a
+Construct a 95% confidence interval for the average test score for Florida students.
+
+**Solution Attempt:** Use a one‐sample $t$ CI (large $n$ so $t\approx 1.96$): $\bar X \pm t_{0.975}\, s/\sqrt{n}$.
+Here, $\bar X=1013$, $s=108$, $n=453$, so $SE=s/\sqrt{n}=108/\sqrt{453}\approx 5.074$.
+Thus the 95\% CI is
+$$
+1013 \pm 1.96(5.074) \;=\; 1013 \pm 9.946 \;=\; (1003.05,\;1022.95).
+$$
+
+\hfill $\square$
+
+## 6b
+Is there statistically significant evidence that Florida students perform differently than other students in the United States?
+
+**Solution Attempt:** Test $H_0:\mu=1000$ vs. $H_1:\mu\neq 1000$. Test statistic
+$$
+z \approx \frac{\bar X-\mu_0}{s/\sqrt{n}} = \frac{1013-1000}{108/\sqrt{453}} \approx \frac{13}{5.074} \approx 2.562.
+$$
+Two‐sided $p$–value $\approx 0.0104<0.05$, so there is statistically significant evidence that Florida’s mean differs from 1000.
+
+\hfill $\square$
+
+## 6c
+Another 503 students are selected at random from Florida. They are given a 3-hour preparation course before the test is administered. Their average test score is 1019, with a standard deviation of 95.
+
+### 6c (i)
+Construct a 95% confidence interval for the change in the average test score associated with the prep course.
+
+**Solution Attempt:** Treat as two independent samples. Let $\Delta=\bar X_{\text{prep}}-\bar X_{\text{orig}}=1019-1013=6$.
+The standard error is
+$$
+SE_{\Delta}=\sqrt{\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}}
+=\sqrt{\frac{108^2}{453}+\frac{95^2}{503}}\approx 6.610.
+$$
+A 95\% CI: $\Delta \pm 1.96\,SE_{\Delta} = 6 \pm 1.96(6.610) = 6 \pm 12.97 = (-6.97,\;18.97)$.
+
+\hfill $\square$
+
+### 6c (ii)
+Is there statistically significant evidence that the prep course helped?
+
+**Solution Attempt:** Test $H_0:\Delta=0$ vs. $H_1:\Delta>0$. Test statistic $t=\Delta/SE_{\Delta}=6/6.610\approx 0.908$.
+One‐sided $p\approx 0.18$ (two‐sided $\approx 0.36$). Not statistically significant at 5\%.
+
+\hfill $\square$
+
+## 6d 
+The original 453 students are given the prep course and then are asked to take the test a second time. The average change in their test scores is 9 points, and the standard deviation of the change is 60 points.
+
+### 6d (i)
+Construct a 95% confidence interval for the change in average test scores.
+
+**Solution Attempt:** Paired setting on the same students. Let $\bar D=9$, $s_D=60$, $n=453$, $SE_D=s_D/\sqrt{n}=60/\sqrt{453}\approx 2.819$.
+95\% CI: $\bar D \pm 1.96\,SE_D = 9 \pm 1.96(2.819) = 9 \pm 5.525 = (3.48,\;14.53)$.
+
+\hfill $\square$
+
+### 6d (ii)
+Is there statistically significant evidence that the students will perform better on their second attempt, after taking the prep course?
+
+**Solution Attempt:** One‐sided test $H_0:\mu_D\le 0$ vs. $H_1:\mu_D>0$.
+$t=\bar D/SE_D = 9/2.819 \approx 3.193$; one‐sided $p\approx 0.0007<0.05$. Yes, there is significant evidence of improvement.
+
+\hfill $\square$
+
+### 6d (iii)
+Students may have performed better in their second attempt because of the prep course or because they gained test-taking experience in their first attempt. Describe an experiment that would quantify these two effects.
+
+**Solution Attempt:**  We can run a 2 by 2 experiment with prep (yes/no) and practice (first/retake). Randomly assign students to four groups.
+
+- Prep before first test, no retake (measures pure prep effect)
+- No prep before first test, no retake (base)
+- No prep before first test, retake without prep (measures practice)
+- Prep before retake (adds prep effect on top of practice)
+
+Then we analyze with a two-way ANOVA 
+
+- Practice effect = score gain from retaking without prep.
+- Prep effect = score gap between prepped vs. unprepped at the same test number. 
+Making all this random makes sure that we measure prep and practice separately.
+
+\hfill $\square$
+
+# Problem 7
+Math SAT score ($Y$) are normally distributed with a mean of 500 and a standard deviation of 100. An evening school advertises that it can improve students' scores by roughly a third of a standard deviation, or 30 points, if they attend a course which runs over several weeks. The statistician for a consumer protection agency suspects that the courses are not effective. She views the situation as follows: $H_0 : \mu_Y = 500$ versus $H_1 : \mu_Y = 530$.
+
+## 7a 
+Sketch the two distributions under the null hypothesis and the alternative hypothesis.
+
+**Solution Attempt:** The relevant curves are the *sampling distributions* of $\bar Y$ (for the test). With $n=49$, $SE=100/\sqrt{49}=100/7\approx 14.286$. So
+$$
+\bar Y \mid H_0 \sim \mathcal N\!\left(500,\; (100/\sqrt{49})^2\right), 
+\qquad
+\bar Y \mid H_1 \sim \mathcal N\!\left(530,\; (100/\sqrt{49})^2\right).
+$$
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+
+mu0 = 500
+mu1 = 530
+sigma = 100
+n = 49
+se = sigma / np.sqrt(n)
+
+x = np.linspace(440, 590, 400)
+f0 = (1/(se*np.sqrt(2*np.pi))) * np.exp(-(x-mu0)**2/(2*se**2))
+f1 = (1/(se*np.sqrt(2*np.pi))) * np.exp(-(x-mu1)**2/(2*se**2))
+
+plt.figure(figsize=(8,5))
+plt.plot(x, f0, label=r'$H_0: \mu=500$')
+plt.plot(x, f1, label=r'$H_1: \mu=530$')
+plt.axvline(mu0, linestyle='--')
+plt.axvline(mu1, linestyle='--')
+plt.title('Sampling Dist of $\\bar{Y}$ under $H_0$ & $H_1$ ($n=49$, $SE=100/\\sqrt{49}$)')
+plt.xlabel(r'$\bar{Y}$')
+plt.ylabel('Density')
+plt.legend()
+plt.tight_layout()
+plt.show()
+```
+(Plot shows two normals centered at 500 and 530 with the same spread $SE=100/\sqrt{49}$.)
+
+\hfill $\square$
+
+## 7b
+The consumer protection agency wants to evaluate this claim by sending 50 students to attend classes. One of the students becomes sick during the course and drops out. What is the distribution of the average score of the remaining 49 students under the null, and under the alternative hypothesis?
+
+**Solution Attempt:** By normal theory,
+$$
+\bar Y \mid H_0 \sim \mathcal N\!\left(500,\; (100/\sqrt{49})^2\right),
+\qquad
+\bar Y \mid H_1 \sim \mathcal N\!\left(530,\; (100/\sqrt{49})^2\right).
+$$
+
+\hfill $\square$
+
+## 7c 
+Assume that after graduating from the course, the 49 participants take the SAT test and score an average of 520. Is this convincing evidence that the school has fallen short of its claim? What is the $p$-value for such a score under the null hypothesis?
+
+**Solution Attempt:** Use a one–sided test that rejects for large $\bar Y$ (improvement).
+$$
+z=\frac{520-500}{100/\sqrt{49}}=\frac{20}{14.286}\approx 1.40.
+$$
+$p$–value (upper tail) $=1-\Phi(1.40)\approx 0.081$. Not significant at $5\%$; the data do **not** provide convincing evidence of a 30-point improvement.
+
+\hfill $\square$
+
+## 7d
+What would be the critical value under the null hypothesis if the size of your test were 5%?
+
+**Solution Attempt:** One–sided $\alpha=0.05$: critical value
+$$
+c = 500 + z_{0.95}\cdot \frac{100}{\sqrt{49}}
+= 500 + 1.6449\cdot 14.286 \approx 523.50.
+$$
+Reject $H_0$ if $\bar Y > 523.50$.
+
+\hfill $\square$
+
+## 7e
+Given this critical value, what is the power of the test? What options does the statistican have for increasing the power in this situation?
+
+**Solution Attempt:** Power under $H_1$ is
+$$
+P_{H_1}(\bar Y>c)
+= 1-\Phi\!\left(\frac{c-530}{100/\sqrt{49}}\right)
+= 1-\Phi\!\left(\frac{523.50-530}{14.286}\right)
+= 1-\Phi(-0.455)\approx \Phi(0.455)\approx 0.675.
+$$
+So the power is about $67.5\%$. To increase power: increase $n$ (largest effect), use a larger $\alpha$, reduce variance (more reliable measurement), or ensure a one-sided test aligned with the claim.
+
+\hfill $\square$
+
+# Problem 8
+Assume that under the null hypothesis, $\bar Y$ has an expected value of 500 and a standard deviation of 20. Under the alternative hypothesis, the expected value is 550. Sketch the probability density function for the null and alternative hypothesis in the same figure. Pick a critical value such that the $p$-value is approximately 5%. Mark the areas, which show the size and the power of the test. What happens to the power of the test if the altnernative hypothesis moves close to the null hypothesis, i.e. $\mu_y = 540,530, 520$? 
+
+**Solution Attempt:** I am going to try and plot this with `matplotlib`.
+
+Imports,
+```{python}
+import matplotlib.pyplot as plt
+from math import erf, sqrt
+```
+Parameters and functions,
+```{python}
+# Given
+mu0 = 500
+sigma = 20  # SD under both hypotheses (sampling distribution of \bar Y)
+mu1 = 550   # primary alternative
+alpha = 0.05
+
+# Critical value for one-sided upper test at ~5%
+z_alpha = 1.6448536269514722  # Phi^{-1}(0.95)
+c = mu0 + z_alpha * sigma  # critical value
+
+# x-range for plotting
+x = np.linspace(440, 580, 600)
+def normal_pdf(x, mu, sd):
+    return (1/(sd*np.sqrt(2*np.pi))) * np.exp(-(x-mu)**2/(2*sd**2))
+
+f0 = normal_pdf(x, mu0, sigma)
+f1 = normal_pdf(x, mu1, sigma)
+```
+The first plot,
+```{python}
+# null vs alternative (550) with shaded size and power
+plt.figure(figsize=(8,5))
+plt.plot(x, f0, label=r'$H_0:\, \mu=500$')
+plt.plot(x, f1, label=r'$H_1:\, \mu=550$')
+plt.axvline(c, linestyle='--', label=f'critical value approx. {c:.1f}')
+
+# Shade alpha under H0 to the right of c
+mask_alpha = x >= c
+plt.fill_between(x[mask_alpha], f0[mask_alpha], alpha=0.3)
+
+# Shade power under H1 to the right of c
+plt.fill_between(x[mask_alpha], f1[mask_alpha], alpha=0.3)
+
+plt.title('Sampling dists of $\\bar{Y}$ under $H_0$ and $H_1$ w/ crit val')
+plt.xlabel(r'$\bar{Y}$')
+plt.ylabel('Density')
+plt.legend()
+plt.tight_layout()
+plt.show()
+```
+The second plot,
+```{python}
+# power comparison as alternative mean moves closer 
+mus = [550, 540, 530, 520]
+plt.figure(figsize=(8,5))
+plt.plot(x, f0, label=r'$H_0:\, \mu=500$')
+for m in mus:
+    plt.plot(x, normal_pdf(x, m, sigma), label=rf'$H_1:\, \mu={m}$')
+plt.axvline(c, linestyle='--', label='critical value')
+mask = x >= c
+plt.fill_between(x[mask], normal_pdf(x[mask], mu0, sigma), alpha=0.15)
+plt.title('Effect on power as $H_1$ mean approaches $H_0$')
+plt.xlabel(r'$\bar{Y}$')
+plt.ylabel('Density')
+plt.legend()
+plt.tight_layout()
+plt.show()
+
+# Compute powers numerically for the listed alternatives
+
+def Phi(z):
+    return 0.5*(1 + erf(z/np.sqrt(2)))
+
+powers = {}
+for m in mus:
+    # Power = P_{mu=m}(\bar{Y} > c) = 1 - Phi((c - m)/sigma)
+    z = (c - m)/sigma
+    power = 1 - Phi(z)
+    powers[m] = power
+
+powers
+```
+
+Use a one-sided upper test (reject for large $\bar Y$). With $\sigma_{\bar Y}=20$ and $\alpha\approx 0.05$, the critical value is
+$$
+c \;=\; 500 + z_{0.95}\cdot 20 \;=\; 500 + 1.6449\cdot 20 \;\approx\; 532.9.
+$$
+
+**Size (Type I error)** is the right–tail area under $H_0$ beyond $c$; this is ~5\%.
+
+**Power at $\mu$** is $1-\Phi\!\big((c-\mu)/20\big)$, the right–tail area under the alternative beyond $c$.
+
+Numerical power:
+\begin{align*}
+  \mu=550:&\quad 1-\Phi \big((532.9-550)/20\big)\approx 0.804,\\
+  \mu=540:&\quad 1-\Phi \big((532.9-540)/20\big)\approx 0.639,\\
+  \mu=530:&\quad 1-\Phi \big((532.9-530)/20\big)\approx 0.442,\\
+  \mu=520:&\quad 1-\Phi \big((532.9-520)/20\big)\approx 0.260.
+\end{align*}
+
+As the alternative mean moves closer to the null (550 $\to$ 540 $\to$ 530 $\to$ 520), the two sampling distributions overlap more, so the shaded power region shrinks—power decreases.
+
+\hfill $\square$
+
+# Problem 9
+
+Some policy advisors have argued that education should be subsidized in developing countries to reduce fertility rates. To investigate whether or not education fertility are correlated, you collect data on population growth rates ($Y$) and education ($X$) for 86 countries. Given the sums below, compute the sample correlation: 
+$$
+\sum_{i=1}^n Y_i = 1.594; \;  \sum_{i=1}^n X_i = 449.6; \; \sum_{i=1}^n Y_iX_i = 6.4697; \; \sum_{i=1}^n Y_i^2 = 0.03982; \; \sum_{i=1}^n X_i^2 = 3022.76
+$$
+
+**Solution Attempt:** Use
+$$
+r \;=\; \frac{S_{XY}}{\sqrt{S_{XX}S_{YY}}},\quad
+S_{XY}=\sum X_iY_i-\frac{\sum X_i\sum Y_i}{n},\;
+S_{XX}=\sum X_i^2-\frac{(\sum X_i)^2}{n},\;
+S_{YY}=\sum Y_i^2-\frac{(\sum Y_i)^2}{n}.
+$$
+\begin{align*}
+S_{XY} &= 6.4697 - \frac{(449.6)(1.594)}{86}
+       = 6.4697 - 8.3332837209 \approx -1.863583721,\\
+S_{XX} &= 3022.76 - \frac{(449.6)^2}{86}
+       \approx 3022.76 - 2350.4669767 \approx 672.2930233,\\
+S_{YY} &= 0.03982 - \frac{(1.594)^2}{86}
+       \approx 0.03982 - 0.0295446047 \approx 0.0102753953.
+\end{align*}
+Therefore
+$$
+r \;=\; \frac{-1.863583721}{\sqrt{(672.2930233)(0.0102753953)}} \;\approx\; -0.709.
+$$
+The sample correlation is about $r\approx -0.709$ (negative association: higher education is associated with lower population growth).
+
+\hfill $\square$
+
+# Problem 10
+Let $X$ be a Bernoulli random variable with parameter $p$. Suppose you observe a random sample $(X_i)_{i=1}^n$.
+
+## 10a
+Denote the parameter of interest as $\theta \equiv p^3$. Propose a consistent estimator for $\theta$. Why is it consistent?
+
+**Solution Attempt:** A natural estimator is
+$$
+\hat\theta \;=\; \big(\bar X\big)^3,\qquad \bar X=\frac1n\sum_{i=1}^n X_i.
+$$
+By the Law of Large Numbers, $\bar X \xrightarrow{p} p$. By the Continuous Mapping Theorem,
+$(\bar X)^3 \xrightarrow{p} p^3=\theta$, so $\hat\theta$ is consistent.
+
+(Alternative: the U–statistic $\tilde\theta=\binom{n}{3}^{-1}\sum_{i<j<k} X_iX_jX_k$ is unbiased for $p^3$ and also consistent.)
+
+\hfill $\square$
+
+## 10b
+Let $\hat \theta$ the estimator you proposed in part (a). Describe $E(\hat \theta)$. Is your estimator unbiased? *Hint: you may need to use formula:*
+$$
+\Big(\sum_{i=1}^n X_i\Big)^3 = \sum_{i=1}^n X_i^3 + 3\sum_{i\neq j} X_iX_j^2 + 6 \sum_{i \neq j \neq \ell} X_iX_jX_\ell.
+$$
+
+**Solution Attempt:** Let $S=\sum_{i=1}^n X_i\sim\text{Bin}(n,p)$. Then $\hat\theta=(\bar X)^3=(S/n)^3$, so
+$$
+E(\hat\theta)=\frac{E(S^3)}{n^3}.
+$$
+For Bernoulli $X_i^k=X_i$ and independence gives $E(X_i)=p$, $E(X_iX_j)=p^2$ ($i\neq j$), $E(X_iX_jX_\ell)=p^3$ ($i\neq j\neq \ell$). Counting terms,
+$$
+E(S^3)= np \;+\; 3n(n-1)p^2 \;+\; n(n-1)(n-2)p^3.
+$$
+Hence
+$$
+E(\hat\theta)
+= \frac{np}{n^3} + \frac{3n(n-1)p^2}{n^3} + \frac{n(n-1)(n-2)p^3}{n^3}
+= \frac{p}{n^2} + \frac{3(n-1)}{n^2}p^2 + \frac{(n-1)(n-2)}{n^2}p^3.
+$$
+Therefore $\hat\theta=(\bar X)^3$ is **biased** for finite $n$ (since $E[\hat\theta]\neq p^3$ in general), but it is **asymptotically unbiased and consistent** because $E[\hat\theta]\to p^3$ as $n\to\infty$.
+
+\hfill $\square$
+
+
+# Problem 11
+Assume you wanted to compare the expected values of two random variables $E(X)$ and $E(Y)$.
+
+## 11a
+How would you test the null hypothesis $H_0 : E(X) = E(Y)$ against the alternative $H_1 : E(X) \neq E(Y)$ if you observe two independent random samples $(X_i)^{n_1}_{i=1}$ and $(Y_j)^{n_2}_{j=1}$?
+
 **Solution Attempt:**
-Does this constitute a change?
+
+
+## 11b
+How would you test the null hypothesis $H_0 : E(X) = E(Y)$ against the alternative hypothesis $H_1 : E(X) \neq E(Y)$ if you observe one random sample $(X_i, Y_i)^n_{i=1}$?
+
+**Solution Attempt:**
+
+# Problem 12
+Suppose you are interested in a parameter $\theta > 0$ and you have a random sample $(X_i)^n_{i=1}$ (note that the parameter $\theta$ is strictly positive, like a variance for example). Suppose $\hat Q$ is a statistic and suppose that the distribution of $X$ is such that 
+$$
+n \cdot \left( \frac{\hat Q}{\theta} \right)^2 \sim F, \quad \text{where} \quad F(z) = 
+\begin{cases}
+  0, & z < 0 \\
+  1 - e^{-z/2}, & z \in [0, \infty).
+\end{cases}
+$$
+$F$ is a special case of the Exponential Distribution (equivalently, $\chi^2_2$).
+
+Suppose you want to test the null hypothesis $H_0 : \theta = \theta_0$ against the alternative hypothesis $H_1 : \theta < \theta_0$, and that for this purpose you want to use the test-statistic
+$$
+T = n \cdot \left( \frac{\widehat Q}{\theta_0} \right)^2
+$$
+and a rejection rule "reject $H_0$ if and only if $T < c$", where $c$ is a critical value. Let $\alpha \in (0,1)$ denote the target significance level for the test.
+
+## 12a
+Find the critical value $c$ you need to use to attain the target significance level $\alpha$.
+
+**Solution Attempt:** Under $H_0$, $T \sim F$ with $F(t)=1-e^{-t/2}$ for $t\ge 0$. We need
+$$
+\alpha = P_{H_0}(T<c) = F(c) = 1 - e^{-c/2}
+\quad\Longrightarrow\quad
+e^{-c/2} = 1-\alpha
+\quad\Longrightarrow\quad
+c = -2\ln(1-\alpha).
+$$
+\hfill $\square$
+
+## 12b
+Let $t$ denote the value of $T$ in your sample. Find an expression for the $p$-value for the test. Suppose $\theta_0 = 20$. Compute the $p$-value of the test when $n = 100$ and $\widehat Q = 0.5$.
+
+**Solution Attempt:** For a lower–tail test, the $p$–value is
+$$
+p\text{-value} \;=\; P_{H_0}(T \le t) \;=\; F(t) \;=\; 1 - e^{-t/2}.
+$$
+With $\theta_0=20$, $n=100$, $\widehat Q=0.5$,
+$$
+t \;=\; n\Big(\frac{\widehat Q}{\theta_0}\Big)^2
+\;=\; 100\Big(\frac{0.5}{20}\Big)^2
+\;=\; 100\cdot 0.000625
+\;=\; 0.0625,
+$$
+so
+$$
+p\text{-value} \;=\; 1 - e^{-0.0625/2}
+\;=\; 1 - e^{-0.03125}
+\;\approx\; 0.0308.
+$$
+
+\hfill $\square$
+
+# 12c
+Find the power of the test when the true value of $\theta$ is some $\theta^*$, with $\theta^* \neq \theta_0$. Suppose $\theta_0 = 20$, $n=100$, and $\widehat Q = 0.5$. Compute the power of the test when $\theta^* = 10$.
+
+**Solution Attempt:** If the true value is $\theta^*$, then
+$$
+U \;=\; n\Big(\frac{\widehat Q}{\theta^*}\Big)^2 \sim \chi^2_2,
+\qquad
+T \;=\; n\Big(\frac{\widehat Q}{\theta_0}\Big)^2
+\;=\; \Big(\frac{\theta^*}{\theta_0}\Big)^2 U.
+$$
+Thus the power at $\theta^*$ is
+$$
+P_{\theta^*}(T<c) \;=\; P\!\left(U < \frac{c}{(\theta^*/\theta_0)^2}\right)
+\;=\; F\!\left(\frac{c}{(\theta^*/\theta_0)^2}\right)
+\;=\; 1 - \exp\!\left(-\frac{c}{2}\Big(\frac{\theta_0}{\theta^*}\Big)^{\!2}\right).
+$$
+For a concrete number, take the usual $\alpha=0.05$ so $c=-2\ln(1-0.05)\approx 0.1026$, and $\theta^*=10$ with $\theta_0=20$ gives $(\theta_0/\theta^*)^2=4$. Then
+$$
+\text{Power} \;=\; 1 - \exp\!\Big(-\frac{0.1026}{2}\cdot 4\Big)
+\;=\; 1 - e^{-0.2052}
+\;\approx\; 0.186.
+$$
+(Note: power depends on $\alpha$ via $c$, and on $\theta^*$; it does not depend on the realized $\widehat Q$.)
+
+\hfill $\square$
+
+
+# Problem 13
+Suppose $Y_i \sim \text{i.i.d. }\mathcal N(\mu_Y, \sigma_Y^2)$ for $i=1,\dots,n$ with $\sigma_Y^2$ known. Find $t$-statistics for testing $H_0:\mu_Y=0$ versus $H_1:\mu_Y>0$. Suppose $\sigma_Y=10$ and $n=100$. Using a test with size $5\%$ and the corresponding rejection rule, answer the following.
+
+**Setup**, With known variance, use
+$$
+t \;=\; \frac{\bar Y - 0}{\sigma_Y/\sqrt{n}} \;=\; \frac{\bar Y}{10/\sqrt{100}} \;=\; \frac{\bar Y}{1},
+\quad t\mid H_0 \sim \mathcal N(0,1).
+$$
+At size $5\%$ (one-sided), reject $H_0$ if $t>1.64$ (critical value $z_{0.95}\approx 1.64$).
+
+## 13a
+Suppose $\mu_Y=0$, so the null hypothesis is true. What is the probability that the null hypothesis is rejected?
+
+**Solution Attempt:** Under $H_0$, $t\sim \mathcal N(0,1)$, so
+$$
+P(\text{reject}\mid H_0)=P(t>1.64)=1-\Phi(1.64)\approx 0.0505\approx 5\%.
+$$
+
+\hfill $\square$
+
+## 13b
+Suppose $\mu_Y=2$, so the alternative hypothesis is true. What is the probability that the null hypothesis is rejected?
+
+**Solution Attempt:** Under $\mu_Y=2$, $t=\bar Y/1 \sim \mathcal N(2,1)$, hence
+$$
+P(\text{reject}\mid \mu_Y=2)=P(t>1.64)=1-\Phi(1.64-2)=1-\Phi(-0.36)=\Phi(0.36)\approx 0.641.
+$$
+
+\hfill $\square$
+
+## 13c
+Suppose that in 90% of cases the data are drawn from a population where the null is true ($\mu_Y = 0$) and in the 10% of cases the data came from a population where the alternative is true and $\mu_Y = 2$.
+
+### 13c (i)
+You complete the $t$-statistics. What is the probability that $t > 1.64$, that is, that you reject the null hypothesis?
+
+**Solution Attempt:** By the law of total probability,
+$$
+P(t>1.64)=0.9\,P(t>1.64\mid \mu=0)+0.1\,P(t>1.64\mid \mu=2)
+=0.9(0.0505)+0.1(0.6406)\approx 0.110.
+$$
+
+\hfill $\square$
+
+### 13c (ii)
+Suppose you reject the null hypothesis; that is $t > 1.64$. What is the probability that the sample data were drawn from the $mu_y = 0$ population?
+
+**Solution Attempt:** By Bayes’ rule,
+$$
+P(\mu=0\mid t>1.64)=\frac{0.9\,P(t>1.64\mid \mu=0)}{P(t>1.64)}
+=\frac{0.9\cdot 0.0505}{0.110}\approx 0.415.
+$$
+
+\hfill $\square$
+
+## 13d
+It is hard to discover a new effective drug. Suppose 90% of new drugs are ineffective and only 10% are effective. Let $Y$ denote the drop in the level of a specific blood toxin for a patient taking a new drug. If the drug is ineffective, $\mu_Y = 0$ and $\sigma_Y = 10$; if the drug is effective, $\mu_Y = 2$ and $\sigma_Y = 10$.
+
+### 13d (i)
+A new drug is tested on a random sample of $n = 100$ patients, data are collected, and the resulting $t$-statistics is found to be greater than 1.64. What is the probability that the drug is ineffective?
+
+**Solution Attempt:** Same mixture as 13c with priors $0.9/0.1$ and the same tail probabilities, so
+$$
+P(\text{ineffective}\mid t>1.64)\approx 0.415.
+$$
+
+\hfill $\square$
+
+### 13d (ii)
+Suppose the one-sided test uses the $0.5\%$ significance level. What is the probability the drug is ineffective?
+
+**Solution Attempt:** Use critical value $z_{0.995}\approx 2.575$. Then
+$$
+P(t>2.575\mid \mu=0)=0.005,\qquad
+P(t>2.575\mid \mu=2)=1-\Phi(2.575-2)=1-\Phi(0.575)\approx 0.282.
+$$
+Bayes update:
+$$
+P(\text{ineffective}\mid t>2.575)
+=\frac{0.9\cdot 0.005}{0.9\cdot 0.005+0.1\cdot 0.282}
+=\frac{0.0045}{0.0045+0.0282}\approx 0.138.
+$$
+
+\hfill $\square$

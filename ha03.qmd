@@ -438,3 +438,6 @@ $\bar Y$ is an unbiased estimator of $\mu_Y$. Is $\bar Y^2$ an unbiased estimato
 
 ## 4a
 $\bar Y$ is an unbiased estimator of $\mu_Y$. Is $\bar Y^2$ an unbiased estimator of $\mu_Y^2$?
+
+**Solution Attempt:**
+Does this constitute a change?

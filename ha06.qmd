@@ -220,7 +220,7 @@ $$
 # Problem 10
 For the following matrices check the statement: "If a matrix $X$ has full rank then the matrix $X'X$ is invertible" and find the inverse $(X'X)^{-1}$:
 
-# Problem 10a
+## Problem 10a
 $$
 X = \begin{bmatrix}
 1 & 0 \\
@@ -230,7 +230,7 @@ X = \begin{bmatrix}
 \end{bmatrix}
 $$
 
-# Problem 10b
+## Problem 10b
 $$
 X = \begin{bmatrix}
 1 & 0 \\
@@ -240,7 +240,7 @@ X = \begin{bmatrix}
 \end{bmatrix}
 $$
 
-# Problem 10c
+## Problem 10c
 $$
 X = \begin{bmatrix}
 1 & 1 \\

@@ -307,32 +307,54 @@ C = \begin{bmatrix}
 \end{bmatrix}
 $$
 
-**Solution Attempt** Find the rank of each matrix.
 
-### $A=\begin{bmatrix}3&6&4&8\\ 2&7&1&9\\ 4&2&5&0\end{bmatrix}$
-Condensed row-reduction:
+**Solution Attempt** I'll show extended work for this one and clean it up for the rest of the parts.
 $$
-\begin{bmatrix}
+\begin{aligned}
+&\begin{bmatrix}
 3&6&4&8\\
 2&7&1&9\\
 4&2&5&0
 \end{bmatrix}
-\ \sim\
+\ \xrightarrow{\;R_2\gets 3R_2-2R_1,\; R_3\gets 3R_3-4R_1\;}
 \begin{bmatrix}
-1&2&\tfrac43&\tfrac83\\
-0&1&-\tfrac53&\tfrac73\\
-0&-6&-\tfrac73&-\tfrac{32}3
+3&6&4&8\\
+0&9&-5&11\\
+0&-18&-1&-32
 \end{bmatrix}
-\ \sim\
+\\[4pt]
+&\xrightarrow{\;R_3\gets R_3+2R_2\;}
+\begin{bmatrix}
+3&6&4&8\\
+0&9&-5&11\\
+0&0&-11&-10
+\end{bmatrix}
+\ \xrightarrow{\;R_3\gets -\tfrac{1}{11}R_3,\; R_2\gets \tfrac{1}{9}R_2\;}
+\begin{bmatrix}
+3&6&4&8\\
+0&1&-\tfrac{5}{9}&\tfrac{11}{9}\\
+0&0&1&\tfrac{10}{11}
+\end{bmatrix}
+\\[4pt]
+&\xrightarrow{\;R_2\gets R_2+\tfrac{5}{9}R_3,\; R_1\gets R_1-4R_3\;}
+\begin{bmatrix}
+3&6&0&\tfrac{48}{11}\\
+0&1&0&\tfrac{19}{11}\\
+0&0&1&\tfrac{10}{11}
+\end{bmatrix}
+\ \xrightarrow{\;R_1\gets R_1-6R_2,\; R_1\gets \tfrac{1}{3}R_1\;}
 \begin{bmatrix}
 1&0&0&-2\\
 0&1&0&\tfrac{19}{11}\\
 0&0&1&\tfrac{10}{11}
 \end{bmatrix}.
+\end{aligned}
 $$
-Three pivots $\Rightarrow \operatorname{rank}(A)=3$.
-
-*(Equivalently, $\det$ of the $3\times3$ left block $\begin{vmatrix}3&6&4\\2&7&1\\4&2&5\end{vmatrix}=-33\ne0$.)*
+There are $3$ pivots, so
+$$
+\operatorname{rank}(A)=3.
+$$
+(Equivalently, the $3\times3$ left block has determinant $-33\ne 0$.)
 
 ### $B=\begin{bmatrix}18&2\\ 7&-4\\ 6&11\end{bmatrix}$
 Condensed row-reduction:
@@ -343,7 +365,7 @@ $$
 $$
 Two pivots $\Rightarrow \operatorname{rank}(B)=2$.
 
-*(Equivalently, the $2\times2$ minor $\begin{vmatrix}18&2\\ 7&-4\end{vmatrix}=-86\ne0$.)*
+(Equivalently, the $2\times2$ minor $\begin{vmatrix}18&2\\ 7&-4\end{vmatrix}=-86\ne0$.)
 
 ### $C=\begin{bmatrix}-5&8&11&0\\ 13&3&0&2\\ 10&0&-6&2\end{bmatrix}$
 Condensed row-reduction:
@@ -362,7 +384,7 @@ $$
 $$
 Three pivots $\Rightarrow \operatorname{rank}(C)=3$.
 
-*(Equivalently, $\det\begin{bmatrix}-5&8&11\\ 13&3&0\\ 10&0&-6\end{bmatrix}=384\ne0$.)*
+(Equivalently, $\det\begin{bmatrix}-5&8&11\\ 13&3&0\\ 10&0&-6\end{bmatrix}=384\ne0$.)
 
 $$
 \boxed{\operatorname{rank}(A)=3,\quad \operatorname{rank}(B)=2,\quad \operatorname{rank}(C)=3.}
@@ -469,40 +491,23 @@ p - x - y = 1 \\
 \end{cases}
 $$
 
-**Solution Attempt** ## Problem 6b
+**Solution Attempt** From the last two equations,
 $$
-\begin{cases}
-x + y + z + t + p = 17,\\
-x - y - z - t - p = -5,\\
-y + z + t + p = 11,\\
-p - x - y = 1,\\
--\,t + x = 10.
-\end{cases}
+t=x-10,\qquad p=1+x+y.
 $$
-
-**Solution Attempt**  
-From the last two equations:
+Then $y+z+t+p=11\Rightarrow 2x+2y+z=20\Rightarrow z=20-2x-2y.$  
+Plugging into $x+y+z+t+p=17$ gives $x=6$, hence
 $$
-t = x - 10,\qquad p = 1 + x + y.
+t=-4,\qquad p=7+y,\qquad z=8-2y.
 $$
-Use these in $y+z+t+p=11$:
+Explicit check of the 2nd equation:
 $$
-y + z + (x-10) + (1+x+y) = 11 \;\Rightarrow\; 2x + 2y + z = 20 \;\Rightarrow\; z = 20 - 2x - 2y.
+x-y-z-t-p
+=6-y-(8-2y)-(-4)-(7+y)= -5.
 $$
-Now plug $t,p,z$ into $x+y+z+t+p=17$:
+Thus the solution family is
 $$
-x + y + (20 - 2x - 2y) + (x-10) + (1 + x + y) = 17
-\;\Rightarrow\; 3x + 2y + z = 26
-\;\Rightarrow\; x = 6.
-$$
-Hence
-$$
-t = -4,\qquad p = 7 + y,\qquad z = 8 - 2y.
-$$
-The second equation is then automatically satisfied, so $y$ is free.
-
-$$
-\boxed{(x,y,z,t,p) = \big(6,\; y,\; 8-2y,\; -4,\; 7+y\big),\ \ y\in\mathbb{R}.}
+\boxed{(x,y,z,t,p)=\big(6,\;y,\;8-2y,\;-4,\;7+y\big),\quad y\in\mathbb{R}.}
 $$
 
 \hfill $\square$

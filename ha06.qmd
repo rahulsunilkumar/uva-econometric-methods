@@ -13,15 +13,77 @@ format:
 # Problem 1
 Are the following vectors linearly independent?
 
-## Problem 1a
+##  1a
 $$
-a_1 = \begin{pmatrix}3 \\ 2\end{pmatrix}, \quad a_2 = \begin{pmatrix}7 \\ 6\end{pmatrix}, \quad a_3 \begin{pmatrix}12 \\ 10\end{pmatrix}
+a_1 = \begin{pmatrix}3 \\ 2\end{pmatrix}, \quad a_2 = \begin{pmatrix}7 \\ 6\end{pmatrix}, \quad a_3 = \begin{pmatrix}12 \\ 10\end{pmatrix}
 $$
 
-## Problem 1b
+**Solution Attempt** These vectors live in $\mathbb{R}^2$, so any set of three vectors must be linearly dependent. To make this explicit, solve
+$$
+c_1 a_1 + c_2 a_2 + c_3 a_3=\begin{pmatrix}0\\0\end{pmatrix}
+\quad\Longleftrightarrow\quad
+\begin{cases}
+3c_1+7c_2+12c_3=0,\\
+2c_1+6c_2+10c_3=0.
+\end{cases}
+$$
+Row-reducing (work condensed) gives
+$$
+\begin{bmatrix}3&7&12\\[2pt]2&6&10\end{bmatrix}
+\sim
+\begin{bmatrix}1&0&\tfrac12\\[2pt]0&1&\tfrac32\end{bmatrix},
+$$
+so
+$$
+c_1=-\tfrac12\,c_3,\qquad c_2=-\tfrac32\,c_3,
+$$
+with $c_3$ free. Taking $c_3=1$ yields the concrete dependence
+$$
+-\tfrac12\,a_1-\tfrac32\,a_2+1\cdot a_3=\begin{pmatrix}0\\0\end{pmatrix},
+$$
+and, clearing denominators,
+$$
+-1\cdot a_1-3\cdot a_2+2\cdot a_3=\begin{pmatrix}0\\0\end{pmatrix}.
+$$
+
+$$
+\boxed{\text{Therefore, the vectors are linearly dependent (not independent).}}
+$$
+
+\hfill $\square$
+
+## 1b
 $$
 a_1 = \begin{pmatrix}1 \\ 0 \\ 0\end{pmatrix}, \quad a_2 = \begin{pmatrix}0 \\ 1 \\ 0\end{pmatrix}, \quad a_3 = \begin{pmatrix}0 \\ 0 \\ 1\end{pmatrix}
 $$
+
+**Solution Attempt** Test
+$$
+c_1 a_1 + c_2 a_2 + c_3 a_3=\begin{pmatrix}0\\0\\0\end{pmatrix}.
+$$
+Writing components,
+$$
+c_1\begin{pmatrix}1\\0\\0\end{pmatrix}
++c_2\begin{pmatrix}0\\1\\0\end{pmatrix}
++c_3\begin{pmatrix}0\\0\\1\end{pmatrix}
+=
+\begin{pmatrix}
+c_1\\ c_2\\ c_3
+\end{pmatrix}
+=
+\begin{pmatrix}0\\0\\0\end{pmatrix}.
+$$
+Thus
+$$
+c_1=0,\quad c_2=0,\quad c_3=0,
+$$
+so the only solution is the trivial one.
+
+$$
+\boxed{\text{Therefore, the vectors are linearly independent.}}
+$$
+
+\hfill $\square$
 
 # Problem 2
 Find determinants of the following matrices:
@@ -51,6 +113,44 @@ D = \begin{bmatrix}
 \end{bmatrix}
 $$
 
+**Solution Attempt** Cofactor along row 1:
+$$
+\det A
+=1\!\begin{vmatrix}2&8\\1&9\end{vmatrix}
+-5\!\begin{vmatrix}3&8\\6&9\end{vmatrix}
++7\!\begin{vmatrix}3&2\\6&1\end{vmatrix}
+=1(18-8)-5(27-48)+7(3-12)=10+105-63=52.
+$$
+
+Cofactor along row 1:
+$$
+\det B
+=-1\!\begin{vmatrix}-2&3\\10&0\end{vmatrix}
+-3\!\begin{vmatrix}6&3\\7&0\end{vmatrix}
++2\!\begin{vmatrix}6&-2\\7&10\end{vmatrix}
+= -1(-30)-3(-21)+2(60+14)=30+63+148=241.
+$$
+
+Expand down column 1 (uses the zero):
+$$
+\det C
+=13\!\begin{vmatrix}4&1\\2&3\end{vmatrix}
++0\cdot(\cdots)
++(-7)\!\begin{vmatrix}4&1\\4&1\end{vmatrix}
+=13(12-2)+(-7)(0)=130.
+$$
+
+Note $R_2=(-\tfrac{3}{4})R_1$ (rows dependent), so
+$$
+\det D=0.
+$$
+
+$$
+\boxed{\det A=52,\quad \det B=241,\quad \det C=130,\quad \det D=0.}
+$$
+
+\hfill $\square$
+
 # Problem 3
 Using definitions, check whether the following matrices are positive definite or positive semidefinite:
 
@@ -78,7 +178,49 @@ E = \begin{bmatrix}
 \end{bmatrix}
 $$
 
-# Problem 3b
+**Solution Attempt** Using the definition: a matrix $M$ is PSD if $x^\top M x \ge 0$ for all $x\neq 0$, and PD if $x^\top M x > 0$ for all $x\neq 0$.
+
+$\displaystyle A=\begin{bmatrix}1&0\\0&1\end{bmatrix}$  
+$$
+x^\top A x = x_1^2 + x_2^2 > 0 \text{ for all } x\neq 0.
+$$
+$\Rightarrow$ **PD**.
+
+$\displaystyle B=\begin{bmatrix}1&0\\0&0\end{bmatrix}$  
+$$
+x^\top B x = x_1^2 \ge 0,\quad \text{and } x^\top B x=0 \text{ for } x=(0,1)^\top\neq 0.
+$$
+$\Rightarrow$ **PSD, not PD**.
+
+$\displaystyle C=\begin{bmatrix}0&1\\1&0\end{bmatrix}$  
+$$
+x^\top C x = 2x_1x_2.
+$$
+Takes both signs (e.g., $x=(1,-1)^\top \Rightarrow -2$ and $x=(1,1)^\top \Rightarrow 2$).  
+$\Rightarrow$ **indefinite** (neither PSD nor PD).
+
+$\displaystyle D=\begin{bmatrix}1&-3\\0&1\end{bmatrix}$  
+$$
+x^\top D x = x_1^2 - 3x_1x_2 + x_2^2
+= \Big(x_1-\tfrac{3}{2}x_2\Big)^2 - \tfrac{5}{4}x_2^2.
+$$
+Negative for $x=(1,2)^\top$ ($1-6+4=-1$), positive for $x=(1,0)^\top$ ($=1$).  
+$\Rightarrow$ **indefinite**.
+
+$\displaystyle E=\begin{bmatrix}0&1\\0&0\end{bmatrix}$  
+$$
+x^\top E x = x_1x_2,
+$$
+which takes both signs (e.g., $x=(1,-1)^\top \Rightarrow -1$, $x=(1,1)^\top \Rightarrow 1$).  
+$\Rightarrow$ **indefinite**.
+
+$$
+\boxed{A:\ \text{PD};\quad B:\ \text{PSD (not PD)};\quad C,D,E:\ \text{indefinite}.}
+$$
+
+\hfill $\square$
+
+## Problem 3b
 $$
 A = \begin{bmatrix}
 0 & 0 & 1 \\
@@ -102,6 +244,49 @@ D = \begin{bmatrix}
 \end{bmatrix}
 $$
 
+**Solution Attempt** Using the definition: $M$ is PSD if $x^\top M x \ge 0$ for all $x\neq 0$, and PD if $x^\top M x>0$ for all $x\neq 0$.
+
+$$A=\begin{bmatrix}0&0&1\\0&1&0\\1&0&0\end{bmatrix} \text{ (symmetric)}$$
+$$
+x^\top A x = 2x_1x_3 + x_2^2.
+$$
+Takes both signs (e.g., $x=(1,0,-1)^\top \Rightarrow -2$, $x=(1,0,1)^\top \Rightarrow 2$).  
+$$\Rightarrow \text{indefinite (neither PSD nor PD).}$$
+
+$$B=\begin{bmatrix}1&2&3\\2&4&6\\3&6&0\end{bmatrix} \text{ (symmetric)}$$
+Test by quadratic form:
+$$
+x=(1,-2,1)^\top \ \Rightarrow\ x^\top B x=-9<0,\qquad
+x=(1,1,1)^\top \ \Rightarrow\ x^\top B x=27>0.
+$$
+So it attains both signs.  
+$$\Rightarrow \text{indefinite (neither PSD nor PD).}$$
+
+$$C=\begin{bmatrix}1&0&1\\0&1&0\\1&0&1\end{bmatrix} \text{ (symmetric)}$$
+$$
+x^\top C x = x_1^2+x_2^2+x_3^2+2x_1x_3 = (x_1+x_3)^2 + x_2^2 \ge 0,
+$$
+and equals $0$ for $x=(1,0,-1)^\top\neq 0$.  
+$$\Rightarrow \text{PSD (not PD).}$$
+
+$$D=\begin{bmatrix}-1&2&-1\\2&-4&2\\-1&2&-1\end{bmatrix} \text{ (symmetric)}$$
+Observe
+$$
+D = -\,vv^\top,\quad v=\begin{bmatrix}1\\-2\\1\end{bmatrix}.
+$$
+Hence
+$$
+x^\top D x = -\,(v^\top x)^2 \le 0,\ \text{with } x=v \Rightarrow x^\top D x<0.
+$$
+So it is negative semidefinite (nonpositive for all $x$).  
+$$\Rightarrow \text{not PSD/PD in the positive sense (NSD).}$$
+
+$$
+\boxed{A:\ \text{indefinite},\quad B:\ \text{indefinite},\quad C:\ \text{PSD (not PD)},\quad D:\ \text{negative semidefinite (not PSD/PD).}}
+$$
+
+\hfill $\square$
+
 # Problem 4
 Find the rank of each the following matrices:
 $$
@@ -122,6 +307,69 @@ C = \begin{bmatrix}
 \end{bmatrix}
 $$
 
+**Solution Attempt** Find the rank of each matrix.
+
+### $A=\begin{bmatrix}3&6&4&8\\ 2&7&1&9\\ 4&2&5&0\end{bmatrix}$
+Condensed row-reduction:
+$$
+\begin{bmatrix}
+3&6&4&8\\
+2&7&1&9\\
+4&2&5&0
+\end{bmatrix}
+\ \sim\
+\begin{bmatrix}
+1&2&\tfrac43&\tfrac83\\
+0&1&-\tfrac53&\tfrac73\\
+0&-6&-\tfrac73&-\tfrac{32}3
+\end{bmatrix}
+\ \sim\
+\begin{bmatrix}
+1&0&0&-2\\
+0&1&0&\tfrac{19}{11}\\
+0&0&1&\tfrac{10}{11}
+\end{bmatrix}.
+$$
+Three pivots $\Rightarrow \operatorname{rank}(A)=3$.
+
+*(Equivalently, $\det$ of the $3\times3$ left block $\begin{vmatrix}3&6&4\\2&7&1\\4&2&5\end{vmatrix}=-33\ne0$.)*
+
+### $B=\begin{bmatrix}18&2\\ 7&-4\\ 6&11\end{bmatrix}$
+Condensed row-reduction:
+$$
+\begin{bmatrix}18&2\\ 7&-4\\ 6&11\end{bmatrix}
+\ \sim\
+\begin{bmatrix}1&0\\ 0&1\\ 0&0\end{bmatrix}.
+$$
+Two pivots $\Rightarrow \operatorname{rank}(B)=2$.
+
+*(Equivalently, the $2\times2$ minor $\begin{vmatrix}18&2\\ 7&-4\end{vmatrix}=-86\ne0$.)*
+
+### $C=\begin{bmatrix}-5&8&11&0\\ 13&3&0&2\\ 10&0&-6&2\end{bmatrix}$
+Condensed row-reduction:
+$$
+\begin{bmatrix}
+-5&8&11&0\\
+13&3&0&2\\
+10&0&-6&2
+\end{bmatrix}
+\ \sim\
+\begin{bmatrix}
+1&0&0&\tfrac{5}{64}\\
+0&1&0&\tfrac{21}{64}\\
+0&0&1&-\tfrac{13}{64}
+\end{bmatrix}.
+$$
+Three pivots $\Rightarrow \operatorname{rank}(C)=3$.
+
+*(Equivalently, $\det\begin{bmatrix}-5&8&11\\ 13&3&0\\ 10&0&-6\end{bmatrix}=384\ne0$.)*
+
+$$
+\boxed{\operatorname{rank}(A)=3,\quad \operatorname{rank}(B)=2,\quad \operatorname{rank}(C)=3.}
+$$
+
+\hfill $\square$
+
 # Problem 5
 Find such value of the parameter $\alpha$ that the following vectors are linearly dependent:
 $$
@@ -136,6 +384,46 @@ a_3 = \begin{pmatrix}
 \end{pmatrix}
 $$
 
+**Solution Attempt**  The vectors are linearly dependent if the determinant of the matrix formed by placing them as columns equals $0$:
+$$
+\det\begin{bmatrix}
+2 & 3 & -1\\
+\alpha & 0 & 2\\
+-2 & 4 & 1
+\end{bmatrix}=0.
+$$
+Compute the determinant by expansion along the first row:
+$$
+2\begin{vmatrix}0&2\\4&1\end{vmatrix}
+-3\begin{vmatrix}\alpha&2\\-2&1\end{vmatrix}
++(-1)\begin{vmatrix}\alpha&0\\-2&4\end{vmatrix}=0.
+$$
+Simplify each minor:
+$$
+2(0\cdot1-8)
+-3(\alpha\cdot1-(-4))
+-1(\alpha\cdot4-0)=0,
+$$
+$$
+2(-8)-3(\alpha+4)-(4\alpha)=0,
+$$
+$$
+-16 -3\alpha -12 -4\alpha = 0,
+$$
+$$
+-7\alpha -28 = 0.
+$$
+Hence,
+$$
+\alpha = -4.
+$$
+
+$$
+\boxed{\alpha=-4}
+$$
+
+\hfill $\square$
+
 # Problem 6
 Solve the following systems of linear questions:
 
@@ -149,6 +437,27 @@ x - y - z = -3 \\
 \end{cases}
 $$
 
+**Solution Attempt** Add the first two equations to eliminate $y,z$:
+$$
+(x+y+z)+(x-y-z)=11+(-3)\;\Rightarrow\;2x=8\;\Rightarrow\;x=4.
+$$
+Use $x=4$ in the 2nd and 3rd equations:
+$$
+4 - y - z = -3 \;\Rightarrow\; y+z=7,\qquad
+-4 + y - z = 5 \;\Rightarrow\; y - z = 9.
+$$
+Solve the $2\times2$ system:
+$$
+y=\tfrac{(7+9)}{2}=8,\qquad z=7-y=-1.
+$$
+Check in the 4th equation: $3(4)-8+2(-1)=12-8-2=2$.
+
+$$
+\boxed{(x,y,z)=(4,\,8,\,-1).}
+$$
+
+\hfill $\square$
+
 ## Problem 6b
 $$
 \begin{cases}
@@ -160,6 +469,44 @@ p - x - y = 1 \\
 \end{cases}
 $$
 
+**Solution Attempt** ## Problem 6b
+$$
+\begin{cases}
+x + y + z + t + p = 17,\\
+x - y - z - t - p = -5,\\
+y + z + t + p = 11,\\
+p - x - y = 1,\\
+-\,t + x = 10.
+\end{cases}
+$$
+
+**Solution Attempt**  
+From the last two equations:
+$$
+t = x - 10,\qquad p = 1 + x + y.
+$$
+Use these in $y+z+t+p=11$:
+$$
+y + z + (x-10) + (1+x+y) = 11 \;\Rightarrow\; 2x + 2y + z = 20 \;\Rightarrow\; z = 20 - 2x - 2y.
+$$
+Now plug $t,p,z$ into $x+y+z+t+p=17$:
+$$
+x + y + (20 - 2x - 2y) + (x-10) + (1 + x + y) = 17
+\;\Rightarrow\; 3x + 2y + z = 26
+\;\Rightarrow\; x = 6.
+$$
+Hence
+$$
+t = -4,\qquad p = 7 + y,\qquad z = 8 - 2y.
+$$
+The second equation is then automatically satisfied, so $y$ is free.
+
+$$
+\boxed{(x,y,z,t,p) = \big(6,\; y,\; 8-2y,\; -4,\; 7+y\big),\ \ y\in\mathbb{R}.}
+$$
+
+\hfill $\square$
+
 ## Problem 6c
 $$
 \begin{cases}
@@ -170,6 +517,33 @@ y - x = -39 \\
 \end{cases}
 $$
 
+**Solution Attempt** From $y - x = -39$ we get $$y = x - 39.$$
+Substitute into the first two equations:
+$$
+x + (x-39) + z + t = -6 \;\Rightarrow\; 2x + z + t = 33, \\
+x - (x-39) - z - t = 20 \;\Rightarrow\; z + t = 19.
+$$
+Combine to solve for $x$:
+$$
+2x + (z+t) = 33 \;\Rightarrow\; 2x + 19 = 33 \;\Rightarrow\; x = 7,
+\quad y = x - 39 = -32.
+$$
+Use $z + t = 19$ and the last equation:
+$$
+2x + 3t + y - 4z = 32 \;\Rightarrow\; 14 + 3t - 32 - 4z = 32
+\;\Rightarrow\; 3t - 4z = 50.
+$$
+With $t = 19 - z$:
+$$
+3(19 - z) - 4z = 50 \;\Rightarrow\; 57 - 7z = 50 \;\Rightarrow\; z = 1,\quad t = 18.
+$$
+
+$$
+\boxed{(x,y,z,t)=(7,\,-32,\,1,\,18).}
+$$
+
+\hfill $\square$
+
 ## Problem 6d
 $$
 \begin{cases}
@@ -178,6 +552,33 @@ $$
 -x + 7y + 6z = 48
 \end{cases}
 $$
+
+From the first two equations, eliminate $y$ by subtraction:
+$$
+(-4x-5y-5z)-(-3x-5y-z)=-74-(-4)\ \Rightarrow\ -x-4z=-70\ \Rightarrow\ x=70-4z.
+$$
+Use the third equation to relate $y$ and $z$:
+$$
+-(70-4z)+7y+6z=48 \ \Rightarrow\ 7y+10z=118 \ \Rightarrow\ y=\frac{118-10z}{7}.
+$$
+Substitute $x$ and $y$ into $-3x-5y-z=-4$:
+$$
+-3(70-4z)-5\!\left(\frac{118-10z}{7}\right)-z=-4.
+$$
+Multiply by $7$ to clear denominators and solve for $z$ (work condensed):
+$$
+-1302 + 129z = -28 \ \Rightarrow\ z=16.
+$$
+Then
+$$
+x=70-4\cdot16=6,\qquad y=\frac{118-10\cdot16}{7}=-6.
+$$
+
+$$
+\boxed{(x,y,z)=(6,\,-6,\,16).}
+$$
+
+\hfill $\square$
 
 ## Problem 6e
 $$
@@ -189,8 +590,42 @@ x + 2y + 2z - t = 1 \\
 \end{cases}
 $$
 
+**Solution Attempt** Subtract the first equation from the second:
+$$
+(x+2y+2z-t) - (x+2y - z + 3t) = 1 - 0
+\;\Rightarrow\; 3z - 4t = 1
+\;\Rightarrow\; z = \frac{1+4t}{3}.
+$$
+Use this in the first equation to get $x$:
+$$
+x + 2y - \frac{1+4t}{3} + 3t = 0
+\;\Rightarrow\;
+x = -2y + \frac{1 - 5t}{3}.
+$$
+With these $x,z$, the third and fourth equations are automatically satisfied (they reduce to identities), so $y$ and $t$ are free parameters.
+
+Therefore the solution set is
+$$
+(x,y,z,t) = \Big(\frac{1-5t}{3} - 2y,\; y,\; \frac{1+4t}{3},\; t\Big),
+\quad y,t\in\mathbb{R}.
+$$
+Equivalently, in vector form,
+$$
+\begin{pmatrix}x\\y\\z\\t\end{pmatrix}
+=
+\begin{pmatrix}\tfrac13\\[2pt]0\\[2pt]\tfrac13\\[2pt]0\end{pmatrix}
++ y\begin{pmatrix}-2\\[2pt]1\\[2pt]0\\[2pt]0\end{pmatrix}
++ t\begin{pmatrix}-\tfrac53\\[2pt]0\\[2pt]\tfrac43\\[2pt]1\end{pmatrix}.
+$$
+
+$$
+\boxed{\text{Infinitely many solutions with } y,t \text{ free.}}
+$$
+
+\hfill $\square$
+
 # Problem 7
-For which values of $\lambda$ the following matrix is invertable?
+For which values of $\lambda$ the following matrix is invertible?
 $$
 A = \begin{bmatrix}
 1 & -2 & 2 \\
@@ -198,6 +633,21 @@ A = \begin{bmatrix}
 2 & 1 & 1
 \end{bmatrix}
 $$
+
+**Solution Attempt** $A$ is invertible iff $\det A\ne 0$. Compute
+$$
+\det A
+=1\begin{vmatrix}3&0\\1&1\end{vmatrix}
+-(-2)\begin{vmatrix}\lambda&0\\2&1\end{vmatrix}
++2\begin{vmatrix}\lambda&3\\2&1\end{vmatrix}
+=3+2\lambda+2(\lambda-6)=4\lambda-9.
+$$
+
+$$
+\boxed{\text{$A$ is invertible iff }4\lambda-9\ne 0\;\;\Longleftrightarrow\;\;\lambda\ne \tfrac{9}{4}.}
+$$
+
+\hfill $\square$
 
 # Problem 8
 Find all values $a$, for which the system of linear equations does not have any solution.
@@ -208,6 +658,31 @@ x + y = 1
 \end{cases}
 $$
 
+**Solution Attempt** The coefficient matrix is
+$$
+M=\begin{bmatrix}2 & 9a^2-2\\[2pt] 1 & 1\end{bmatrix},\qquad
+\det M = 2\cdot 1 - (9a^2-2)\cdot 1 = 4 - 9a^2.
+$$
+If $\det M\neq 0$ (i.e., $a\neq \pm \tfrac{2}{3}$), there is a unique solution. If $\det M=0$ (i.e., $a=\pm \tfrac{2}{3}$), check consistency:
+
+For $a=\tfrac{2}{3}$:
+$$
+2x+(4-2)y=2\ \Longleftrightarrow\ 2x+2y=2,\quad\text{and}\quad x+y=1.
+$$
+These are the same equation $\Rightarrow$ infinitely many solutions (consistent).
+
+For $a=-\tfrac{2}{3}$:
+$$
+2x+2y=-2,\quad\text{but}\quad x+y=1\ \Rightarrow\ 2x+2y=2,
+$$
+which is a contradiction $\Rightarrow$ no solution.
+
+$$
+\boxed{\,\text{No solution exactly when } a=-\tfrac{2}{3}.\,}
+$$
+
+\hfill $\square$
+
 # Problem 9
 Find a value of $b$ such that system of linear questions has infinitely many solutions:
 $$
@@ -216,6 +691,24 @@ $$
 4x + 2y = 2 
 \end{cases}
 $$
+
+**Solution Attempt** A system of two linear equations in two variables has infinitely many solutions when one equation is a scalar multiple of the other.  
+
+That is, we must have proportional coefficients:
+$$
+\frac{6}{4} = \frac{2b}{2} = \frac{3}{2}.
+$$
+Simplify:
+$$
+\frac{6}{4} = \frac{3}{2},\quad \frac{2b}{2} = b,\quad \frac{3}{2} = \frac{3}{2}.
+$$
+So we require $b = \frac{3}{2}$.
+
+$$
+\boxed{b = \tfrac{3}{2}.}
+$$
+
+\hfill $\square$
 
 # Problem 10
 For the following matrices check the statement: "If a matrix $X$ has full rank then the matrix $X'X$ is invertible" and find the inverse $(X'X)^{-1}$:
@@ -230,6 +723,37 @@ X = \begin{bmatrix}
 \end{bmatrix}
 $$
 
+**Solution Attempt** If $X$ has full column rank, then $X'X$ is invertible.
+
+Here $X\in\mathbb{R}^{4\times 2}$ and $\operatorname{rank}(X)=2$ (its two columns are the standard basis vectors in $\mathbb{R}^4$), so $X$ has full column rank. Compute
+$$
+X'X
+=
+\begin{bmatrix}
+1&0&0&0\\
+0&1&0&0
+\end{bmatrix}
+\begin{bmatrix}
+1&0\\
+0&1\\
+0&0\\
+0&0
+\end{bmatrix}
+=
+\begin{bmatrix}
+1&0\\
+0&1
+\end{bmatrix}
+= I_2,
+$$
+which is invertible.
+
+$$
+\boxed{(X'X)^{-1}=I_2.}
+$$
+
+\hfill $\square$
+
 ## Problem 10b
 $$
 X = \begin{bmatrix}
@@ -240,6 +764,42 @@ X = \begin{bmatrix}
 \end{bmatrix}
 $$
 
+**Solution Attempt** Columns:
+$$
+x_1=\begin{bmatrix}1\\1\\1\\1\end{bmatrix},\qquad
+x_2=\begin{bmatrix}0\\1\\0\\0\end{bmatrix}.
+$$
+They are linearly independent, so $\operatorname{rank}(X)=2$ (full column rank) and thus $X'X$ is invertible.
+
+Compute
+$$
+X'X=\begin{bmatrix}
+x_1^\top x_1 & x_1^\top x_2\\
+x_2^\top x_1 & x_2^\top x_2
+\end{bmatrix}
+=
+\begin{bmatrix}
+4 & 1\\
+1 & 1
+\end{bmatrix},
+\qquad
+\det(X'X)=4\cdot1-1\cdot1=3\ne 0.
+$$
+Hence
+$$
+(X'X)^{-1}=\frac{1}{3}
+\begin{bmatrix}
+1 & -1\\[2pt]
+-1 & 4
+\end{bmatrix}.
+$$
+
+$$
+\boxed{X'X=\begin{bmatrix}4&1\\1&1\end{bmatrix},\quad (X'X)^{-1}=\tfrac13\begin{bmatrix}1&-1\\-1&4\end{bmatrix}.}
+$$
+
+\hfill $\square$
+
 ## Problem 10c
 $$
 X = \begin{bmatrix}
@@ -249,3 +809,36 @@ X = \begin{bmatrix}
 4 & 1
 \end{bmatrix}
 $$
+
+**Solution Attempt** Columns are independent (clearly not multiples), so $\operatorname{rank}(X)=2$ (full column rank) and $X'X$ is invertible.
+Compute
+$$
+X'X=\begin{bmatrix}
+x_1^\top x_1 & x_1^\top x_2\\
+x_2^\top x_1 & x_2^\top x_2
+\end{bmatrix}
+=
+\begin{bmatrix}
+1^2+2^2+3^2+4^2 & 1\cdot1+2\cdot3+3\cdot0+4\cdot1\\
+\cdot & 1^2+3^2+0^2+1^2
+\end{bmatrix}
+=
+\begin{bmatrix}
+30 & 11\\
+11 & 11
+\end{bmatrix}.
+$$
+Its determinant is $\det(X'X)=30\cdot 11-11\cdot 11=209\ne 0$, so
+$$
+(X'X)^{-1}=\frac{1}{209}
+\begin{bmatrix}
+11 & -11\\
+-11 & 30
+\end{bmatrix}.
+$$
+
+$$
+\boxed{X'X=\begin{bmatrix}30&11\\11&11\end{bmatrix},\quad (X'X)^{-1}=\tfrac{1}{209}\begin{bmatrix}11&-11\\-11&30\end{bmatrix}.}
+$$
+
+\hfill $\square$

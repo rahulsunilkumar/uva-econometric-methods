@@ -1,0 +1,361 @@
+---
+title: "ECON 4720: HA03"
+author: "Rahul Sunilkumar"
+date: today
+format: 
+  pdf:
+    toc: false
+    toc-title: Problems
+    pdf-engine: pdflatex
+    fontfamily: erewhon
+---
+
+# Problem 1
+Suppose that $X = (1, X_2, X_3)'$ where $X_3 = \alpha_1 + \alpha_2 X_2$ is a linear function of $X_2$. Show that $Q_{XX} = E[XX']$ is not invertible.
+
+**Solution Attempt**
+Define the nonzero vector $c=(\alpha_1,\,\alpha_2,\,-1)'$. Then
+$$
+c'X=\alpha_1\cdot 1+\alpha_2 X_2-1\cdot X_3
+=\alpha_1+\alpha_2 X_2-(\alpha_1+\alpha_2 X_2)=0 \quad \text{a.s.}
+$$
+Hence
+$$
+Q_{XX}c \;=\; E\big[X(c'X)\big] \;=\; E[X\cdot 0]\;=\;0.
+$$
+So $c\neq 0$ lies in the null space of $Q_{XX}$, implying $Q_{XX}$ is singular and therefore **not invertible**.
+
+$$
+\boxed{\text{$Q_{XX}$ is not invertible.}}
+$$
+
+\hfill $\square$
+
+# Problem 2  
+Suppose you have two regressors: $X_{1}$ is binary (takes values 0 and 1) and $X_{2}$ is categorical with 3 categories (A, B, C). Write $E[Y \mid X_{1}, X_{2}]$ as a linear regression.
+
+**Solution Attempt**
+Let the base (reference) category for $X_2$ be $A$. Introduce two dummy variables:
+$$
+D_B = 
+\begin{cases}
+1, & \text{if } X_2 = B,\\
+0, & \text{otherwise,}
+\end{cases}
+\qquad
+D_C = 
+\begin{cases}
+1, & \text{if } X_2 = C,\\
+0, & \text{otherwise.}
+\end{cases}
+$$
+Then a general linear model for $E[Y\mid X_1,X_2]$ is
+$$
+E[Y\mid X_1,X_2]
+= \beta_0 + \beta_1 X_1 + \beta_2 D_B + \beta_3 D_C.
+$$
+
+- $\beta_0$ is the mean when $X_1=0$ and $X_2=A$.  
+- $\beta_1$ is the change in mean when $X_1$ switches from 0 to 1 (holding $X_2=A$).  
+- $\beta_2$ and $\beta_3$ measure the differences for categories $B$ and $C$ relative to $A$.
+
+$$
+\boxed{E[Y\mid X_1,X_2] = \beta_0 + \beta_1 X_1 + \beta_2 D_B + \beta_3 D_C.}
+$$
+
+\hfill $\square$
+
+# Problem 3
+Let $\hat{u}$ be the OLS residual from a regression of $Y$ on $X$.
+
+## Problem 3a
+Using matrix algebra, show $X'\hat{u} = 0$.
+
+**Solution Attempt**
+In matrix form, the linear regression model is
+$$
+Y = X\beta + u,
+$$
+where $X$ is an $n\times k$ matrix of regressors, $\beta$ is a $k\times 1$ vector of coefficients, and $u$ is an $n\times 1$ vector of errors.
+
+The OLS estimator is
+$$
+\hat{\beta} = (X'X)^{-1}X'Y,
+$$
+and the fitted values are $\hat{Y}=X\hat{\beta}$. The residual vector is
+$$
+\hat{u} = Y - \hat{Y} = Y - X\hat{\beta}.
+$$
+Now multiply both sides by $X'$:
+$$
+X'\hat{u} = X'(Y - X\hat{\beta}) = X'Y - X'X\hat{\beta}.
+$$
+Substitute $\hat{\beta} = (X'X)^{-1}X'Y$:
+$$
+X'\hat{u} = X'Y - X'X(X'X)^{-1}X'Y = X'Y - X'Y = 0.
+$$
+
+Hence,
+$$
+\boxed{X'\hat{u}=0.}
+$$
+
+\hfill $\square$
+
+## Problem 3b
+Find the OLS coefficient from a regression of $\hat{u}$ on $X$.
+
+**Solution Attempt** From part (a), we know the OLS residuals satisfy $X'\hat{u}=0$.  
+Now, if we regress $\hat{u}$ on $X$, the OLS coefficient is
+$$
+\hat{\gamma} = (X'X)^{-1}X'\hat{u}.
+$$
+But since $X'\hat{u}=0$, we immediately have
+$$
+\hat{\gamma} = (X'X)^{-1}(0) = 0.
+$$
+
+Hence, the fitted coefficients from regressing $\hat{u}$ on $X$ are all zero.
+
+$$
+\boxed{\hat{\gamma}=0.}
+$$
+
+\hfill $\square$
+
+## Problem 3c
+Let $\hat{Y}$ be the predicted values of $Y$. Find the OLS coefficient from a regression of $\hat{Y}$ on $X$.
+
+**Solution Attempt**
+Recall that
+$$
+\hat{Y} = X\hat{\beta}, \quad \text{where } \hat{\beta} = (X'X)^{-1}X'Y.
+$$
+If we now regress $\hat{Y}$ on $X$, the OLS coefficient is
+$$
+\hat{\gamma} = (X'X)^{-1}X'\hat{Y}.
+$$
+Substitute $\hat{Y} = X\hat{\beta}$:
+$$
+\hat{\gamma} = (X'X)^{-1}X'(X\hat{\beta})
+= (X'X)^{-1}(X'X)\hat{\beta}
+= \hat{\beta}.
+$$
+
+Hence, the OLS coefficient from regressing $\hat{Y}$ on $X$ is the same as the coefficient from the original regression.
+
+$$
+\boxed{\hat{\gamma} = \hat{\beta}.}
+$$
+
+\hfill $\square$
+
+# Problem 4
+Take the linear homoskedastic model  
+$$
+Y_i^* = X_i'\beta + u_i
+$$
+$$
+E[u \mid X] = 0
+$$
+$$
+E[u^2 \mid X] = \sigma^2
+$$
+
+and suppose that $Y^*$ is measured with error. Instead of $Y^*$, we observe $Y = Y^* + e$ where $e$ is measurement error. Suppose that $u$ and $e$ are independent and  
+$$
+E[e \mid X] = 0
+$$
+$$
+E[e^2 \mid X] = \sigma_e^2(X)
+$$
+
+## Problem 4a
+Derive an equation for $Y$ as a function of $X$. Be explicit to write the error term as a function of the errors $u$ and $e$. What is the effect of this measurement error on the model?
+
+**Solution Attempt**
+Derivation.  
+$$
+Y_i \;=\; Y_i^*+e_i \;=\; (X_i'\beta+u_i)+e_i 
+\;=\; X_i'\beta \;+\; \underbrace{(u_i+e_i)}_{v_i}.
+$$
+Thus the observed regression is
+$$
+Y_i \;=\; X_i'\beta + v_i, 
+\qquad v_i:=u_i+e_i.
+$$
+
+Properties of the composite error.
+Mean-zero conditional on $X$:
+$$
+E[v_i\mid X] \;=\; E[u_i\mid X]+E[e_i\mid X] \;=\; 0+0 \;=\; 0.
+$$
+Conditional variance (using $u\perp e$ given $X$):
+$$
+\operatorname{Var}(v_i\mid X) 
+= \operatorname{Var}(u_i\mid X)+\operatorname{Var}(e_i\mid X)
+= \sigma^2 + \sigma_e^2(X).
+$$
+
+Effect on the model. The structural coefficients $\beta$ are unchanged and **exogeneity still holds** ($E[v\mid X]=0$), so OLS remains **unbiased/consistent** for $\beta$. However, unless $\sigma_e^2(X)$ is constant, the error becomes **heteroskedastic**:
+$$
+\operatorname{Var}(v_i\mid X)=\sigma^2+\sigma_e^2(X)\ \text{(depends on $X$)}.
+$$
+Consequences: OLS is no longer efficient under Gauss–Markov; usual homoskedastic SEs are invalid. Use **heteroskedasticity-robust SEs** (or feasible GLS/weighted least squares if a form for $\sigma_e^2(X)$ is available). Practically, $R^2$ typically **falls** and residual variance **rises** due to added measurement noise in $Y$.
+
+$$
+\boxed{\,Y=X'\beta+v,\ \ v=u+e,\ \ E[v\mid X]=0,\ \ \operatorname{Var}(v\mid X)=\sigma^2+\sigma_e^2(X)\,}
+$$
+
+\hfill $\square$
+
+## Problem 4b
+Describe the effect of this measurement error on OLS estimation of $\beta$ in the feasible regression of the observed $Y$ on $X$. Is the estimator unbiased? consistent?
+
+**Solution Attempt**
+From part (a), the observed model is  
+$$
+Y = X\beta + v, \qquad v = u + e,
+$$
+with $E[v \mid X] = 0$ and $\textrm{Var}(v \mid X) = \sigma^2 + \sigma_e^2(X)$. Because the composite error $v$ is still mean independent of $X$, the OLS exogeneity condition remains valid. This means that, conditional on $X$, the estimator satisfies  
+$$
+E[\hat{\beta} \mid X] = \beta,
+$$
+so $\hat{\beta}$ is unbiased. As the sample size grows, $X'v/n \to_p 0$, which ensures $\hat{\beta} \to_p \beta$, making the estimator consistent as well.
+
+However, the inclusion of measurement error in $Y$ changes the variance of the regression disturbance. The conditional variance $\text{Var}(v \mid X) = \sigma^2 + \sigma_e^2(X)$ may vary with $X$, introducing heteroskedasticity. While OLS still produces unbiased and consistent coefficient estimates, it is no longer efficient, and the usual homoskedasticity-based standard errors are invalid. In practice, one should use heteroskedasticity-robust standard errors or feasible GLS if the functional form of $\sigma_e^2(X)$ is known.
+
+In summary, measurement error in the dependent variable does not bias or distort the consistency of OLS estimates, but it inflates the residual variance, lowers efficiency, and weakens precision in inference.
+
+\hfill $\square$
+
+## Problem 4c
+Describe the effect (if any) of this measurement error on standard error calculation for $\hat{\beta}$.
+
+**Solution Attempt**
+From earlier parts, the observed model is  
+$$
+Y = X\beta + v, \qquad v = u + e,
+$$
+where $E[v \mid X] = 0$ and $\textrm{Var}(v \mid X) = \sigma^2 + \sigma_e^2(X)$. Because $\sigma_e^2(X)$ can depend on $X$, the variance of $v$ is not constant across observations. This means the model becomes heteroskedastic even though the original model for $Y^*$ was homoskedastic.
+
+The OLS estimator $\hat{\beta}$ is still unbiased and consistent, but the usual OLS formula for standard errors assumes constant variance of the errors. If that assumption is used here, the reported standard errors will be wrong—typically too small or too large depending on how $\sigma_e^2(X)$ changes with $X$. In other words, inference based on the usual “homoskedastic” formula is no longer reliable.
+
+To fix this, we can use heteroskedasticity-robust (White) standard errors, which remain valid even when $\textrm{Var}(v \mid X)$ differs across observations. These robust errors account for the fact that measurement error in $Y$ makes the residuals have unequal variance.
+
+\hfill $\square$
+
+# Problem 5
+An economist friend tells you that the assumption that the observations $(Y_i, X_i)$ are i.i.d. implies that the regression $Y_i = X_i'\beta + u_i$ is homoskedastic. Do you agree with your friend? How would you explain your position?
+
+**Solution Attempt**
+I do not agree. The assumption that the observations $(Y_i, X_i)$ are i.i.d. only means that each pair is drawn from the same joint distribution and that different observations are independent of one another. It does not require the variance of $u_i$ given $X_i$ to be the same for all $X_i$.
+
+Formally, i.i.d. means that $(Y_i, X_i)$ and $(Y_j, X_j)$ are independent and identically distributed for all $i \neq j$, so
+$$
+E[u_i^2 \mid X_i] = \textrm{Var}(u_i \mid X_i)
+$$
+can still vary with $X_i$. This would make the errors heteroskedastic, even though the data are i.i.d. The “identically distributed” part applies to the joint distribution of $(Y_i, X_i)$, not to the conditional distribution of $u_i$ given $X_i$.
+
+Therefore, i.i.d. sampling guarantees that each observation follows the same population model, but it does not guarantee constant error variance. Homoskedasticity is a separate assumption that must be stated explicitly.
+
+\hfill $\square$
+
+# Problem 6
+Assume that the regression model $Y_i = \beta_0 + \beta_1 X_i + u_i$ satisfies the least squares assumptions. You and a friend collect a random sample of 300 observations on $Y$ and $X$.
+
+## Problem 6a
+Your friend reports that he inadvertently scrambled the $X$ observations for 20% of the sample. For these scrambled observations, the value of $X$ does not correspond to $X_i$ for the $i^{th}$ observation; rather, it corresponds to the value of $X$ for some other observation. The measured value of the regressor, $\tilde{X}_i$, is equal to $X_i$ for 80% of the observations, but it is equal to a randomly selected $X_j$ for the remaining 20% of the observations. You regress $Y_i$ on $\tilde{X}_i$. Show that $E[\hat{\beta}] = k\beta_1$. Find the constant $k$.
+
+**Solution Attempt**
+Let $\tilde X_i$ be the regressor used in place of $X_i$. Model the scrambling by
+$$
+\tilde X_i \;=\; S_i X_i + (1-S_i)X_i',
+$$
+where $S_i\sim \text{Bernoulli}(p)$ with $p=0.8$, and $X_i'$ is an i.i.d. copy of $X_i$ independent of $(X_i,S_i)$. The outcome satisfies
+$$
+Y_i=\beta_0+\beta_1 X_i+u_i,\qquad E[u_i\mid X_i]=0.
+$$
+The population slope when regressing $Y$ on $\tilde X$ is
+$$
+\beta_1^{(\tilde X)}=\frac{\operatorname{Cov}(\tilde X, Y)}{\operatorname{Var}(\tilde X)}
+=\frac{\operatorname{Cov}(\tilde X,\,\beta_1 X+u)}{\operatorname{Var}(\tilde X)}
+=\beta_1\frac{\operatorname{Cov}(\tilde X, X)}{\operatorname{Var}(\tilde X)},
+$$
+since $\operatorname{Cov}(\tilde X,u)=0$ by exogeneity and the independence in the scrambling.
+
+Compute the two moments. First,
+$$
+\operatorname{Cov}(\tilde X, X)
+=\operatorname{Cov}\big(SX+(1-S)X',\,X\big)
+=\operatorname{Cov}(SX,X)+\operatorname{Cov}((1-S)X',X).
+$$
+Because $X'$ is independent of $(X,S)$, the second covariance is $0$. For the first term, using $S\!\perp\! X$,
+$$
+\operatorname{Cov}(SX,X)=E[SX^2]-E[SX]E[X]
+= p\,E[X^2]-p\,E[X]^2
+= p\,\operatorname{Var}(X).
+$$
+Second,
+$$
+\operatorname{Var}(\tilde X)
+=\operatorname{Var}\big(SX+(1-S)X'\big)
+=E\big[\operatorname{Var}(\tilde X\mid S)\big]+\operatorname{Var}\big(E[\tilde X\mid S]\big)
+=\operatorname{Var}(X)+0
+=\operatorname{Var}(X).
+$$
+Therefore,
+$$
+\beta_1^{(\tilde X)}=\beta_1\frac{p\,\operatorname{Var}(X)}{\operatorname{Var}(X)}=p\,\beta_1=0.8\,\beta_1.
+$$
+In large samples (and under the usual LS assumptions), $E[\hat\beta_1]\,$ equals this population slope, so
+$$
+E[\hat\beta_1]=k\,\beta_1,\qquad k=0.8.
+$$
+
+$$
+\boxed{k=0.8\quad\text{so}\quad E[\hat\beta_1]=0.8\,\beta_1.}
+$$
+
+\hfill $\square$
+
+## Problem 6b
+Explain how you could construct an unbiased estimate of $\beta_1$ using the OLS estimator in (a).
+
+**Solution Attempt:**  
+From 6a, the OLS slope from regressing $Y$ on $\tilde X$ satisfies
+$$
+E[\hat\beta_1]=k\,\beta_1,\qquad k=0.8.
+$$
+An unbiased estimator of $\beta_1$ is therefore the attenuation-corrected slope
+$$
+\tilde\beta_1 \;=\; \frac{\hat\beta_1}{k} \;=\; \frac{\hat\beta_1}{0.8}.
+$$
+Indeed,
+$$
+E[\tilde\beta_1]=E\!\left[\frac{\hat\beta_1}{k}\right]=\frac{1}{k}E[\hat\beta_1]=\frac{1}{k}\,k\,\beta_1=\beta_1.
+$$
+(If you report standard errors, scale them by $1/k$ as well: $\operatorname{se}(\tilde\beta_1)=\operatorname{se}(\hat\beta_1)/0.8$.)
+
+\hfill $\square$
+
+## Problem 6c
+Suppose now your friend tells you that the $X$’s were scrambled for the first 60 observations but the remaining 240 observations are correct. You estimate $\beta_1$ by regressing $Y$ on $X$, using only the correctly measured 240 observations. Is his estimator of $\beta_1$ better than the estimator you proposed in (b)? Explain. 
+
+**Solution Attempt:**  
+If we know exactly which 60 observations are scrambled, the clean approach is to drop them and run OLS on the 240 correctly matched pairs. That regression uses the true regressor and still satisfies the least squares assumptions, so its slope is unbiased and consistent with the usual variance
+$$
+\textrm{Var}(\hat\beta_{1,\text{clean}})\approx \frac{\sigma^2}{S_{XX,\;240}}.
+$$
+In contrast, the estimator from 6b first uses all 300 with the contaminated regressor $\tilde X$, producing an attenuated slope with larger residual variance (because $\tilde X$ is “noisier” relative to $Y$), and then rescales by $1/k=1/0.8$ to remove the attenuation. That rescaling multiplies standard errors by $1/0.8$ and multiplies variances by $1/0.8^2=1.5625$, on top of the fact that the contamination already inflated the regression’s residual variance. So even though the 6b estimator is unbiased after the correction, it is typically much less precise:
+$$
+\textrm{Var}\!\Big(\tfrac{\hat\beta_{1,\text{contam}}}{0.8}\Big)
+\;=\;\frac{1}{0.8^2}\,\textrm{Var}(\hat\beta_{1,\text{contam}})
+\;\;>\;\;\textrm{Var}(\hat\beta_{1,\text{clean}}),
+$$
+because $\textrm{Var}(\hat\beta_{1,\text{contam}})$ is computed from a regression with a noisy regressor and hence larger residual variance.
+
+Therefore, using only the 240 correctly measured observations yields an unbiased, consistent, and more efficient estimator than the attenuation-corrected estimator that uses all 300 with scrambled $X$’s. In short: drop the known-bad 60; the 240-only OLS is better (lower variance, same mean).
+
+\hfill $\square$
+

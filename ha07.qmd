@@ -201,7 +201,7 @@ Effect on the model. The structural coefficients $\beta$ are unchanged and **exo
 $$
 \operatorname{Var}(v_i\mid X)=\sigma^2+\sigma_e^2(X)\ \text{(depends on $X$)}.
 $$
-Consequences: OLS is no longer efficient under Gauss–Markov; usual homoskedastic SEs are invalid. Use **heteroskedasticity-robust SEs** (or feasible GLS/weighted least squares if a form for $\sigma_e^2(X)$ is available). Practically, $R^2$ typically **falls** and residual variance **rises** due to added measurement noise in $Y$.
+Consequences: OLS is no longer efficient under Gauss–Markov; usual homoskedastic SEs are invalid. Use **heteroskedasticity-robust SEs** (or feasible GLS/weighted least squares if a form for $\sigma_e^2(X)$ is available). I think in practice, $R^2$ typically **falls** and residual variance **rises** due to added measurement noise in $Y$.
 
 $$
 \boxed{\,Y=X'\beta+v,\ \ v=u+e,\ \ E[v\mid X]=0,\ \ \operatorname{Var}(v\mid X)=\sigma^2+\sigma_e^2(X)\,}
@@ -343,19 +343,18 @@ $$
 Suppose now your friend tells you that the $X$’s were scrambled for the first 60 observations but the remaining 240 observations are correct. You estimate $\beta_1$ by regressing $Y$ on $X$, using only the correctly measured 240 observations. Is his estimator of $\beta_1$ better than the estimator you proposed in (b)? Explain. 
 
 **Solution Attempt:**  
-If we know exactly which 60 observations are scrambled, the clean approach is to drop them and run OLS on the 240 correctly matched pairs. That regression uses the true regressor and still satisfies the least squares assumptions, so its slope is unbiased and consistent with the usual variance
+If we know exactly which 60 observations are scrambled, the simplest fix is to drop them and run OLS using only the 240 correctly matched pairs. This regression uses the true regressor and satisfies the standard least squares assumptions, so the slope estimate is unbiased and consistent, with variance roughly
 $$
-\textrm{Var}(\hat\beta_{1,\text{clean}})\approx \frac{\sigma^2}{S_{XX,\;240}}.
+\operatorname{Var}(\hat\beta_{1,\text{clean}})\approx \frac{\sigma^2}{S_{XX,240}}.
 $$
-In contrast, the estimator from 6b first uses all 300 with the contaminated regressor $\tilde X$, producing an attenuated slope with larger residual variance (because $\tilde X$ is “noisier” relative to $Y$), and then rescales by $1/k=1/0.8$ to remove the attenuation. That rescaling multiplies standard errors by $1/0.8$ and multiplies variances by $1/0.8^2=1.5625$, on top of the fact that the contamination already inflated the regression’s residual variance. So even though the 6b estimator is unbiased after the correction, it is typically much less precise:
+By contrast, the estimator in part (6b) uses all 300 observations, including the scrambled ones. Because $\tilde X$ is a noisy version of $X$, that regression produces an attenuated slope and a larger residual variance. The correction step divides by $k=0.8$ to remove the attenuation, which also multiplies the standard errors by $1/0.8$ and the variances by $1/0.8^2=1.5625$. Since the original contaminated regression already had inflated residual variance, the corrected estimate ends up being much less precise:
 $$
-\textrm{Var}\!\Big(\tfrac{\hat\beta_{1,\text{contam}}}{0.8}\Big)
-\;=\;\frac{1}{0.8^2}\,\textrm{Var}(\hat\beta_{1,\text{contam}})
-\;\;>\;\;\textrm{Var}(\hat\beta_{1,\text{clean}}),
+\operatorname{Var}\!\left(\frac{\hat\beta_{1,\text{contam}}}{0.8}\right)
+= \frac{1}{0.8^2}\operatorname{Var}(\hat\beta_{1,\text{contam}})
+> \operatorname{Var}(\hat\beta_{1,\text{clean}}).
 $$
-because $\textrm{Var}(\hat\beta_{1,\text{contam}})$ is computed from a regression with a noisy regressor and hence larger residual variance.
-
-Therefore, using only the 240 correctly measured observations yields an unbiased, consistent, and more efficient estimator than the attenuation-corrected estimator that uses all 300 with scrambled $X$’s. In short: drop the known-bad 60; the 240-only OLS is better (lower variance, same mean).
+Therefore, dropping the known-bad 60 observations and running OLS on the remaining 240 gives an estimator that is unbiased, consistent, and **more efficient** (lower variance). In short: it’s better to use only the correct data.
 
 \hfill $\square$
+
 

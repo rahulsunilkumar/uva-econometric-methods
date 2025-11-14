@@ -1,0 +1,1470 @@
+---
+title: "ECON 4720: HA09"
+author: "Rahul Sunilkumar"
+date: today
+format: 
+  pdf:
+    toc: true
+    toc-title: Problems
+    pdf-engine: pdflatex
+    fontfamily: erewhon
+---
+
+# Problem 1
+A recent study found that the death rate for people who sleep 6 to 7 hours per night is lower than the death rate for people who sleep 9 or more hours. The 1.1 million observations used for this study came from a random survey of Americans aged 30 to 102. Each survey respondent was tracked for 4 years. The death rate for people sleeping 7 hours was calculated as the ratio of the number of deaths over the span of the study among people sleeping 7 hours to the total number of survey respondents who slept 7 hours. This calculation was then repeated for people sleeping 6 hours and so on. Based on this summary, would you recommend that Americans who sleep 9 hours per night consider reducing their sleep to 6 or 7 hours if they want to prolong their lives? Why or why not? Explain.
+
+**Solution Attempt**  
+No, I wouldn’t recommend that people who sleep 9 hours switch to 6–7 hours based on this summary alone. The study is observational, so people weren’t randomly assigned to sleep amounts. Many who sleep 9+ hours might already have health problems that both increase their need for sleep and their risk of death. That means the higher death rate could be due to **underlying health**, not the sleep itself.
+
+Since the study doesn’t control for factors like age, illness, lifestyle, or income, the comparison only shows **correlation**, not causation. So we can’t conclude that sleeping less would actually help people live longer.
+
+$$
+\boxed{\text{The evidence is correlational, so we shouldn’t recommend changing sleep based on it.}}
+$$
+
+\hfill $\square$
+
+
+# Problem 2
+Consider the following regression:
+$$
+Y_i = \beta_0 + \beta_1 X_i + \beta_2 X_i D_i + u_i,
+$$
+where $D_i$ is a dummy variable that can take only the values one and zero and $\operatorname{cov}(u_i, X_i) = 0$. Suppose we mistakenly estimate the model
+$$
+Y_i = \gamma_0 + \gamma_1 X_i + e_i,
+$$
+which omits the cross-product term $X_i D_i$. Assuming that $E[X_i \mid D_i = 1] = 0$, show that
+$$
+\hat{\gamma}_1 \xrightarrow{p} \beta_1 + \beta_2 \frac{\operatorname{Var}[X D]}{\operatorname{Var}[X]}.
+$$
+
+**Solution Attempt**  
+
+If we regress $Y_i$ on $X_i$ only, the (population) OLS slope is
+$$
+\gamma_1^* \;=\; \frac{\operatorname{Cov}(X,Y)}{\operatorname{Var}(X)}.
+$$
+From the true model
+$$
+Y = \beta_0 + \beta_1 X + \beta_2 X D + u,
+$$
+we have
+$$
+\operatorname{Cov}(X,Y)
+= \operatorname{Cov}\big(X,\beta_0 + \beta_1 X + \beta_2 X D + u\big).
+$$
+Using linearity of covariance and $\operatorname{Cov}(X,u)=0$,
+$$
+\operatorname{Cov}(X,Y)
+= \beta_1 \operatorname{Var}(X)
+  + \beta_2 \operatorname{Cov}(X, X D).
+$$
+So
+$$
+\gamma_1^*
+= \frac{\operatorname{Cov}(X,Y)}{\operatorname{Var}(X)}
+= \beta_1 + \beta_2 \frac{\operatorname{Cov}(X, X D)}{\operatorname{Var}(X)}.
+$$
+
+Now use the assumption $E[X \mid D=1] = 0$.
+
+First,
+$$
+E[X D] = E\big[E[X D \mid D]\big]
+       = E\big[D \, E[X \mid D]\big]
+       = P(D=1)\cdot 0 = 0.
+$$
+Then
+$$
+\operatorname{Var}(X D)
+= E[(X D)^2] - (E[X D])^2
+= E[X^2 D] - 0
+= E[X^2 D].
+$$
+Also
+$$
+\operatorname{Cov}(X, X D)
+= E[X \cdot (X D)] - E[X]E[X D]
+= E[X^2 D] - E[X]\cdot 0
+= E[X^2 D].
+$$
+So
+$$
+\operatorname{Cov}(X, X D) = \operatorname{Var}(X D).
+$$
+
+Plugging this back in:
+$$
+\gamma_1^* = \beta_1 + \beta_2 \frac{\operatorname{Var}(X D)}{\operatorname{Var}(X)}.
+$$
+
+By the large-sample properties of OLS,
+$$
+\hat{\gamma}_1 \xrightarrow{p} \gamma_1^*
+= \beta_1 + \beta_2 \frac{\operatorname{Var}[X D]}{\operatorname{Var}[X]}.
+$$
+
+$$
+\boxed{\hat{\gamma}_1 \xrightarrow{p} \beta_1 + \beta_2 \dfrac{\operatorname{Var}[X D]}{\operatorname{Var}[X]}.}
+$$
+
+\hfill $\square$
+
+
+# Problem 3
+Suppose you want to estimate the following model
+$$
+Y = (\beta_0 + \beta_1 X + u)^2
+$$
+where $E[u \mid X] = 0$ and from economic theory we know that $Y > 0$ and $\beta_0 + \beta_1 X + u > 0$.
+
+## 3a
+Propose an estimator for the parameters $\beta_0, \beta_1$.
+
+**Solution Attempt**
+We have
+$$
+Y = (\beta_0 + \beta_1 X + u)^2,\qquad E[u \mid X]=0,\quad Y>0,\quad \beta_0+\beta_1 X+u>0.
+$$
+So we can take the positive square root:
+$$
+\sqrt{Y} = \beta_0 + \beta_1 X + u.
+$$
+
+Define $Z = \sqrt{Y}$. Then
+$$
+Z = \beta_0 + \beta_1 X + u
+$$
+is just a standard linear regression. So we estimate $\beta_0,\beta_1$ by OLS from the regression
+$$
+\sqrt{Y}_i = \beta_0 + \beta_1 X_i + u_i.
+$$
+Call the OLS estimates $\hat\beta_0,\hat\beta_1$.
+
+\hfill $\square$
+
+## 3b
+Propose a predicted value of $Y$ when $X = x_0$.
+
+**Solution Attempt**
+
+At $X = x_0$, the linear predictor for $\sqrt{Y}$ is
+$$
+\widehat{\sqrt{Y}}(x_0) = \hat\beta_0 + \hat\beta_1 x_0.
+$$
+So the predicted value of $Y$ is
+$$
+\hat Y(x_0) = \big(\hat\beta_0 + \hat\beta_1 x_0\big)^2.
+$$
+
+\hfill $\square$
+
+## 3c
+Is your predicted value of $Y$ at the point $X = x_0$ biased?
+
+**Solution Attempt**
+The true conditional mean is
+$$
+E[Y \mid X=x_0]
+= E\big[(\beta_0 + \beta_1 x_0 + u)^2 \mid X=x_0\big]
+= (\beta_0 + \beta_1 x_0)^2 + E[u^2 \mid X=x_0].
+$$
+As the sample grows, $\hat Y(x_0)$ converges to $(\beta_0 + \beta_1 x_0)^2$, which is **missing** the $E[u^2 \mid X=x_0]$ term. So $\hat Y(x_0)$ is **biased downward** as a predictor of $E[Y \mid X=x_0]$.
+
+\hfill $\square$
+
+## 3d
+Is your predicted value of $Y$ at the point $X = x_0$ consistent?
+
+**Solution Attempt**
+For the same reason, $\hat Y(x_0)$ converges to $(\beta_0 + \beta_1 x_0)^2$, not to $E[Y \mid X=x_0] = (\beta_0 + \beta_1 x_0)^2 + E[u^2 \mid X=x_0]$. So it is **not consistent** for the conditional expectation $E[Y \mid X=x_0]$.
+
+\hfill $\square$
+
+
+## 3e
+What is the partial effect of $X$ on the expected value of $Y$ at the point $X = x_0$ in a homoskedastic case?
+
+**Solution Attempt**
+Assume $\operatorname{Var}(u \mid X) = \sigma^2$ (constant). Then
+$$
+\begin{aligned}
+E[Y \mid X]
+&= E\big[(\beta_0 + \beta_1 X + u)^2 \mid X\big] \\
+&= (\beta_0 + \beta_1 X)^2 + E[u^2 \mid X] \\
+&= (\beta_0 + \beta_1 X)^2 + \sigma^2.
+\end{aligned}
+$$
+The partial effect of $X$ on $E[Y \mid X]$ at $X=x_0$ is
+$$
+\left.\frac{\partial E[Y \mid X]}{\partial X}\right|_{X=x_0}
+= 2(\beta_0 + \beta_1 x_0)\beta_1.
+$$
+
+\hfill $\square$
+
+# Problem 4
+Suppose you want to estimate the following model
+$$
+Y = (\beta_0 + \beta_1 X)^2 + u
+$$
+where $E[u \mid X] = 0$.
+
+## 4a
+Propose an estimator for the parameters $\beta_0, \beta_1$.
+
+**Solution Attempt**  
+Here
+$$
+E[Y \mid X] = (\beta_0 + \beta_1 X)^2,
+$$
+which is **nonlinear** in $(\beta_0,\beta_1)$. A natural choice is **nonlinear least squares (NLS)**: choose $(\hat\beta_0,\hat\beta_1)$ to minimize
+$$
+\sum_{i=1}^n \Big(Y_i - (\beta_0 + \beta_1 X_i)^2\Big)^2.
+$$
+Those minimizing values are the NLS estimators $\hat\beta_0,\hat\beta_1$.
+
+\hfill $\square$
+
+## 4b
+Propose a predicted value of $Y$ when $X = x_0$.
+
+**Solution Attempt**  
+Plug $x_0$ into the fitted nonlinear mean:
+$$
+\hat Y(x_0) = \big(\hat\beta_0 + \hat\beta_1 x_0\big)^2.
+$$
+
+\hfill $\square$
+
+## 4c
+Is your predicted value of $Y$ at the point $x_0$ biased?
+
+**Solution Attempt**  
+The true conditional mean is
+$$
+E[Y \mid X=x_0] = (\beta_0 + \beta_1 x_0)^2.
+$$
+Our predictor is
+$$
+\hat Y(x_0) = \big(\hat\beta_0 + \hat\beta_1 x_0\big)^2.
+$$
+Because this is a nonlinear function of the estimators, in finite samples
+$$
+E[\hat Y(x_0) \mid X] \neq (\beta_0 + \beta_1 x_0)^2
+$$
+in general. So $\hat Y(x_0)$ is **biased** for $E[Y \mid X=x_0]$.
+
+\hfill $\square$
+
+## 4d
+Is your predicted value of $Y$ at the point $x_0$ consistent?
+
+**Solution Attempt**  
+Under the usual NLS assumptions, $\hat\beta_0 \to_p \beta_0$ and $\hat\beta_1 \to_p \beta_1$. By continuity,
+$$
+\hat Y(x_0)
+= \big(\hat\beta_0 + \hat\beta_1 x_0\big)^2
+\;\xrightarrow{p}\;
+\big(\beta_0 + \beta_1 x_0\big)^2
+= E[Y \mid X=x_0].
+$$
+So $\hat Y(x_0)$ is **consistent** for the conditional mean.
+
+\hfill $\square$
+
+## 4e
+What is the partial effect of $X$ on the expected value of $Y$ at point $X = x_0$?
+
+**Solution Attempt**  
+From above,
+$$
+E[Y \mid X] = (\beta_0 + \beta_1 X)^2.
+$$
+Differentiate with respect to $X$:
+$$
+\frac{\partial E[Y \mid X]}{\partial X}
+= 2(\beta_0 + \beta_1 X)\,\beta_1.
+$$
+Evaluated at $X = x_0$:
+$$
+\left.\frac{\partial E[Y \mid X]}{\partial X}\right|_{X=x_0}
+= 2(\beta_0 + \beta_1 x_0)\,\beta_1.
+$$
+
+\hfill $\square$
+
+
+# Problem 5
+For problems 5–7 you will use the STATA data file `highschool.dta`. If you take a look at the `readme_highschool.pdf` readme file, you will see that among the variables included for each sophomore student in the sample we have the following:
+
+- `FOLLOW_MATH` = follow-up year (senior-year) math test score  
+- `DROPOUT` = dummy variable (1 if student dropped out between the sophomore and senior years, 0 otherwise)  
+- `BASE_MATH` = base year (sophomore-year) math test score  
+- `FATHER_EDUC` = highest degree completed by student’s father  
+- `MOTHER_EDUC` = highest degree completed by student’s mother  
+- `INCOME` = student’s family income  
+- `EMP_GROWTH` = percentage of employment growth in the student’s local labor market during 1980–1982  
+
+Consider the following model
+$$
+\begin{aligned}
+\texttt{FOLLOW-MATH}_i &= \beta_0 + \beta_1 \texttt{BASE-MATH}_i + \beta_2 \texttt{DROPOUT}_i + \beta_3 \texttt{FATHER-EDUC}_i + \beta_4 \texttt{MOTHER-EDUC}_i \\
+&+ \beta_5 \texttt{INCOME}_i + u_i \quad (\text{Model I})
+\end{aligned}
+$$
+
+We assume the basic assumptions of the multivariate regression model are satisfied.
+
+## 5a  
+Explain the features of the intercept of Model I.
+
+**Solution Attempt**  
+In Model I,
+$$
+\texttt{FOLLOW-MATH}_i
+= \beta_0 + \beta_1 \texttt{BASE-MATH}_i
++ \beta_2 \texttt{DROPOUT}_i
++ \beta_3 \texttt{FATHER-EDUC}_i
++ \beta_4 \texttt{MOTHER-EDUC}_i
++ \beta_5 \texttt{INCOME}_i + u_i.
+$$
+
+The intercept $\beta_0$ represents the **predicted follow-up math score** for a student who has:
+
+- $\texttt{BASE-MATH} = 0$  
+- $\texttt{DROPOUT} = 0$ (non-dropout)  
+- $\texttt{FATHER-EDUC} = 0$  
+- $\texttt{MOTHER-EDUC} = 0$  
+- $\texttt{INCOME} = 0$
+
+This is a **baseline reference point** in the regression. While such a student may not exist in the data (e.g., income and education can’t realistically be zero), the intercept is still needed to anchor the regression line. Its main role is to shift the regression function vertically so that the fitted model best matches the observed data.
+
+\hfill $\square$
+
+
+## 5b
+Estimate Model I by OLS. Interpret the results and list which coefficients are significantly different from zero. Are the observed signs of the estimates as you might expect?
+
+**Solution Attempt**  
+I cannot find the `highschool.dta` dataset here, so I cannot report actual numerical coefficients or significance levels. If I had the data, I would:
+
+1. Run an OLS regression  
+   $$
+   \texttt{FOLLOW\_MATH}_i
+   = \beta_0 + \beta_1 \texttt{BASE\_MATH}_i + \beta_2 \texttt{DROPOUT}_i
+   + \beta_3 \texttt{FATHER\_EDUC}_i + \beta_4 \texttt{MOTHER\_EDUC}_i
+   + \beta_5 \texttt{INCOME}_i + u_i.
+   $$
+2. Look at the estimated coefficients, their standard errors, $t$-statistics and $p$-values to decide which are significantly different from zero.
+
+Economically, I would **expect**:
+
+- $\beta_1 > 0$: higher base-year math scores should predict higher follow-up scores.  
+- $\beta_2 < 0$: dropouts should, on average, perform worse on the follow-up test.  
+- $\beta_3,\beta_4 > 0$: more educated parents provide more support/resources, raising scores.  
+- $\beta_5 > 0$: higher family income should be associated with better performance.
+
+Significance would be assessed by $|t_j| > t_{n-k,\,\alpha/2}$ (or small $p$-values). Typically $\beta_1$ and the parental education terms are highly significant, while $\beta_2$ and $\beta_5$ may or may not be.
+
+\hfill $\square$
+
+## 5c
+Test the hypothesis $H_0 : \beta_3 = \beta_4$ against $H_1 : \beta_3 \neq \beta_4$ at a significance level $\alpha = 5\%$. Explain in words the socioeconomic interpretation of this hypothesis. Repeat the test at a significance level $\alpha = 1\%$. Does the result of the test change? Describe one more method of testing.
+
+**Solution Attempt**  
+I cannot access the data to compute the actual test statistic, but here is how I would proceed.
+
+The hypothesis $H_0:\beta_3=\beta_4$ says that **father’s and mother’s education have the same marginal effect** on the student’s follow-up math score, holding everything else constant. Under $H_1$ their effects differ.
+
+To test $H_0$ at $\alpha=5\%$:
+
+1. Re-express the model by defining, for example,  
+   $$
+   Z_i = \texttt{FATHER\_EDUC}_i - \texttt{MOTHER\_EDUC}_i.
+   $$
+   Then $H_0:\beta_3=\beta_4$ is equivalent to $H_0:\beta_Z=0$ in a regression that includes $Z_i$.
+2. Use the usual $t$-test  
+   $$
+   t = \hat\beta_Z / \operatorname{se}(\hat\beta_Z).
+   $$
+3. Reject $H_0$ if $|t| > t_{n-k,\,0.975}$ (or $p<0.05$).
+
+Repeating at $\alpha=1\%$ just uses a larger critical value $t_{n-k,\,0.995}$. In practice, if $|t|$ is huge, we would reject at both 5% and 1%; if $|t|$ is modest (just above the 5% cutoff), we might reject at 5% but not at 1%.
+
+Another way to test is to use a **Wald $F$-test** based on the original regression and the restriction $R\beta = 0$ with $R = [0,0,0,1,-1,0]$. Yet another method would be to construct a **confidence interval** for $\beta_3-\beta_4$ and see whether it contains zero.
+
+\hfill $\square$
+
+## 5d
+Repeat (c) under the assumption of homoskedasticity. Compare your answers with the answers in (c). Propose two more methods of testing.
+
+**Solution Attempt**  
+In 5c I would normally use **heteroskedasticity-robust** standard errors in the $t$- or $F$-tests. Under the assumption of homoskedasticity, I instead use the classical OLS variance estimator:
+$$
+\widehat{\operatorname{Var}}(\hat\beta) = \hat\sigma^2 (X'X)^{-1},
+\quad
+\hat\sigma^2 = \frac{\hat u'\hat u}{n-k}.
+$$
+The test statistic form is the same, but the estimated variances (and thus $t$ and $p$-values) may change slightly. With a reasonably large sample the conclusions often stay the same, but they could differ if heteroskedasticity is important.
+
+Two additional ways to test $H_0:\beta_3 = \beta_4$:
+
+1. **Bootstrap test**: repeatedly resample observations with replacement, re-estimate $\beta_3-\beta_4$, and construct a bootstrap confidence interval or $p$-value.  
+2. **Likelihood-ratio vs. unrestricted model** (if we were in a normal-error framework): estimate the unrestricted model, estimate a restricted model with $\beta_3=\beta_4$ imposed, and compute a likelihood-ratio $LR$ statistic comparing the two.
+
+\hfill $\square$
+
+## 5e
+Looking at the estimation results of this simple model, is there evidence that dropping out has a statistically significant effect on students’ subsequent performance? If so, what is the sign of this effect?
+
+**Solution Attempt**  
+Without the dataset I cannot compute the actual coefficient or $t$-statistic for $\beta_2$ (on $\texttt{DROPOUT}$). If I had the data, I would look at:
+
+- the sign of $\hat\beta_2$, and  
+- whether $|\hat\beta_2 / \operatorname{se}(\hat\beta_2)|$ is large (or the $p$-value is small).
+
+Economic reasoning suggests that $\beta_2$ should be **negative**: conditional on base-year math score and background characteristics, dropping out is likely associated with **lower** follow-up math performance. If the $t$-statistic is large in magnitude (say $|t|>2$ at 5%), we would conclude that dropping out has a statistically significant and negative effect on subsequent performance.
+
+\hfill $\square$
+
+# Problem 6
+Define a new variable: $\texttt{PARENTS-EDUC}_i = \texttt{MOTHER-EDUC}_i + \texttt{FATHER-EDUC}_i$. Consider the following model:
+$$
+\begin{aligned}
+\texttt{FOLLOW-MATH}_i &= \beta_0 + \beta_1 \texttt{BASE-MATH}_i + \beta_2 \texttt{BASE-MATH}_i \times \texttt{DROPOUT}_i + \beta_3 \texttt{DROPOUT}_i \\
+&+ \beta_4 \texttt{PARENTS-EDUC}_i + \beta_5 \texttt{INCOME}_i + u_i
+\end{aligned}
+$$
+(Model II)
+
+Once again, we assume the basic assumptions of the multivariate regression model are satisfied, in addition to homoskedasticity.
+
+## 6a 
+Explain in detail the differences between Model I and Model II. What features about the influence of dropping out on subsequent performance are explored in Model II and not in Model I?
+
+**Solution Attempt**  
+Model I:
+$$
+\texttt{FOLLOW\_MATH}_i = \beta_0 + \beta_1 \texttt{BASE\_MATH}_i
++ \beta_2 \texttt{DROPOUT}_i + \beta_3 \texttt{FATHER\_EDUC}_i
++ \beta_4 \texttt{MOTHER\_EDUC}_i + \beta_5 \texttt{INCOME}_i + u_i.
+$$
+
+Model II:
+$$
+\texttt{FOLLOW\_MATH}_i = \beta_0 + \beta_1 \texttt{BASE\_MATH}_i
++ \beta_2 \big(\texttt{BASE\_MATH}_i \times \texttt{DROPOUT}_i\big)
++ \beta_3 \texttt{DROPOUT}_i
++ \beta_4 \texttt{PARENTS\_EDUC}_i
++ \beta_5 \texttt{INCOME}_i + u_i,
+$$
+where $\texttt{PARENTS\_EDUC} = \texttt{MOTHER\_EDUC} + \texttt{FATHER\_EDUC}$.
+
+Main differences:
+
+1. **Parental education**: Model I enters father’s and mother’s education separately; Model II uses their **sum**, so it assumes only total parental education matters, not which parent has the degree.
+
+2. **Interaction with dropout**: Model II includes the interaction term  
+   $\texttt{BASE\_MATH} \times \texttt{DROPOUT}$.  
+   This allows the **slope** of follow-up math with respect to base-year math to differ for dropouts vs non-dropouts.
+
+   - For non-dropouts ($\texttt{DROPOUT}=0$):  
+     $E[\texttt{FOLLOW\_MATH} \mid \texttt{BASE\_MATH}, \texttt{DROPOUT}=0]
+     = \beta_0 + \beta_1 \texttt{BASE\_MATH} + \beta_4 \texttt{PARENTS\_EDUC} + \beta_5 \texttt{INCOME}.$  
+     Slope on BASE\_MATH is $\beta_1$.
+   - For dropouts ($\texttt{DROPOUT}=1$):  
+     $E[\cdot] = \beta_0 + (\beta_1 + \beta_2)\texttt{BASE\_MATH} + \beta_3 + \beta_4 \texttt{PARENTS\_EDUC} + \beta_5 \texttt{INCOME}.$  
+     Slope is $\beta_1 + \beta_2$, intercept is shifted by $\beta_3$.
+
+So Model II allows **both a level shift** (via $\beta_3$) and a **change in the marginal effect of base-year performance** (via $\beta_2$) for dropouts. Model I only allows a level shift (through $\beta_2 \texttt{DROPOUT}$) and constrains the slope on base-year math to be the same for dropouts and non-dropouts.
+
+Thus, Model II explores whether the **return of initial math ability to later performance** is different for dropouts vs non-dropouts—something Model I cannot capture.
+
+\hfill $\square$
+
+## 6b 
+Suppose we want to test the socioeconomic hypothesis that the relation between the base year exam (BASE_MATH$_i$) and the follow-up year exam (FOLLOW_MATH$_i$) are different for dropouts and non-dropouts. Express this hypothesis in terms of the coefficients of the model and test it at a significance level $\alpha = 5\%$.
+
+**Solution Attempt**  
+From Model II, the slope of FOLLOW\_MATH with respect to BASE\_MATH is:
+
+- Non-dropouts ($\texttt{DROPOUT}=0$): slope $= \beta_1$.  
+- Dropouts ($\texttt{DROPOUT}=1$): slope $= \beta_1 + \beta_2$.
+
+The hypothesis that the relation is *different* is
+$$
+H_0: \beta_2 = 0 \quad \text{vs}\quad H_1: \beta_2 \neq 0.
+$$
+
+I cannot compute the test statistic without data, but the procedure at $\alpha=5\%$ is:
+
+1. Estimate Model II by OLS and obtain $\hat\beta_2$ and $\operatorname{se}(\hat\beta_2)$.  
+2. Form the $t$-statistic  
+   $$
+   t = \hat\beta_2 / \operatorname{se}(\hat\beta_2).
+   $$
+3. Compare $|t|$ to the 5% critical value $t_{n-k,\,0.975}$ (or use the $p$-value).  
+   - If $|t|$ is large (or $p<0.05$), reject $H_0$ and conclude that the BASE\_MATH–FOLLOW\_MATH relationship differs between dropouts and non-dropouts.  
+   - Otherwise, fail to reject $H_0$ and conclude the slopes are statistically similar.
+
+\hfill $\square$
+
+## 6c 
+Test the socioeconomic hypothesis that dropping out makes no difference at all at a significance level $\alpha = 1\%$. You can assume homoskedasticity if you need.
+
+**Solution Attempt**  
+In Model II, dropout affects the regression through:
+
+- the interaction term coefficient $\beta_2$ (slope difference), and  
+- the dummy coefficient $\beta_3$ (intercept difference).
+
+The hypothesis that dropping out makes **no difference at all**, holding base-year score, parents’ education, and income constant, is
+$$
+H_0: \beta_2 = 0,\quad \beta_3 = 0
+\quad \text{vs}\quad
+H_1: \text{at least one is nonzero}.
+$$
+
+With the data, I would:
+
+1. Estimate Model II by OLS (assuming homoskedasticity).  
+2. Compute an $F$-statistic for the joint restrictions $R\beta=0$ with  
+   $R$ selecting the $\beta_2$ and $\beta_3$ positions.  
+3. Compare the $F$ value to the 1% critical value $F_{2,\,n-k}(0.99)$ or use the $p$-value.  
+   - If $p<0.01$, reject $H_0$ and conclude dropout matters.  
+   - If $p\ge 0.01$, fail to reject and conclude we do not find strong evidence that dropout changes the relationship.
+
+Since I do not have the data, I cannot say which outcome holds, only how to test it.
+
+\hfill $\square$
+
+# Problem 7
+Suppose we believe that some students simply dropped out of high school because the local labor market was booming and there were very good job opportunities. This would imply (arguably) that smart and capable students are dropping out in order to take better jobs. According to this story, dropping out would have no adverse effect on their subsequent analytical capabilities and performance. A crude way of modeling this situation would be to assume that:
+$$
+\Delta \texttt{FOLLOW-MATH}_i / \Delta \texttt{BASE-MATH}_i =
+\begin{cases}
+\gamma & \text{if the student does not drop out} \\
+\delta + \theta \cdot \texttt{EMP-GROWTH}_i & \text{if the student drops out}
+\end{cases}
+$$
+
+## 7a
+Show that the following model incorporates the hypothesis we detailed above:
+$$
+\begin{aligned}
+\texttt{FOLLOW-MATH}_i &= \beta_0 + \beta_1 \texttt{BASE-MATH}_i + \beta_2 \texttt{BASE-MATH}_i \times \texttt{DROPOUT}_i + \beta_3 \texttt{DROPOUT}_i \\
+&+ \beta_4 \texttt{BASE-MATH}_i \times \texttt{EMP-GROWTH}_i \times \texttt{DROPOUT}_i \\
+&+ \beta_5 \texttt{PARENTS-EDUC}_i + \beta_6 \texttt{INCOME}_i + u_i
+\end{aligned}
+$$
+Call this “Model III”. Express $\gamma$, $\delta$ and $\theta$ in terms of the $\beta$’s. According to the simple story detailed above, what sign would you expect $\theta$ to have?
+
+**Solution Attempt**  
+We focus on how FOLLOW\_MATH changes with BASE\_MATH.
+
+- For **non-dropouts** ($\texttt{DROPOUT}=0$), all terms with $\texttt{DROPOUT}$ drop out:  
+  $$
+  E[\texttt{FOLLOW\_MATH} \mid \text{BASE, EMP\_GROWTH}, \texttt{DROPOUT}=0]
+  = \beta_0 + \beta_1 \texttt{BASE\_MATH} + \dots
+  $$
+  So
+  $$
+  \frac{\Delta \texttt{FOLLOW\_MATH}}{\Delta \texttt{BASE\_MATH}}
+  = \beta_1 = \gamma.
+  $$
+
+- For **dropouts** ($\texttt{DROPOUT}=1$), the conditional mean is  
+  $$
+  E[\cdot] = \beta_0 + (\beta_1 + \beta_2)\texttt{BASE\_MATH}
+  + \beta_3 + \beta_4 \texttt{BASE\_MATH}\cdot\texttt{EMP\_GROWTH} + \dots
+  $$
+  The derivative with respect to BASE\_MATH is  
+  $$
+  \frac{\partial E[\texttt{FOLLOW\_MATH}]}{\partial \texttt{BASE\_MATH}}
+  = \beta_1 + \beta_2 + \beta_4 \texttt{EMP\_GROWTH}.
+  $$
+
+Comparing to the hypothesized form
+$$
+\Delta \texttt{FOLLOW\_MATH} / \Delta \texttt{BASE\_MATH}
+= \delta + \theta \cdot \texttt{EMP\_GROWTH} \quad \text{for dropouts},
+$$
+we identify
+$$
+\gamma = \beta_1,\qquad
+\delta = \beta_1 + \beta_2,\qquad
+\theta = \beta_4.
+$$
+
+The story says that in booming labor markets (high EMP\_GROWTH), dropouts are “smart and capable” students taking good jobs, so the relation between BASE\_MATH and FOLLOW\_MATH for dropouts should be **stronger** when EMP\_GROWTH is higher. That is, the slope $\delta + \theta \cdot \texttt{EMP\_GROWTH}$ should **increase with EMP\_GROWTH**, which implies
+$$
+\theta > 0.
+$$
+
+\hfill $\square$
+
+## 7b
+Estimate Model III by OLS. Test $H_0 : \theta = 0$ against $H_1 : \theta \neq 0$ at a significance level $\alpha = 5\%$ (Hint: In order to test this you need to go back to the previous part and see what $\theta$ is in terms of the $\beta$’s). Do the results support the socioeconomic hypothesis we mentioned above?
+
+**Solution Attempt**  
+In Model III, $\theta$ corresponds to $\beta_4$, the coefficient on the triple interaction
+$$
+\texttt{BASE\_MATH} \times \texttt{EMP\_GROWTH} \times \texttt{DROPOUT}.
+$$
+
+With the dataset, I would:
+
+1. Construct the interaction variables  
+   - $\texttt{BASE\_MATH} \times \texttt{DROPOUT}$  
+   - $\texttt{BASE\_MATH} \times \texttt{EMP\_GROWTH} \times \texttt{DROPOUT}$  
+   and estimate Model III by OLS.  
+2. Obtain $\hat\beta_4$ and $\operatorname{se}(\hat\beta_4)$ (using robust or homoskedastic SEs as specified).  
+3. Form the $t$-statistic  
+   $$
+   t = \hat\beta_4 / \operatorname{se}(\hat\beta_4),
+   $$
+   and compare $|t|$ to the 5% critical value or use the $p$-value.  
+
+- If we **reject** $H_0:\theta=0$, the data suggest that employment growth changes the BASE\_MATH–FOLLOW\_MATH slope for dropouts, giving some support to the socioeconomic story (and we would check whether $\hat\theta$ is positive, as predicted).  
+- If we **fail to reject** $H_0$, there is no strong evidence that EMP\_GROWTH modifies the relationship for dropouts, so the simple story is not supported.
+
+Without the dataset I cannot say which outcome holds, only how to test it.
+
+\hfill $\square$
+
+## 7c
+Test the hypothesis that dropping out does not make any difference against the alternative that it does at a significance level $\alpha = 1\%$. You can assume homoskedasticity if you need.
+
+**Solution Attempt**  
+In Model III, dropout can matter through:
+
+- the interaction slope term $\beta_2$ (BASE\_MATH × DROPOUT),  
+- the level shift $\beta_3$ (DROPOUT dummy), and  
+- the triple interaction $\beta_4$ (BASE\_MATH × EMP\_GROWTH × DROPOUT).
+
+The hypothesis that dropping out **does not make any difference** is that all dropout-related coefficients are zero:
+$$
+H_0: \beta_2 = \beta_3 = \beta_4 = 0
+\quad \text{vs}\quad
+H_1: \text{at least one is nonzero}.
+$$
+
+Assuming homoskedasticity, with the data I would:
+
+1. Estimate the **unrestricted** Model III and record $SSR_{UR}$.  
+2. Estimate a **restricted** model imposing $\beta_2=\beta_3=\beta_4=0$ and record $SSR_{R}$.  
+3. Compute the $F$-statistic
+   $$
+   F = \frac{(SSR_R - SSR_{UR})/q}{SSR_{UR}/(n-k_{UR})},
+   $$
+   where $q=3$ is the number of restrictions.  
+4. Compare $F$ to the 1% critical value $F_{3,\,n-k_{UR}}(0.99)$ or use the $p$-value.
+
+- If $F$ is large (or $p<0.01$), we reject $H_0$ and conclude that dropout has a statistically significant effect on the FOLLOW\_MATH relationship.  
+- If not, we fail to reject $H_0$ and say that, at the 1% level, we find no strong evidence that dropout matters once other variables are controlled for.
+
+Since I cannot access the dataset, I cannot compute $F$ or the final decision; this is the procedure I would follow.
+
+\hfill $\square$
+
+# Problem 8
+Use the `Birthweight_Smoking` data set to answer the following questions. To begin, run three regressions:  
+(1) Birthweight on Smoker  
+(2) Birthweight on Smoker, Alcohol and Nprevist  
+(3) Birthweight on Smoker, Alcohol, Nprevist and Unmarried  
+
+```{python}
+import pandas as pd
+df = pd.read_stata('data/Birthweight and Smoking (EE 5.3, 6.1, 7.1, 9.2)/birthweight_smoking.dta')
+```
+
+## 8a
+What is the value of the estimated effect of smoking on birth weight in each of the regressions?
+```{python}
+import numpy as np
+import pandas as pd
+from scipy.stats import t as t_dist
+
+def run_ols(y, X):
+    """
+    y: 1D array
+    X: 2D array WITHOUT constant (this function adds it)
+    returns: dict with coef, se, t, p, yhat, resid
+    """
+    y = np.asarray(y)
+    X = np.asarray(X)
+    n = X.shape[0]
+    X = np.column_stack([np.ones(n), X])  # add intercept
+    k = X.shape[1]
+
+    XtX = X.T @ X
+    XtX_inv = np.linalg.inv(XtX)
+    Xty = X.T @ y
+    beta_hat = XtX_inv @ Xty
+
+    y_hat = X @ beta_hat
+    resid = y - y_hat
+    sigma2 = (resid @ resid) / (n - k)
+
+    var_beta = sigma2 * XtX_inv
+    se = np.sqrt(np.diag(var_beta))
+    t_stats = beta_hat / se
+    p_vals = 2 * (1 - t_dist.cdf(np.abs(t_stats), df=n - k))
+
+    return {
+        "beta": beta_hat,
+        "se": se,
+        "t": t_stats,
+        "p": p_vals,
+        "yhat": y_hat,
+        "resid": resid,
+    }
+
+# ---------- REGRESSION (1) ----------
+# Birthweight on Smoker
+reg1 = run_ols(
+    y=df["birthweight"],
+    X=df[["smoker"]],
+)
+
+# ---------- REGRESSION (2) ----------
+# Birthweight on Smoker, Alcohol, Nprevist
+reg2 = run_ols(
+    y=df["birthweight"],
+    X=df[["smoker", "alcohol", "nprevist"]],
+)
+
+# ---------- REGRESSION (3) ----------
+# Birthweight on Smoker, Alcohol, Nprevist, Unmarried
+reg3 = run_ols(
+    y=df["birthweight"],
+    X=df[["smoker", "alcohol", "nprevist", "unmarried"]],
+)
+
+# indices:
+# beta[0] = intercept
+# beta[1] = smoker coefficient in all three regressions
+# in reg3, "unmarried" is the last regressor, so its index = 1 + number_of_X_cols_before_it
+
+print("Regression (1): Birthweight ~ Smoker")
+print("Smoker coef (beta_1):", reg1["beta"][1])
+print("Smoker se:", reg1["se"][1])
+print()
+
+print("Regression (2): Birthweight ~ Smoker + Alcohol + Nprevist")
+print("Smoker coef (beta_1):", reg2["beta"][1])
+print("Smoker se:", reg2["se"][1])
+print()
+
+print("Regression (3): Birthweight ~ Smoker + Alcohol + Nprevist + Unmarried")
+print("Smoker coef (beta_1):", reg3["beta"][1])
+print("Smoker se:", reg3["se"][1])
+
+# For later parts (8b and 8e), you can also print the whole vectors:
+print("\nAll coefficients reg1:", reg1["beta"])
+print("All coefficients reg2:", reg2["beta"])
+print("All coefficients reg3:", reg3["beta"])
+print("\nAll SEs reg1:", reg1["se"])
+print("All SEs reg2:", reg2["se"])
+print("All SEs reg3:", reg3["se"])
+```
+
+**Solution Attempt**  
+From the three regressions we estimated:
+
+- Regression (1): Birthweight on Smoker  
+  - Coefficient on Smoker: $\hat\beta_{\text{smoker}} \approx -253.23$
+
+- Regression (2): Birthweight on Smoker, Alcohol, Nprevist  
+  - Coefficient on Smoker: $\hat\beta_{\text{smoker}} \approx -217.58$
+
+- Regression (3): Birthweight on Smoker, Alcohol, Nprevist, Unmarried  
+  - Coefficient on Smoker: $\hat\beta_{\text{smoker}} \approx -175.38$
+
+In all three cases, the coefficient is negative: on average, babies of smokers weigh about $175$–$250$ grams less than babies of non-smokers, depending on the set of controls.
+
+\hfill $\square$
+
+
+## 8b  
+Construct a 95% confidence interval for the effect of smoking on birth weight, using each of the regressions.
+
+**Solution Attempt**  
+A 95% confidence interval is
+$$
+\hat\beta_{\text{smoker}} \pm 1.96 \cdot \text{SE}(\hat\beta_{\text{smoker}}).
+$$
+
+- Regression (1): $\hat\beta_{\text{smoker}} = -253.23$, $\text{SE} = 26.95$
+  $$
+  -253.23 \pm 1.96 \cdot 26.95
+  \approx -253.23 \pm 52.82,
+  $$
+  so the 95% CI is roughly
+  $$
+  [-306.1,\,-200.4].
+  $$
+
+- Regression (2): $\hat\beta_{\text{smoker}} = -217.58$, $\text{SE} = 26.68$
+  $$
+  -217.58 \pm 1.96 \cdot 26.68
+  \approx -217.58 \pm 52.29,
+  $$
+  giving a 95% CI of about
+  $$
+  [-269.9,\,-165.3].
+  $$
+
+- Regression (3): $\hat\beta_{\text{smoker}} = -175.38$, $\text{SE} = 27.10$
+  $$
+  -175.38 \pm 1.96 \cdot 27.10
+  \approx -175.38 \pm 53.11,
+  $$
+  so the 95% CI is approximately
+  $$
+  [-228.5,\,-122.3].
+  $$
+
+In all three regressions, the entire confidence interval is negative.
+
+\hfill $\square$
+
+
+## 8c  
+Does the coefficient on Smoker in regression (1) suffer from omitted variable bias? Explain.
+
+**Solution Attempt**  
+Yes, regression (1) almost certainly suffers from omitted variable bias. It regresses birthweight only on Smoker and leaves out other determinants of birthweight that are likely correlated with smoking, such as Alcohol use, prenatal care (Nprevist), mother’s health, income, education, etc.
+
+If smokers are more likely to drink alcohol and to have fewer prenatal visits, and both of those reduce birthweight, then in regression (1) their negative effects will be loaded into the Smoker coefficient. This makes the smoking effect **too negative** (biased away from zero). The fact that the smoking coefficient becomes smaller in magnitude once we add controls (from about $-253$ to $-218$ to $-175$) is consistent with this story.
+
+\hfill $\square$
+
+
+## 8d  
+Does the coefficient on Smoker in regression (2) suffer from omitted variable bias? Explain.
+
+**Solution Attempt**  
+Regression (2) adds Alcohol and Nprevist, so it controls for two important confounders and should reduce omitted variable bias relative to regression (1). However, it can still suffer from omitted variable bias because we still leave out other relevant factors that are correlated with smoking and affect birthweight, such as Unmarried, mother’s age, education, income, etc.
+
+When we add Unmarried in regression (3), the smoking coefficient moves again (from about $-217.6$ to $-175.4$), suggesting that marital status was also correlated with smoking and birthweight. So regression (2) likely still has some omitted variable bias, just less than regression (1).
+
+\hfill $\square$
+
+
+## 8e  
+Consider the coefficient on Unmarried in regression (3).
+
+### 8e(i)  
+Construct a 95% confidence interval for the coefficient.
+
+**Solution Attempt**  
+In regression (3), the Unmarried coefficient and standard error are approximately
+$$
+\hat\beta_{\text{unmarried}} \approx -187.13,
+\qquad
+\text{SE} \approx 26.01.
+$$
+The 95% CI is
+$$
+-187.13 \pm 1.96 \cdot 26.01
+\approx -187.13 \pm 51.0,
+$$
+so roughly
+$$
+[-238.1,\,-136.2].
+$$
+
+\hfill $\square$
+
+
+### 8e(ii)  
+Is the coefficient statistically significant? Explain.
+
+**Solution Attempt**  
+Yes. The $t$-statistic is about
+$$
+t \approx \frac{-187.13}{26.01} \approx -7.2,
+$$
+which is far in the tails of a $t$ distribution and easily exceeds the usual critical values in absolute value. The 95% confidence interval does not include zero either. So Unmarried is statistically significant at conventional levels.
+
+\hfill $\square$
+
+
+### 8e(iii)  
+Is the magnitude of the coefficient large? Explain.
+
+**Solution Attempt**  
+The estimate suggests that, holding smoking, alcohol, and prenatal visits fixed, babies of unmarried mothers weigh about **187 grams less on average** than babies of married mothers (roughly 6–7 ounces). In the context of birthweight, a difference of this size is quite meaningful, so the magnitude is economically large, not just statistically significant.
+
+\hfill $\square$
+
+
+### 8e(iv)  
+A family advocacy group notes that the large coefficient suggests that public policies that encourage marriage will lead, on average, to healthier babies. Do you agree?
+
+**Solution Attempt**  
+Not necessarily. The Unmarried dummy is not a randomized treatment; it is correlated with many other factors: like income and job stability, mother’s education, access to health care and insurance, social support and stress, neighborhood quality, etc.
+
+The coefficient on Unmarried therefore reflects both the effect of marital status **and** the effect of all these correlated factors. It is a **conditional association**, not a clean causal effect of marriage itself. Policies that mechanically increase marriage rates would not automatically change those underlying conditions.
+
+So while the negative coefficient suggests that babies of unmarried mothers tend to have lower birthweight, we cannot conclude that “encouraging marriage” alone would cause babies to be healthier. Many of the benefits attributed to marriage may really come from these other characteristics.
+
+\hfill $\square$
+
+
+## 8f  
+Consider the various other control variables in the data set. Which do you think should be included in the regression? Using a table like Table 7.1 examine the robustness of the confidence interval you constructed in (b). What is a reasonable 95% confidence interval for the effect of smoking on birth weight?
+
+**Solution Attempt**  
+Conceptually, we want to include control variables that:
+
+1. Affect birthweight, and  
+2. Are correlated with smoking,  
+so that we remove omitted variable bias without “over-controlling” for variables that lie on the causal path from smoking to birthweight.
+
+Natural candidates include:
+
+- Mother’s age, education, race, income, and health indicators  
+- Measures of prenatal care and health behaviors (e.g., alcohol, drugs)  
+- Indicators for parity (first birth vs later), complications, etc.
+
+In our three specifications, the smoking coefficient changes from about $-253$ (no controls) to $-218$ (adding Alcohol and Nprevist) to $-175$ (adding Unmarried). The 95% CIs we found were:
+
+- Regression (1): $[-306.1,\,-200.4]$  
+- Regression (2): $[-269.9,\,-165.3]$  
+- Regression (3): $[-228.5,\,-122.3]$
+
+So across reasonable specifications, the estimated effect of smoking is **always negative** and typically in the range of roughly $-120$ to $-270$ grams. A sensible “robust” 95% interval that reflects this range might be something like
+$$
+[-250,\,-150] \text{ grams.}
+$$
+This captures the fact that, even after adding multiple controls, the data consistently suggest a substantial negative effect of smoking on birthweight.
+
+\hfill $\square$
+
+
+# Problem 9
+In the empirical exercises on earning and height in homework 6, you estimated a relatively large and statistically significant effect of a worker’s height on his or her earnings. One explanation for this result is omitted variable bias: Height is correlated with an omitted factor that affects earnings. For example, Case and Paxson (2008) suggest that cognitive ability (or intelligence) is the omitted factor. The mechanism they describe is straightforward: Poor nutrition and other harmful environmental factors in utero and in early childhood have, on average, deleterious effects on both cognitive and physical development. Cognitive ability affects earnings later in life and thus is an omitted variable in the regression.
+
+```{python}
+import pandas as pd
+df = pd.read_stata('data/Earnings and Height (EE 4.2, 5.1, 7.2)/Earnings_and_Height.dta')
+```
+
+## 9a
+Suppose that the mechanism described above is correct. Explain how this leads to omitted variable bias in the OLS regression of Earnings on Height. Does this bias lead the estimated slope to be too large or too small?
+
+If the mechanism described above is correct, the estimated effect of height on earnings should disappear if a variable measuring cognitive ability is included in the regression. Unfortunately, there isn’t a direct measure of cognitive ability in the data set, but the data set does include “years of education” for each individual. Because students with higher cognitive ability are more likely to attend school longer, years of education might serve as a control variable for cognitive ability; in this case, including education in the regression will eliminate, or at least attenuate, the omitted variable bias problem.
+
+Use the years of education variable (`educ`) to construct four indicator variables for whether a worker has less than a high school diploma (`LT_HS = 1` if `educ < 12`, 0 otherwise), a high school diploma (`HS = 1` if `educ = 12`, 0 otherwise), some college (`Some_Col = 1` if `12 < educ < 16`, 0 otherwise), or a bachelor’s degree or higher (`College = 1` if `educ >=  16`, 0 otherwise).
+
+**Solution Attempt**  
+If cognitive ability affects both height and earnings, then “ability” is an omitted variable that is correlated with Height and also appears in the true earnings equation. In the regression
+$$
+\text{Earnings} = \beta_0 + \beta_1 \cdot \text{Height} + u,
+$$
+the omitted factor (cognitive ability) gets absorbed into the error term. Because ability is positively correlated with height *and* positively correlated with earnings, we have
+$$
+\operatorname{Cov}(\text{Height}, u) > 0,
+$$
+which violates exogeneity. As a result, the OLS estimate of $\beta_1$ is biased upward: it attributes some of the effect of ability (which raises earnings) to height.  
+
+Therefore, the estimated slope on Height will be **too large** relative to the true causal effect of height itself.
+
+```{python}
+import numpy as np
+import pandas as pd
+from scipy.stats import t as t_dist
+
+# assume df is already loaded:
+# df = pd.read_stata('data/Earnings and Height (EE 4.2, 5.1, 7.2)/Earnings_and_Height.dta')
+
+# ---- education dummies ----
+df['LT_HS']    = (df['educ'] < 12).astype(int)
+df['HS']       = (df['educ'] == 12).astype(int)
+df['Some_Col'] = ((df['educ'] > 12) & (df['educ'] < 16)).astype(int)
+df['College']  = (df['educ'] >= 16).astype(int)   # omitted category
+
+# ---- helper: OLS by hand ----
+def run_ols(y, X, add_const=True):
+    y = np.asarray(y, float)
+    X = np.asarray(X, float)
+    n = X.shape[0]
+    if add_const:
+        X = np.column_stack([np.ones(n), X])  # intercept
+    k = X.shape[1]
+    XtX = X.T @ X
+    beta = np.linalg.solve(XtX, X.T @ y)
+    resid = y - X @ beta
+    sigma2 = (resid @ resid) / (n - k)
+    XtX_inv = np.linalg.inv(XtX)
+    se = np.sqrt(np.diag(sigma2 * XtX_inv))
+    tvals = beta / se
+    return beta, se, tvals
+
+# ---- split by sex ----
+is_female = df['sex'] == '0:female'
+is_male   = df['sex'] == '1:male'
+
+df_f = df[is_female].copy()
+df_m = df[is_male].copy()
+
+# ---- WOMEN ----
+# (1) Earnings ~ Height
+b1_w, se1_w, t1_w = run_ols(df_f['earnings'], df_f[['height']])
+
+# (2) Earnings ~ Height + LT_HS + HS + Some_Col
+X_w2 = df_f[['height', 'LT_HS', 'HS', 'Some_Col']]
+b2_w, se2_w, t2_w = run_ols(df_f['earnings'], X_w2)
+
+# ---- MEN ----
+# (1) Earnings ~ Height
+b1_m, se1_m, t1_m = run_ols(df_m['earnings'], df_m[['height']])
+
+# (2) Earnings ~ Height + LT_HS + HS + Some_Col
+X_m2 = df_m[['height', 'LT_HS', 'HS', 'Some_Col']]
+b2_m, se2_m, t2_m = run_ols(df_m['earnings'], X_m2)
+
+# ---- pretty output ----
+param_names1 = ['const', 'height']
+param_names2 = ['const', 'height', 'LT_HS', 'HS', 'Some_Col']
+
+print("Women, regression (1):")
+print(pd.DataFrame({'coef': b1_w, 'se': se1_w, 't': t1_w}, index=param_names1))
+
+print("\nWomen, regression (2):")
+print(pd.DataFrame({'coef': b2_w, 'se': se2_w, 't': t2_w}, index=param_names2))
+
+print("\nMen, regression (1):")
+print(pd.DataFrame({'coef': b1_m, 'se': se1_m, 't': t1_m}, index=param_names1))
+
+print("\nMen, regression (2):")
+print(pd.DataFrame({'coef': b2_m, 'se': se2_m, 't': t2_m}, index=param_names2))
+```
+
+\hfill $\square$
+
+## 9b
+Focusing first on women only, run a regression of (1) Earnings on Height and (2) Earnings on Height, including `LT_HS`, `HS` and `Some_Col` as control variables.
+
+
+### 9b(i) 
+Compare the estimated coefficient on Height in regression (1) and (2). Is there a large change in the coefficient? Has it changed in a way consistent with the cognitive ability explanation? Explain.
+
+**Solution Attempt**  
+For women:
+
+- Regression (1): height coefficient = 511.22  
+- Regression (2): height coefficient = 135.14  
+
+The drop is very large. This means much of the original height effect was actually capturing education differences (a proxy for cognitive ability). Once we control for education, the effect shrinks a lot, which is exactly what the omitted-variable story predicts.
+
+\hfill $\square$
+
+### 9b(ii) 
+The regression omits the control variable College. Why?
+
+**Solution Attempt**  
+We omit “College” because including all four education categories would create perfect multicollinearity. College becomes the baseline group, and the coefficients on the other three categories measure earnings differences relative to college graduates.
+
+\hfill $\square$
+
+### 9b(iii) 
+Test the joint null hypothesis that the coefficient on the education variables are equal to zero. You can assume homoskedasticity if you need.
+
+**Solution Attempt**  
+Joint hypothesis:  
+$H_0$: $LT\_HS = HS = \texttt{Some-Col} = 0$.
+
+All three t-values (about -33, -33, and -18) are extremely large in magnitude. A joint F-test would strongly reject $H_0$. Therefore, education levels clearly matter for earnings.
+
+\hfill $\square$
+
+### 9b(iv) 
+Discuss the values of the estimated coefficients on `LT_HS`, `HS` and `Some_Col`. What do the coefficients measure?
+
+**Solution Attempt**  
+Interpretation of coefficients (all relative to college graduates):
+
+- `LT_HS`: about -31,858 — very large earnings penalty  
+- `HS`: about -20,418 — still a major penalty, but smaller than `LT_HS`  
+- `Some_Col`: about -12,649 — smaller penalty, consistent with higher education raising earnings  
+
+These coefficients measure average differences in earnings compared to the college-educated baseline.
+
+\hfill $\square$
+
+### 9c
+Repeat (b), using data for men.
+
+**Solution Attempt**  
+For men:
+
+- Height coefficient in regression (1): 1306.86  
+- Height coefficient in regression (2): 744.68  
+
+As with women, the coefficient falls substantially once education controls are added. This again supports the cognitive-ability explanation. The education coefficients for men are also very negative and highly significant, showing the same pattern: lower schooling is associated with lower earnings relative to college graduates.
+
+\hfill $\square$
+
+
+# Problem 10
+Using the data set `Growth` excluding the data for Malta, carry out the following exercises.
+
+## 10a
+Construct a table that shows the sample mean, standard deviation and minimum and maximum values for the series `Growth`, `Trade-Share`, `YearsSchool`, `Oil`, `Rev_Coups`, `Assassinations` and `RGDP60`. Include the appropriate units for all entries.
+
+```{python}
+import pandas as pd
+df = pd.read_stata('data/Growth (EE 4.1, 5.2, 6.2)/Growth.dta')
+
+# Exclude Malta if present (case-insensitive)
+df_no_malta = df[~df['country_name'].str.lower().eq('malta')]
+
+vars_10a = ['growth', 'tradeshare', 'yearsschool', 'oil', 
+            'rev_coups', 'assasinations', 'rgdp60']
+
+summary_table = df_no_malta[vars_10a].agg(['mean', 'std', 'min', 'max']).T
+print(summary_table)
+```
+
+## 10b
+Run a regression of `Growth` on `TradeShare`, `YearsSchool`, `Rev_Coups`, `Assassinations` and `RGDP60`. What is the value of the coefficient on `Rev_Coups`? Interpret the value of this coefficient. Is it large or small in a real-world sense?
+
+```{python}
+import numpy as np
+
+# Design matrices
+y = df_no_malta['growth'].to_numpy()
+X = df_no_malta[['tradeshare', 'yearsschool', 'rev_coups', 
+                 'assasinations', 'rgdp60']].to_numpy()
+
+# Add constant
+X = np.column_stack([np.ones(X.shape[0]), X])
+
+# OLS
+beta = np.linalg.inv(X.T @ X) @ (X.T @ y)
+
+# residuals & std errors
+resid = y - X @ beta
+n, k = X.shape
+sigma2 = (resid @ resid) / (n - k)
+var_beta = sigma2 * np.linalg.inv(X.T @ X)
+se = np.sqrt(np.diag(var_beta))
+
+# Display
+param_names = ['const', 'tradeshare', 'yearsschool', 
+               'rev_coups', 'assasinations', 'rgdp60']
+
+print(pd.DataFrame({'coef': beta, 'se': se}, index=param_names))
+```
+
+**Solution Attempt**
+A one-unit rise in `rev_coups` lowers growth by about **2.15 percentage points**, which is very large since mean growth is about **1.87%**. This is economically meaningful.
+
+\hfill $\square$
+
+## 10c
+Use the regression to predict the average annual growth rate for a country that has average values for all regressors.
+
+```{python}
+means = df_no_malta[['tradeshare', 'yearsschool', 
+                     'rev_coups', 'assasinations', 'rgdp60']].mean()
+
+x_avg = np.insert(means.to_numpy(), 0, 1)  # add intercept
+pred_avg = x_avg @ beta
+print("Predicted growth at average values:", pred_avg)
+```
+
+**Solution Attempt**  
+Plugging in variable means yields:
+
+$$
+\widehat{\text{growth}}_{\text{mean}} \approx 1.87,
+$$
+
+which matches the sample mean due to properties of OLS with an intercept.
+
+\hfill $\square$
+
+## 10d
+Repeat (c) but now assume that the country’s value for `TradeShare` is one standard deviation above the mean.
+
+```{python}
+std_trade = df_no_malta['tradeshare'].std()
+
+x_high_trade = x_avg.copy()
+x_high_trade[1] = means['tradeshare'] + std_trade   # position 1 = tradeshare
+
+pred_high_trade = x_high_trade @ beta
+print("Predicted growth with TradeShare +1 SD:", pred_high_trade)
+```
+
+**Solution Attempt**  
+One SD above the mean:  
+$$
+0.542392 + 0.228333 = 0.770725.
+$$
+
+Predicted growth (from your output):
+
+$$
+\widehat{\text{growth}}(\text{TradeShare} = \text{mean} + 1\text{ SD}) \approx 2.176.
+$$
+
+Interpretation: raising TradeShare boosts predicted growth by about 0.30 percentage points.
+
+\hfill $\square$
+
+## 10e
+Why is `Oil` omitted from the regression? What would happen if it were included?
+
+**Solution Attempt**  
+In this dataset, `oil = 0` for every observation. A variable with zero variance provides no information and creates perfect multicollinearity with the intercept. Statistical software automatically drops it.
+
+If included, the regression would not change because the variable contains no usable information.
+
+\hfill $\square$
+
+# Problem 11
+The data file `CollegeDistance` on the companion website contains data from a random sample of high school seniors interviewed in 1980 and re-interviewed in 1986. A detailed description is given in `College Distance_Description`. Using the data set carry out the following exercises.
+
+```{python}
+import pandas as pd
+df = pd.read_stata('data/CollegeDistance.dta')
+
+# ---------------------------
+# Helper OLS function (minimal)
+# ---------------------------
+def run_ols(y, X):
+    y = np.asarray(y, float)
+    X = np.asarray(X, float)
+    n = len(y)
+    X = np.column_stack([np.ones(n), X])  # add constant
+    k = X.shape[1]
+
+    beta = np.linalg.solve(X.T @ X, X.T @ y)
+    resid = y - X @ beta
+    sigma2 = (resid @ resid) / (n - k)
+    XtX_inv = np.linalg.inv(X.T @ X)
+    se = np.sqrt(np.diag(sigma2 * XtX_inv))
+    tvals = beta / se
+
+    # R² and adjusted R²
+    ybar = y.mean()
+    sst = np.sum((y - ybar)**2)
+    ssr = np.sum(resid**2)
+    r2 = 1 - ssr/sst
+    r2_adj = 1 - (ssr/(n-k)) / (sst/(n-1))
+
+    return beta, se, tvals, r2, r2_adj
+
+# ---------------------------
+# 11a: ED ~ dist
+# ---------------------------
+b1, se1, t1, r2_1, r2adj_1 = run_ols(df['ed'], df[['dist']])
+
+print("Regression (a): ED ~ dist")
+print("coef:", b1)
+print("se:", se1)
+print("R2:", r2_1, "Adj_R2:", r2adj_1)
+print()
+
+# ---------------------------
+# 11b: ED ~ dist + other controls
+# ---------------------------
+controls = ['bytest', 'female', 'black', 'hispanic',
+            'incomehi', 'ownhome', 'dadcoll',
+            'cue80', 'stwmfg80']
+
+Xb = df[['dist'] + controls]
+b2, se2, t2, r2_2, r2adj_2 = run_ols(df['ed'], Xb)
+
+print("Regression (b): ED ~ dist + controls")
+print("coef:", b2)
+print("se:", se2)
+print("R2:", r2_2, "Adj_R2:", r2adj_2)
+print()
+```
+
+## 11a
+Run a regression of years of completed education (ED) on distance to the nearest college (Dist). What is the estimated slope?
+
+**Solution Attempt**  
+From regression (a), the estimated model is  
+$$
+\widehat{ED} = 13.956 - 0.0734 \cdot Dist.
+$$  
+Thus, the estimated slope is  
+$$
+\hat\beta_1 = -0.0734.
+$$  
+This implies that each additional mile from the nearest college is associated with **about 0.07 fewer years of completed education**.
+
+\hfill $\square$
+
+## 11b
+Run a regression of ED on Dist, but include some additional regressors to control for characteristics of the student, the student’s family, and the local labor market. In particular, include as additional regressors `Bytest`, `Female`, `Black`, `Hispanic`, `Incomehi`, `Ownhome`, `DadColl`, `Cue80` and `Stwmfg80`. What is the estimated effect of Dist on ED?
+
+**Solution Attempt**  
+From regression (b), the coefficient on distance is  
+$$
+\hat\beta_1 = -0.0315.
+$$  
+After controlling for test scores, demographics, income, home ownership, parental education, county unemployment, and state manufacturing wages, the estimated effect of distance becomes **smaller in magnitude**, indicating that some of the simple relationship in part (a) was explained by these additional variables.
+
+\hfill $\square$
+
+## 11c
+Is the estimated effect of Dist on ED in the regression in (b) substantively different from the regression in (a)? Based on this, does the regression in (a) seem to suffer from important omitted variable bias?
+
+**Solution Attempt**  
+In (a), the slope on Dist is  
+$$-0.0734,$$  
+while in (b) it becomes  
+$$-0.0315.$$
+
+The coefficient shrinks by more than half once controls are added. This indicates that the simple regression in (a) was capturing not only the causal effect of distance, but also differences in test scores, demographics, income, and labor-market conditions. Because the estimate moves substantially after adding controls, regression (a) **does suffer from omitted variable bias**, and the bias inflated the magnitude of the negative relationship.
+
+\hfill $\square$
+
+## 11d
+Compare the fit of the regression in (a) and (b) using the regression standard errors, $R^2$ and $\bar{R}^2$. Why are the $R^2$ and $\bar{R}^2$ so similar in regression (b)?
+
+Compare the fit of the regression in (a) and (b) using the regression standard errors, $R^2$ and $\bar{R}^2$. Why are the $R^2$ and $\bar{R}^2$ so similar in regression (b)?
+
+**Solution Attempt**  
+Regression (a) has  
+- $R^2 \approx 0.0075$  
+- $\bar{R}^2 \approx 0.0072$
+
+Regression (b) has  
+- $R^2 \approx 0.2788$  
+- $\bar{R}^2 \approx 0.2769$
+
+The fit improves dramatically once the controls are added, because these variables explain much more of the variation in ED than distance alone.
+
+The $R^2$ and $\bar{R}^2$ in (b) are very close because the sample size is large relative to the number of regressors. When $n$ is large, the adjustment factor in  
+$$
+\bar{R}^2 = 1 - \frac{SSR/(n-k)}{SST/(n-1)}
+$$  
+is small, so adding nine regressors does not penalize the adjusted $R^2$ very much.
+
+\hfill $\square$
+
+## 11e
+The value of the coefficient on DadColl is positive. What does this coefficient measure?
+
+**Solution Attempt**  
+The coefficient on **DadColl** measures the average difference in completed years of education between students whose fathers attended college and otherwise similar students whose fathers did not—holding distance, test scores, demographics, income, home ownership, and labor-market conditions constant.  
+A positive coefficient means students with college-educated fathers complete **more** schooling on average.
+
+\hfill $\square$
+
+## 11f
+Explain why Cue80 and Swmfg80 appear in the regression. Are the signs of their estimated coefficients (pos or neg) what you would have believed? Interpret the magnitudes of these coefficients.
+
+**Solution Attempt**  
+`Cue80` (county unemployment rate in 1980) and `stwmfg80` (state manufacturing wage) capture **local labor-market conditions** that can influence schooling decisions. Poor job prospects or low wages may make additional schooling more attractive, while high wages may make work more tempting.
+
+- **Cue80** has a small **positive** coefficient (~0.023). This means that a one-percentage-point increase in local unemployment is associated with about **0.02 extra years** of schooling. This matches the intuition that when jobs are scarce, students stay in school longer.
+
+- **Swmfg80** has a small **negative** coefficient (~-0.052). This suggests that higher manufacturing wages lower the incentive to stay in school: a \$1 increase in the state manufacturing hourly wage reduces completed schooling by about **0.05 years**.
+
+Both coefficients have the signs we would expect, and they are modest in magnitude, reflecting that local labor markets matter but are not the dominant determinants of years of education.
+
+\hfill $\square$
+
+## 11g
+Bob is a black male. His high school was 20 miles from the nearest college. His baseyear composite test score (Bytest) was 58. His family income in 1980 was $26,000, and his family owned a home. His mother attended college, but his father did not. The unemployment rate in his county was 7.5%, and the state average manufacturing hourly wage was $9.75. Predict Bob’s years of completed schooling using the regression in (b).
+
+```{python}
+import numpy as np
+
+
+names = ['const', 'dist', 'bytest', 'female', 'black', 'hispanic',
+         'incomehi', 'ownhome', 'dadcoll', 'cue80', 'stwmfg80']
+coef = dict(zip(names, b2))
+
+def predict_ed(dist, bytest, female, black, hispanic,
+               incomehi, ownhome, dadcoll, cue80, stwmfg80):
+    return (coef['const']
+            + coef['dist']*dist
+            + coef['bytest']*bytest
+            + coef['female']*female
+            + coef['black']*black
+            + coef['hispanic']*hispanic
+            + coef['incomehi']*incomehi
+            + coef['ownhome']*ownhome
+            + coef['dadcoll']*dadcoll
+            + coef['cue80']*cue80
+            + coef['stwmfg80']*stwmfg80)
+
+# set incomehi according to the codebook.
+# If "high income" is defined as income > $25,000, then for $26,000:
+incomehi_bob = 1
+
+# Bob (11g)
+bob_ed = predict_ed(
+    dist=20,
+    bytest=58,
+    female=0,
+    black=1,
+    hispanic=0,
+    incomehi=incomehi_bob,
+    ownhome=1,
+    dadcoll=0,
+    cue80=7.5,
+    stwmfg80=9.75
+)
+print("Predicted ED for Bob:", bob_ed)
+
+# Jim (11h) – same as Bob, but dist = 40
+jim_ed = predict_ed(
+    dist=40,
+    bytest=58,
+    female=0,
+    black=1,
+    hispanic=0,
+    incomehi=incomehi_bob,
+    ownhome=1,
+    dadcoll=0,
+    cue80=7.5,
+    stwmfg80=9.75
+)
+print("Predicted ED for Jim:", jim_ed)
+```
+
+**Solution Attempt**  
+Plugging Bob’s characteristics into the estimated regression yields a predicted value of  
+$$
+\widehat{ED}_{Bob} \approx 14.22.
+$$  
+Thus, Bob is predicted to complete **about 14.2 years of schooling**, roughly equivalent to completing two years of college.
+
+\hfill $\square$
+
+## 11h
+Jim has the same characteristics as Bob except that his high school was 40 miles from the nearest college. Predict Jim’s years of completed schooling using the regression in (b).
+
+**Solution Attempt**  
+Using the same regression and setting `Dist = 40` gives  
+$$
+\widehat{ED}_{Jim} \approx 13.59.
+$$  
+
+Comparing the two predictions:
+
+- Bob (20 miles): **14.22 years**  
+- Jim (40 miles): **13.59 years**
+
+A 20-mile increase in distance lowers predicted schooling by about  
+$$
+14.22 - 13.59 \approx 0.63 \text{ years.}
+$$  
+This is consistent with the negative estimated effect of distance found earlier.
+
+\hfill $\square$

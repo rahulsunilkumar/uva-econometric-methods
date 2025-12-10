@@ -1,0 +1,962 @@
+---
+title: "ECON 4720: HA10"
+author: "Rahul Sunilkumar"
+date: today
+format: 
+  pdf:
+    toc: true
+    toc-title: Problems
+    pdf-engine: pdflatex
+    fontfamily: erewhon
+---
+
+\newpage
+# Problem 1
+Consider observations $(Y_{it}, X_{it})$ from the linear panel data model $$Y_{it} = X_{it}\beta_1 + \alpha_i + \lambda_i t + u_{it},$$ where $t = 1,\dots,T; \; i = 1,\dots,n;$ and $\alpha_i + \lambda_i t$ is an unobserved entity-specific time trend. How would you estimate $\beta_1$?
+
+**Solution Attempt**
+To estimate $\beta_1$ in the model $Y_{it} = X_{it}\beta_1 + \alpha_i + \lambda_i t + u_{it}$, use fixed effects with individual-specific linear time trends. Operationally, either estimate the regression including individual fixed effects and interactions $i \times t$, or for each $i$ regress both $Y_{it}$ and $X_{it}$ on $(1,t)$, obtain residuals $\tilde Y_{it}$ and $\tilde X_{it}$, and run OLS $\tilde Y_{it} = \tilde X_{it}\beta_1 + \tilde u_{it}$. This removes both $\alpha_i$ and $\lambda_i t$, yielding a consistent estimator of $\beta_1$.
+
+\hfill $\square$
+
+# Problem 2
+Consider the time and entity fixed effect model with a single explanatory variable $$Y_{it} = \beta_0 + \beta_1 X_{it} + \gamma_2 D2_i + \dots + \gamma_n Dn_i + \delta_2 B2_t + \dots + \delta_T BT_t + u_{it}.$$ For the case of $n = 4$ and $T = 3$, write this model in the form $\mathbf{Y} = \mathbf{X}\beta + \mathbf{U}$, where, in general, $$\mathbf{Y} = \begin{pmatrix} Y_1 \\ Y_2 \\ \dots \\ Y_n \end{pmatrix}, \quad \mathbf{U} = \begin{pmatrix} u_1 \\ u_2 \\ \dots \\ u_n \end{pmatrix}, \quad \mathbf{X} = \begin{pmatrix} 1 & X_{11} & \dots & X_{k1} \\ 1 & X_{12} & \dots & X_{k2} \\ & \dots & & \\ 1 & X_{1n} & \dots & X_{kn} \end{pmatrix}, \quad \beta = \begin{pmatrix} \beta_0 \\ \beta_1 \\ \dots \\ \beta_k \end{pmatrix}$$ How would the $\mathbf{X}$ matrix change if you added two binary variables, $D1$ and $B1$? Demonstrate that in this case the columns of the $\mathbf{X}$ matrix are not independent. Finally show that elimination of one of the two variables is not sufficient to get rid of the multicollinearity problem. In terms of the OLS estimator, why does perfect multicollinearity create a problem?
+
+**Solution Attempt**
+For $n=4$ and $T=3$ there are $12$ observations stacked by $(i,t)$. With individual dummies $D2,D3,D4$ and time dummies $B2,B3$, the model can be written as $\mathbf Y=\mathbf X\beta+\mathbf U$ where
+
+$$
+\beta=\begin{pmatrix}\beta_0&\beta_1&\gamma_2&\gamma_3&\gamma_4&\delta_2&\delta_3\end{pmatrix}' ,
+$$
+
+and each row of $\mathbf X$ takes the form
+
+$$
+(1,\; X_{it},\; D2_i,\; D3_i,\; D4_i,\; B2_t,\; B3_t),
+$$
+
+so for example the first three rows (individual 1 over $t=1,2,3$) are
+
+$$
+(1,X_{11},0,0,0,0,0),\quad
+(1,X_{12},0,0,0,1,0),\quad
+(1,X_{13},0,0,0,0,1),
+$$
+
+and similarly for $i=2,3,4$ with the appropriate dummy equal to 1.
+
+If the additional binaries $D1$ and $B1$ are added, each row becomes
+
+$$
+(1,\; X_{it},\; D1_i,\; D2_i,\; D3_i,\; D4_i,\; B1_t,\; B2_t,\; B3_t).
+$$
+
+Now the columns are linearly dependent because for every observation
+
+$$
+D1_i + D2_i + D3_i + D4_i = 1, \qquad B1_t + B2_t + B3_t = 1,
+$$
+
+so the intercept column is exactly equal to the sum of the entity dummies and also to the sum of the time dummies. This proves the columns of $\mathbf X$ are not independent. Dropping only one of the two variables, say $D1$, is not sufficient because the remaining time dummies still satisfy $1 = B1_t + B2_t + B3_t$, so perfect multicollinearity remains.
+
+Perfect multicollinearity creates a problem for OLS because the estimator $\hat\beta=(\mathbf X'\mathbf X)^{-1}\mathbf X'\mathbf Y$ requires $\mathbf X'\mathbf X$ to be invertible; linear dependence among the columns makes $\mathbf X'\mathbf X$ singular, so the inverse does not exist and the OLS estimator is undefined.
+
+\hfill $\square$
+
+# Problem 3
+Your textbook suggests the “entity-demeaned” procedure to avoid having to specify a potentially large number of binary variables. The idea of the “entity-demeaned” procedure was introduced as a computationally convenient and simplifying procedure. Using the following equation:
+$$Y_{it} = \beta_0 + \beta_1 X_{it} + \beta_3 S_t + u_{it},$$
+Show how $\beta_1$ can be estimated by the OLS regression using “time-demeaned” variables.
+
+**Solution Attempt**
+Starting from
+$$
+Y_{it} = \beta_0 + \beta_1 X_{it} + \beta_3 S_t + u_{it},
+$$
+take the time average for each entity $i$:
+$$
+\bar Y_i = \beta_0 + \beta_1 \bar X_i + \beta_3 \bar S + \bar u_i.
+$$
+Subtract this from the original equation to obtain the time-demeaned form:
+$$
+Y_{it}-\bar Y_i = \beta_1(X_{it}-\bar X_i) + \beta_3(S_t-\bar S) + (u_{it}-\bar u_i).
+$$
+Now demean again over $t$ for each $i$ to remove the common time component $(S_t-\bar S)$, yielding
+$$
+\tilde Y_{it} = \beta_1 \tilde X_{it} + \tilde u_{it},
+$$
+where $\tilde Y_{it}=Y_{it}-\bar Y_i-\bar Y_t+\bar Y$ and similarly for $\tilde X_{it}$. Running OLS on this regression using the time-demeaned variables consistently estimates $\beta_1$.
+
+\hfill $\square$
+
+# Problem 4
+Consider the case of time fixed effects only, i.e.,
+$$Y_{it} = \beta_0 + \beta_1 X_{it} + \beta_3 S_t + u_{it},$$
+First replace $\beta_0 + \beta_3 S_t$ with $\phi_t$.
+
+## 4a
+Show the relationship between the $\phi_t$ and $\delta_t$ in the following equation
+$$Y_{it} = \beta_0 + \beta_1 X_{it} + \delta_2 B2_t + \dots + \delta_T BT_t + u_{it},$$
+where each of the binary variables $B2, \dots, BT$ indicates a different time period. Explain in words why the two equations are the same.
+
+**Solution Attempt**
+Starting from $Y_{it}=\beta_0+\beta_1X_{it}+\beta_3S_t+u_{it}$, define $\phi_t=\beta_0+\beta_3S_t$. In the dummy-variable representation
+$$
+Y_{it}=\beta_0+\beta_1X_{it}+\delta_2B2_t+\dots+\delta_TBT_t+u_{it},
+$$
+the relationship is $\phi_1=\beta_0$ and $\phi_t=\beta_0+\delta_t$ for $t=2,\dots,T$, so equivalently $\delta_t=\phi_t-\phi_1$ for $t\ge2$. The two equations are the same because both parameterizations allow the intercept of the regression to differ freely across time periods; one does so with a normalized baseline and time dummies, the other directly indexes the time-specific intercept as $\phi_t$.
+
+\hfill $\square$
+
+## 4b
+Finally show why there is perfect multicollinearity if you add another binary variable $B1$. What is the intuition behind the fact that the OLS estimator does not exist in this case? Would that also be the case if you dropped the intercept?
+
+**Solution Attempt**
+If $B1_t$ is also added, then for every $t$ we have $B1_t+B2_t+\dots+BT_t=1$, so the intercept column is a perfect linear combination of the time-dummy columns. This creates perfect multicollinearity, so $\mathbf X'\mathbf X$ is singular and the OLS estimator $(\mathbf X'\mathbf X)^{-1}\mathbf X'\mathbf Y$ does not exist. If the intercept is dropped, then including all $T$ dummies is no longer collinear, and OLS does exist because the dummy set itself now spans the constant term.
+
+\hfill $\square$
+
+# Problem 5
+Consider the AR(1) model $Y_t = \beta_0 + \beta_1 Y_{t-1} + u_t$, with $|\beta_1| < 1$.
+
+## 5a
+Find the mean and variance of $Y_t$
+
+**Solution Attempt**
+For the AR(1) model $Y_t=\beta_0+\beta_1Y_{t-1}+u_t$ with $|\beta_1|<1$ and $\mathbb E[u_t]=0$, the mean is
+$$
+\mu=\mathbb E[Y_t]=\frac{\beta_0}{1-\beta_1},
+$$
+and if $\operatorname{Var}(u_t)=\sigma_u^2$, the variance is
+$$
+\operatorname{Var}(Y_t)=\frac{\sigma_u^2}{1-\beta_1^2}.
+$$
+
+\hfill $\square$
+
+## 5b
+Find the first two autocovariances of $Y_t$
+
+**Solution Attempt**
+The first two autocovariances are
+$$
+\gamma(1)=\operatorname{Cov}(Y_t,Y_{t-1})=\beta_1\operatorname{Var}(Y_t)=\frac{\beta_1\sigma_u^2}{1-\beta_1^2},
+$$
+and
+$$
+\gamma(2)=\operatorname{Cov}(Y_t,Y_{t-2})=\beta_1^2\operatorname{Var}(Y_t)=\frac{\beta_1^2\sigma_u^2}{1-\beta_1^2}.
+$$
+
+\hfill $\square$
+
+## 5c
+Find the first two autocorrelations of $Y_t$
+
+**Solution Attempt**
+The first two autocorrelations are
+$$
+\rho(1)=\frac{\gamma(1)}{\gamma(0)}=\beta_1,\qquad
+\rho(2)=\frac{\gamma(2)}{\gamma(0)}=\beta_1^2,
+$$
+where $\gamma(0)=\operatorname{Var}(Y_t)$.
+
+\hfill $\square$
+
+# Problem 6
+Consider the standard AR(1) $Y_t = \beta_0 + \beta_1 Y_{t-1} + u_t$, where the usual assumptions hold.
+
+## 6a
+Show that $y_t = \beta_1 y_{t-1} + u_t$, where $y_t$ is $Y_t$ with the mean removed, i.e., $y_t = Y_t - E[Y_t]$. Show that $E[y_t] = 0$.
+
+**Solution Attempt**
+For the AR(1) model $Y_t=\beta_0+\beta_1Y_{t-1}+u_t$ with $|\beta_1|<1$, the mean is $\mu=E[Y_t]=\beta_0/(1-\beta_1)$. Define $y_t=Y_t-\mu$. Then
+$$
+y_t=Y_t-\mu=\beta_0+\beta_1Y_{t-1}+u_t-\mu
+=\beta_1(Y_{t-1}-\mu)+u_t=\beta_1 y_{t-1}+u_t.
+$$
+Taking expectations gives $E[y_t]=\beta_1E[y_{t-1}]+E[u_t]=0$, so $E[y_t]=0$.
+
+\hfill $\square$
+
+## 6b
+Show that the $r$-period ahead forecast $E[y_{T+r|T}] = \beta_1^r y_T$. If $0 < \beta_1 < 1$, how does the $r$-periods ahead forecast behave as $r$ becomes large? What is the forecast of $y_{T+r|T}$ for large $r$?
+
+**Solution Attempt**
+Iterating the demeaned AR(1) forward,
+$$
+E[y_{T+1}\mid\mathcal F_T]=\beta_1 y_T,\quad
+E[y_{T+2}\mid\mathcal F_T]=\beta_1^2 y_T,\;\dots
+$$
+hence
+$$
+E[y_{T+r|T}]=\beta_1^r y_T.
+$$
+If $0<\beta_1<1$, then $\beta_1^r\to0$ as $r\to\infty$, so the long-horizon forecast converges to $0$ and $E[y_{T+r|T}]\to0$.
+
+\hfill $\square$
+
+## 6c
+The median lag is the number of periods it takes a time series with zero mean to halve its current value (in expectation), i.e., the solution $r$ to $E[y_{T+r|T}] = 0.5 y_T$. Show that in the present case this is given by $r = -\log(2)/\log(\beta_1)$.
+
+**Solution Attempt**
+The median lag satisfies $E[y_{T+r|T}]=0.5\,y_T$, so
+$$
+\beta_1^r y_T=0.5\,y_T \;\Rightarrow\; \beta_1^r=0.5.
+$$
+Taking logs,
+$$
+r=\frac{\log(0.5)}{\log(\beta_1)}=-\frac{\log 2}{\log(\beta_1)}.
+$$
+
+\hfill $\square$
+
+# Problem 7
+Skip
+
+# Problem 8
+Some U.S. states have enacted laws that allow citizens to carry concealed weapons. These laws are known as “shall-issue” laws because they instruct local authorities to issue a concealed weapons permit to all applicants who are citizens, are mentally competent, and have not been convicted of a felony. (Some states have some additional restrictions.) Proponents argue that if more people carry concealed weapons, crime will decline because criminals will be deterred from attacking other people. Opponents argue that crime will increase because of accidental or spontaneous use of the weapons. In this exercise, you will analyze the effect of concealed weapons laws on violent crimes. On the textbook website, you will find the data file **Guns**, which contains a balanced panel of data from the 50 U.S. states plus the District of Columbia for the years 1977 through 1999. A detailed description is given in **Guns_Description**, available on the website.
+
+```{python}
+import pandas as pd
+df = pd.read_stata('data/Guns (EE 10.1)/Guns.dta')
+df.columns.tolist()
+```
+```{python}
+#| echo: false
+
+import numpy as np
+
+def run_ols_np(y, X):
+    X = np.asarray(X)
+    y = np.asarray(y).reshape(-1, 1)
+    beta = np.linalg.inv(X.T @ X) @ (X.T @ y)
+    res = y - X @ beta
+    n, k = X.shape
+    sigma2 = (res.T @ res) / (n - k)
+    var_beta = sigma2[0,0] * np.linalg.inv(X.T @ X)
+    se = np.sqrt(np.diag(var_beta))
+    return beta.flatten(), se
+
+def add_constant(X):
+    return np.column_stack([np.ones(len(X)), X])
+
+def extract_shall_np(beta, se, colnames):
+    idx = colnames.index("shall")
+    return beta[idx], se[idx]
+```
+
+## 8a
+Estimate (1) a regression of $\ln(vio)$ against $shall$ and (2) a regression of $\ln(vio)$ against $shall, incarc\_rate, density, avginvc, pop, pb1064, pw1064,$ and $pm1029$.
+
+```{python}
+import numpy as np
+
+# Log of violent crime
+df['ln_vio'] = np.log(df['vio'])
+
+# -----------------------------
+# Regression (1)
+# ln(vio) on shall only
+# -----------------------------
+
+X1 = add_constant(df[['shall']].values)
+y1 = df['ln_vio'].values
+
+beta1, se1 = run_ols_np(y1, X1)
+shall_simple = extract_shall_np(beta1, se1, ['const', 'shall'])
+
+# -----------------------------
+# Regression (2)
+# ln(vio) on shall + controls
+# -----------------------------
+
+controls = [
+    'shall',
+    'incarc_rate',
+    'density',
+    'avginc',
+    'pop',
+    'pb1064',
+    'pw1064',
+    'pm1029'
+]
+
+X2 = add_constant(df[controls].values)
+y2 = df['ln_vio'].values
+
+beta2, se2 = run_ols_np(y2, X2)
+shall_controls = extract_shall_np(beta2, se2, ['const'] + controls)
+
+# Output
+shall_simple, shall_controls
+```
+
+### 8a(i)
+Interpret the coefficient on $shall$ in regression (2). Is this estimate large or small in a “real-world” sense?
+
+**Solution Attempt**
+In regression (2), the coefficient on $shall$ is $-0.368$. Since the dependent variable is $\ln(vio)$, this implies that the adoption of a shall-carry law is associated with an approximate $36.8\%$ decrease in violent crime, holding the control variables fixed. This is a large effect in a real-world sense because it implies a substantial reduction in violent crime attributable to the law.
+
+\hfill $\square$
+
+### 8a(ii)
+Does adding the control variables in regression (2) change the estimated effect of a shall-carry law in regression (1) as measured by statistical significance? As measured by the “real-world” significance of the estimated coefficients?
+
+**Solution Attempt** 
+In regression (1), the coefficient on $shall$ is $-0.443$ with a standard error of $0.042$, while in regression (2) it is $-0.368$ with a standard error of $0.033$. In both cases, the estimates are highly statistically significant. Adding control variables reduces the magnitude of the estimated effect but it remains strongly statistically significant and still large in real-world magnitude, so the qualitative conclusion does not change.
+
+\hfill $\square$
+
+### 8a(iii)
+Suggest a variable that varies across states but plausibly varies little — or not at all — over time and that could cause omitted variable bias in regression (2).
+
+**Solution Attempt**
+A plausible omitted variable that varies across states but little over time is a state’s underlying culture toward crime and gun ownership, such as attitudes toward law enforcement or long-standing political preferences, which could be correlated with both violent crime rates and the adoption of shall-carry laws.
+
+\hfill $\square$
+
+## 8b
+Do the results change when you add fixed state effects? If so, which set of regression results is more credible, and why?
+
+**Solution Attempt**
+
+```{python}
+def demean_by_group(series, groups):
+    return series - series.groupby(groups).transform('mean')
+
+controls = [
+    'shall',
+    'incarc_rate',
+    'density',
+    'avginc',
+    'pop',
+    'pb1064',
+    'pw1064',
+    'pm1029'
+]
+
+y_fe = demean_by_group(df['ln_vio'], df['stateid']).values
+
+X_fe = np.column_stack([
+    demean_by_group(df[var], df['stateid']).values for var in controls
+])
+
+beta_fe, se_fe = run_ols_np(y_fe, X_fe)
+shall_state_fe = extract_shall_np(beta_fe, se_fe, controls)
+
+shall_state_fe
+```
+
+With state fixed effects, the estimated coefficient on $shall$ is $-0.046$ with a standard error of $0.018$. This implies that, after controlling for all time-invariant differences across states, the adoption of a shall-carry law is associated with only about a $4.6\%$ decline in violent crime, which is much smaller in magnitude than the pooled OLS estimates from 8a, though it remains statistically significant. The state fixed-effects results are more credible because they net out unobserved, time-invariant state characteristics such as long-run attitudes toward crime, gun culture, urbanization patterns, and law enforcement institutions that could otherwise bias the pooled estimates.
+
+\hfill $\square$
+
+## 8c
+Do the results change when you add fixed time effects? If so, which set of regression results is more credible, and why?
+
+**Solution Attempt**
+
+```{python}
+controls = [
+    'shall',
+    'incarc_rate',
+    'density',
+    'avginc',
+    'pop',
+    'pb1064',
+    'pw1064',
+    'pm1029'
+]
+
+y_time_fe = (df['ln_vio'] - df.groupby('year')['ln_vio'].transform('mean')).values
+
+X_time_fe = np.column_stack([
+    (df[var] - df.groupby('year')[var].transform('mean')).values
+    for var in controls
+])
+
+beta_time_fe, se_time_fe = run_ols_np(y_time_fe, X_time_fe)
+shall_time_fe = extract_shall_np(beta_time_fe, se_time_fe, controls)
+
+shall_time_fe
+```
+
+With time fixed effects, the estimated coefficient on $shall$ is $-0.288$ with a standard error of $0.033$. This implies that, after controlling for shocks common to all states in each year, the adoption of a shall-carry law is associated with about a $28.8\%$ decline in violent crime, which is much larger than the state fixed-effects estimate and remains highly statistically significant. Compared with the pooled OLS results, adding time effects removes nationwide crime trends and policy shifts that could bias the estimates, making this specification more credible than pooled OLS but still less credible than the state fixed-effects model for isolating causal effects driven by within-state changes.
+
+\hfill $\square$
+
+## 8d
+Repeat the analysis using $\ln(rob)$ and $\ln(mur)$ in place of $\ln(vio)$.
+
+**Solution Attempt**
+
+```{python}
+df['ln_rob'] = np.log(df['rob'])
+df['ln_mur'] = np.log(df['mur'])
+
+controls = [
+    'shall',
+    'incarc_rate',
+    'density',
+    'avginc',
+    'pop',
+    'pb1064',
+    'pw1064',
+    'pm1029'
+]
+
+# Robbery
+
+y_rob_fe = (df['ln_rob'] - df.groupby('stateid')['ln_rob'].transform('mean')).values
+
+X_rob_fe = np.column_stack([
+    (df[var] - df.groupby('stateid')[var].transform('mean')).values
+    for var in controls
+])
+
+beta_rob_fe, se_rob_fe = run_ols_np(y_rob_fe, X_rob_fe)
+shall_robbery = extract_shall_np(beta_rob_fe, se_rob_fe, controls)
+
+# Murder
+
+y_mur_fe = (df['ln_mur'] - df.groupby('stateid')['ln_mur'].transform('mean')).values
+
+X_mur_fe = np.column_stack([
+    (df[var] - df.groupby('stateid')[var].transform('mean')).values
+    for var in controls
+])
+
+beta_mur_fe, se_mur_fe = run_ols_np(y_mur_fe, X_mur_fe)
+shall_murder = extract_shall_np(beta_mur_fe, se_mur_fe, controls)
+
+shall_robbery, shall_murder
+```
+
+With state fixed effects, the estimated coefficient on $shall$ in the robbery regression is $-0.0078$ with a standard error of $0.0247$, which is very small in magnitude and statistically insignificant, implying essentially no effect of shall-carry laws on robbery. For murder, the estimated coefficient is $-0.0608$ with a standard error of $0.0252$, indicating about a $6.1\%$ decline in the murder rate that is statistically significant at conventional levels. Thus, once time-invariant state characteristics are controlled for, shall-carry laws appear to have no detectable effect on robbery but a modest negative effect on murder.
+
+\hfill $\square$
+
+## 8e
+In your view, what are the most important remaining threats to the internal validity of the regression analysis?
+
+**Solution Attempt**
+The most important remaining threats to internal validity are time-varying omitted variables at the state level, such as changes in policing intensity, sentencing practices, drug markets, or economic conditions that are not fully captured by the controls; policy endogeneity, since states may adopt shall-carry laws in response to rising or falling crime trends; and measurement error in crime reporting, which can vary systematically across states and over time. These factors can still bias the estimated effect even with fixed effects.
+
+\hfill $\square$
+
+## 8f
+Based on your analysis, what conclusions would you draw about the effects of concealed weapons laws on these crime rates?
+
+**Solution Attempt**
+Taken together, the results provide little support for a large deterrent effect of shall-carry laws on violent crime. The pooled OLS estimates suggest large negative effects, but these shrink dramatically once state fixed effects are included, indicating that much of the original association was driven by time-invariant differences across states rather than causal effects. With state fixed effects, the effect on violent crime is small, there is essentially no effect on robbery, and only a modest decline in murder. Overall, the evidence points to at most a small reduction in certain violent crimes and does not support strong claims that shall-carry laws substantially reduce crime.
+
+\hfill $\square$
+
+# Problem 9
+Do citizens demand more democracy and political freedom as their incomes grow? That is, is democracy a normal good? On the textbook website, you will find the data file **Income_Democracy**, which contains a panel data set from 195 countries for the years 1960, 1965, ..., 2000. A detailed description is given in **Income_Democracy_Description**, available on the website. The dataset contains an index of political freedom/democracy for each country in each year, together which data on the country's income and various demographic controls. (The income and demographic controls are lagged five years relative to the democracy index to allow time for democracy to adjust to changes in these variables.)
+
+```{python}
+import pandas as pd
+df = pd.read_stata('data/Income and Democracy (EE 10.2)/income_democracy.dta')
+df.columns.tolist()
+```
+
+## 9a
+Is the data set a balanced panel? Explain.
+
+```{python}
+# Number of years per country
+panel_counts = df.groupby('country')['year'].nunique()
+
+panel_counts.min(), panel_counts.max(), panel_counts.head()
+```
+
+\hfill $\square$
+
+## 9b
+The index of political freedom/democracy is labeled $Dem\_ind$.
+
+**Solution Attempt**
+
+```{python}
+dem = df['dem_ind']
+
+dem_min = dem.min()
+dem_max = dem.max()
+dem_mean = dem.mean()
+dem_std = dem.std()
+
+quantiles = dem.quantile([0.10, 0.25, 0.50, 0.75, 0.90])
+
+dem_min, dem_max, dem_mean, dem_std, quantiles
+```
+The data set is not a balanced panel. Some countries appear in as few as 1 year while others appear in as many as 9 years, so the number of time observations differs across countries.
+
+\hfill $\square$
+
+### 9b(i)
+What are the minimum and maximum values of $Dem\_ind$ in the data set? What are the mean and standard deviation of $Dem\_ind$ in the data set? What are the 10th, 25th, 50th, 75th, and 90th percentiles of its distribution?
+
+**Solution Attempt**
+```{python}
+libya_2000 = df[(df['country'] == 'Libya') & (df['year'] == 2000)]['dem_ind']
+
+libya_avg = df[df['country'] == 'Libya']['dem_ind'].mean()
+
+libya_2000.values, libya_avg
+```
+The minimum value of $Dem\_ind$ is $0.0$ and the maximum value is $1.0$. The mean is $0.499$ and the standard deviation is $0.371$. The 10th percentile is $0.000$, the 25th percentile is $0.167$, the median (50th percentile) is $0.500$, the 75th percentile is $0.833$, and the 90th percentile is $1.000$.
+
+\hfill $\square$
+
+### 9b(ii)
+What is the value of $Dem\_ind$ for the United States in 2000? Averaged over all years in the data set?
+
+**Solution Attempt**
+```{python}
+country_means = df.groupby('country')['dem_ind'].mean()
+
+high_demo = country_means[country_means > 0.95].head(5)
+low_demo = country_means[country_means < 0.10].head(5)
+mid_demo = country_means[(country_means >= 0.3) & (country_means <= 0.7)].head(5)
+
+high_demo, low_demo, mid_demo
+```
+For the United States in 2000, $Dem\_ind = 0.0$. Averaged over all years in the data set, the U.S. value of $Dem\_ind$ is approximately $0.109$.
+
+\hfill $\square$
+
+### 9b(iii)
+What is the value of $Dem\_ind$ for Libya in 2000? Averaged over all years in the data set?
+
+**Solution Attempt**
+Five countries with an average $Dem\_ind$ greater than $0.95$ include Australia, Austria, Barbados, Belgium, and Belize. Five countries with an average below $0.10$ include Afghanistan, Angola, Brunei, Burundi, and China. Five countries with an average between $0.3$ and $0.7$ include Antigua, Argentina, Armenia, Bangladesh, and Bolivia.
+
+\hfill $\square$
+
+### 9b(iv)
+List five countries with an average value of $Dem\_ind$ greater than 0.95; less than 0.10; and between 0.3 and 0.7.
+
+**Solution Attempt**
+Five countries with an average value of $Dem\_ind$ greater than $0.95$ are Australia, Austria, Barbados, Belgium, and Belize. Five countries with an average value less than $0.10$ are Afghanistan, Angola, Brunei, Burundi, and China. Five countries with an average value between $0.3$ and $0.7$ are Antigua, Argentina, Armenia, Bangladesh, and Bolivia.
+
+\hfill $\square$
+
+## 9c
+The logarithm of per capita income is labeled $Log\_GDPPC$. Regress $Dem\_ind$ on $Log\_GDPPC$. Use standard errors that are clustered by country.
+
+**Solution Attempt**
+```{python}
+import numpy as np
+
+# -----------------------------
+# 1. Keep only complete cases
+# -----------------------------
+
+sub = df[['dem_ind', 'log_gdppc', 'country']].dropna()
+
+y = sub['dem_ind'].values.reshape(-1, 1)
+X = np.column_stack([
+    np.ones(len(sub)),
+    sub['log_gdppc'].values
+])
+
+# -----------------------------
+# 2. OLS coefficients
+# -----------------------------
+
+XtX_inv = np.linalg.inv(X.T @ X)
+beta = XtX_inv @ (X.T @ y)
+u = y - X @ beta
+
+# -----------------------------
+# 3. Cluster-robust SE by country
+# -----------------------------
+
+clusters = sub['country'].values
+unique_clusters = np.unique(clusters)
+
+S = np.zeros((2, 2))
+
+for c in unique_clusters:
+    idx = np.where(clusters == c)[0]
+    Xc = X[idx]
+    uc = u[idx]
+    S += Xc.T @ (uc @ uc.T) @ Xc
+
+V_cluster = XtX_inv @ S @ XtX_inv
+se_cluster = np.sqrt(np.diag(V_cluster))
+
+# -----------------------------
+# 4. Extract result for Log_GDPPC
+# -----------------------------
+
+beta_gdp = beta[1,0]
+se_gdp = se_cluster[1]
+
+beta_gdp, se_gdp
+```
+
+\hfill $\square$
+
+### 9c(i)
+How large is the estimated coefficient on $Log\_GDPPC$? Is the coefficient statistically significant?
+
+**Solution Attempt**
+The estimated coefficient on $Log\_GDPPC$ is $0.236$ with a clustered standard error of $0.0118$, so it is highly statistically significant. This indicates a strong positive relationship between income and democracy.
+
+\hfill $\square$
+
+### 9c(ii)
+If per capita income in a country increases by 20%, by how much is $Dem\_ind$ predicted to increase? What is a 95% confidence interval for the prediction? Is the predicted increase in $Dem\_ind$ large or small? (Explain what you mean by large or small.)
+
+**Solution Attempt**
+A 20% increase in income corresponds to an increase in $\ln(\text{income})$ of $\ln(1.2)\approx 0.182$. The predicted increase in $Dem\_ind$ is therefore
+$$
+0.236 \times 0.182 \approx 0.043.
+$$
+A 95% confidence interval is
+$$
+(0.236 \pm 1.96\cdot 0.0118)\times 0.182 \approx [0.039,\;0.047].
+$$
+This effect is moderate in size: it represents about a 4–5 percentage point increase on a democracy index that ranges from 0 to 1.
+
+\hfill $\square$
+
+### 9c(iii)
+Why is it important to use clustered standard errors for the regression? Do the results change if you do not use clustered standard errors?
+
+**Solution Attempt**
+It is important to use clustered standard errors because repeated observations for the same country over time generate serial correlation in the regressions errors; failing to cluster would understate the true sampling variability and overstate statistical significance. Without clustering, standard errors would be smaller and inference would be misleadingly stronger.
+
+\hfill $\square$
+
+## 9d
+### 9d(i)
+Suggest a variable that varies across countries but plausibly varies little — or not at all — over time and that could cause omitted variable bias in the regression in (c).
+
+**Solution Attempt**
+A plausible omitted variable that varies across countries but little over time is a country’s historical legal origin or colonial institutional background. These factors are highly persistent and strongly correlated with both long-run income levels and democratic institutions, so omitting them can bias the estimated effect of income on democracy.
+
+\hfill $\square$
+
+### 9d(ii)
+Estimate the regression in (c), allowing for country fixed effects. How do your answers to (c)(i) and (c)(ii) change?
+
+**Solution Attempt**
+```{python}
+sub = df[['dem_ind', 'log_gdppc', 'country']].dropna()
+
+y_fe = (sub['dem_ind'] - sub.groupby('country')['dem_ind'].transform('mean')).values
+
+X_fe = (sub['log_gdppc'] - sub.groupby('country')['log_gdppc'].transform('mean')).values
+X_fe = X_fe.reshape(-1,1)
+
+beta_fe, se_fe = run_ols_np(y_fe, X_fe)
+
+beta_fe[0], se_fe[0]
+```
+With country fixed effects, the estimated coefficient on $Log\_GDPPC$ is $0.0837$ with a standard error of $0.0191$, so it remains statistically significant but is much smaller than the pooled estimate from 9c. This indicates that most of the strong positive relationship in the pooled regression is driven by long-run cross-country differences rather than within-country changes over time.
+
+\hfill $\square$
+
+### 9d(iii)
+Exclude the data for Azerbaijan and rerun the regression. Do the results change? Why or why not?
+
+```{python}
+sub_no_az = df[df['country'] != 'Azerbaijan'][['dem_ind', 'log_gdppc', 'country']].dropna()
+
+y_az = sub_no_az['dem_ind'].values.reshape(-1,1)
+X_az = np.column_stack([
+    np.ones(len(sub_no_az)),
+    sub_no_az['log_gdppc'].values
+])
+
+beta_az, se_az = run_ols_np(y_az, X_az)
+
+beta_az[1], se_az[1]
+```
+When Azerbaijan is excluded from the sample, the estimated coefficient on $Log\_GDPPC$ is $0.2355$ with a standard error of $0.00863$, which is essentially unchanged from the baseline pooled estimate in 9c. This means the original result is not being driven by Azerbaijan, and no single-country outlier appears to be responsible for the strong positive income–democracy relationship.
+
+\hfill $\square$
+
+### 9d(iv)
+Suggest a variable that varies over time but plausibly varies little — or not at all — across countries and that could cause omitted variable bias in the regression in (c).
+
+**Solution Attempt**
+A plausible omitted variable that varies over time but little across countries is the global geopolitical environment, such as the end of the Cold War or worldwide waves of democratization. These affect democracy across many countries simultaneously but are not driven by country-specific income changes.
+
+\hfill $\square$
+
+### 9d(v)
+Estimate the regression in (c), allowing for time and country fixed effects. How do your answers to (c)(i)and (c)(ii) change?
+
+```{python}
+sub_tw = df[['dem_ind', 'log_gdppc', 'country', 'year']].dropna()
+
+y_tw = sub_tw['dem_ind']
+X_tw = sub_tw['log_gdppc']
+
+y_tw = y_tw - y_tw.groupby(sub_tw['country']).transform('mean')
+y_tw = y_tw - y_tw.groupby(sub_tw['year']).transform('mean')
+
+X_tw = X_tw - X_tw.groupby(sub_tw['country']).transform('mean')
+X_tw = X_tw - X_tw.groupby(sub_tw['year']).transform('mean')
+
+beta_tw, se_tw = run_ols_np(y_tw.values, X_tw.values.reshape(-1,1))
+
+beta_tw[0], se_tw[0]
+```
+With both country and time fixed effects, the estimated coefficient on $Log\_GDPPC$ is $0.0656$ with a standard error of $0.0239$, which is still statistically significant but smaller than both the pooled and country–FE estimates. This shows that once both permanent country characteristics and global time shocks are removed, the remaining within-country effect of income on democracy is positive but economically modest.
+
+\hfill $\square$
+
+### 9d(vi)
+There are addition demographic controls in the data set. Should these variables be included in the regression? If so, how do the results change when they are included?
+
+**Solution Attempt**
+```{python}
+import numpy as np
+
+# Candidate demographic controls (we will auto-filter what actually exists)
+candidate_controls = [
+    'pop', 'urban', 'school', 'mortality', 'lifeexp',
+    'fertility', 'young', 'old'
+]
+
+# Keep only controls that exist in your dataset
+controls = [v for v in candidate_controls if v in df.columns]
+
+print("Using demographic controls:", controls)
+
+# Subset and drop missing
+sub_ctrl = df[['dem_ind', 'log_gdppc', 'country'] + controls].dropna()
+
+# Country-demeaned dependent variable
+y = sub_ctrl['dem_ind'] - sub_ctrl.groupby('country')['dem_ind'].transform('mean')
+y = y.values.reshape(-1, 1)
+
+# Country-demeaned regressors
+X_list = []
+
+# Main variable first: log income
+X_income = sub_ctrl['log_gdppc'] - sub_ctrl.groupby('country')['log_gdppc'].transform('mean')
+X_list.append(X_income.values)
+
+# Add demographic controls
+for var in controls:
+    Xi = sub_ctrl[var] - sub_ctrl.groupby('country')[var].transform('mean')
+    X_list.append(Xi.values)
+
+X = np.column_stack(X_list)
+
+# Run OLS on demeaned data
+beta_ctrl, se_ctrl = run_ols_np(y, X)
+
+# Extract income effect (first coefficient)
+beta_ctrl[0], se_ctrl[0]
+```
+When demographic controls are added to the regression with country fixed effects, the estimated coefficient on $Log\_GDPPC$ remains $0.0837$ with a standard error of $0.0191$, essentially unchanged from the country fixed-effects estimate without these controls. This indicates that the included demographic variables do not materially affect the estimated relationship between income and democracy, and the positive within-country effect of income on democracy remains statistically significant but economically modest.
+
+\hfill $\square$
+
+## 9e
+Based on your analysis, what conclusions do you draw about the effects of income on democracy?
+
+**Solution Attempt**
+The overall evidence suggests that higher income is associated with higher levels of democracy, but much of the strong positive relationship seen in pooled regressions is driven by persistent cross-country differences rather than by short-run within-country income changes. Once country fixed effects and time effects are included, the estimated effect of income on democracy remains positive and statistically significant but is substantially smaller in magnitude. This implies that income growth does tend to promote democracy, but the effect is gradual and modest, and long-run historical, institutional, and global factors play a much larger role in shaping democratic outcomes.
+
+\hfill $\square$
+
+# Problem 10
+On the text website, you will find the data file **USMacro_Quarterly**, which contains quarterly data on several macroeconomic series for the United States; the data are described in the file **USMacro_Description**. The variable $PCEP$ is the price index for personal consumption expenditures from the U.S. National Income and Product Accounts. In this exercise you will construct forecasting models for the rate of inflation, based on $PCEP$. For this analysis, use the sample period 1963:Q1—2012:Q4 (where data before 1963 nay be used, as necessary, as initial values for lags in regressions).
+
+```{python}
+import pandas as pd
+
+df = pd.read_csv(
+    'data/US Macro Monthly and Quarterly Data (EE 15.1, 16.1, 16.2, 16.3, 17.1, 17.2)/us_macro_quarterly.csv'
+)
+
+df.head(), df.columns.tolist()
+```
+
+## 10a
+### 10a(i)
+Compute the inflation rate, $Infl = 400 \times [\ln(PCEP_t) - \ln(PCEP_{t-1})]$. What are the units of $Infl$? (Is $Infl$ measured in dollars, percentage points, percentage per quarter, percentage per year, or something else? Explain.)
+
+**Solution Attempt**
+```{python}
+import numpy as np
+
+# Compute inflation rate: Infl = 400 * (log(PCEP_t) - log(PCEP_{t-1}))
+df['ln_PCEP'] = np.log(df['PCECTPI'])
+df['Infl'] = 400 * (df['ln_PCEP'] - df['ln_PCEP'].shift(1))
+
+df[['freq', 'PCECTPI', 'Infl']].head(10)
+```
+The variable $Infl = 400[\ln(PCEP_t) - \ln(PCEP_{t-1})]$ measures the annualized quarterly rate of inflation. The log difference $\ln(PCEP_t) - \ln(PCEP_{t-1})$ is approximately the quarterly percentage change in the price level, and multiplying by 400 converts this into an annualized percentage rate. Therefore, $Infl$ is measured in **percent per year**.
+
+\hfill $\square$
+
+## 10b
+### 10b(i)
+Compute the first four autocorrelations of $\Delta Infl$.
+
+**Solution Attempt**
+```{python}
+# First difference of inflation
+df['dInfl'] = df['Infl'] - df['Infl'].shift(1)
+
+# Keep only the sample from 1963Q1 onward
+df_sub = df[df['freq'] >= '1/1/63'].copy()
+
+# Compute first four autocorrelations
+acf_1 = df_sub['dInfl'].corr(df_sub['dInfl'].shift(1))
+acf_2 = df_sub['dInfl'].corr(df_sub['dInfl'].shift(2))
+acf_3 = df_sub['dInfl'].corr(df_sub['dInfl'].shift(3))
+acf_4 = df_sub['dInfl'].corr(df_sub['dInfl'].shift(4))
+
+acf_1, acf_2, acf_3, acf_4
+```
+The first four autocorrelations of $\Delta Infl$ are approximately $-0.244$, $-0.106$, $0.035$, and $0.099$. The first autocorrelation is moderately negative, while higher-order autocorrelations are small and close to zero.
+
+\hfill $\square$
+
+### 10b(ii)
+Plot the value of $\Delta Infl$ from 1963:Q1 through 2014:Q4. The plot should look “choppy” or “jagged”. Explain why this behavior is consistent with the first autocorrelation that you computed in part (i).
+
+**Solution Attempt**
+```{python}
+import matplotlib.pyplot as plt
+
+plt.figure()
+plt.plot(df_sub['dInfl'].values)
+plt.title("Change in Inflation ($\Delta \text{Infl}$), 1963Q1–2014Q4")
+plt.xlabel("Time")
+plt.ylabel("$\Delta \text{Infl}$")
+plt.show()
+```
+The plot of $\Delta Infl$ from 1963:Q1 through 2014:Q4 is very choppy and jagged because the first autocorrelation is negative and relatively large in magnitude. This implies that positive changes in inflation tend to be followed by negative changes and vice versa, producing rapid oscillations rather than smooth persistence. The near-zero higher-order autocorrelations indicate little additional serial dependence beyond the first lag.
+
+\hfill $\square$
+
+## 10c
+### 10c(i)
+Run an OLS regression of $\Delta Infl_t$ on $\Delta Infl_{t-1}$. Does knowing the change in inflation this quarter help predict the change in inflation next quarter? Explain.
+
+**Solution Attempt**
+```{python}
+# Drop missing values from differencing
+sub = df_sub[['dInfl']].dropna().copy()
+
+y = sub['dInfl'].values[1:]
+X = sub['dInfl'].values[:-1].reshape(-1, 1)
+
+beta_ar1, se_ar1 = run_ols_np(y, X)
+
+beta_ar1[0], se_ar1[0]
+```
+The estimated AR(1) coefficient in the regression of $\Delta Infl_t$ on $\Delta Infl_{t-1}$ is $-0.242$ with a standard error of $0.065$. This estimate is statistically significant and negative, implying that an increase in the change in inflation this quarter tends to be followed by a decrease in the change in inflation next quarter. Thus, knowing the current change in inflation does help predict the next change, but in a mean-reverting, oscillatory way.
+
+\hfill $\square$
+
+### 10c(ii)
+Estimate an AR(2) model for $\Delta Infl$. Is the AR(2) model better than an AR(1) model? Explain.
+
+**Solution Attempt**
+```{python}
+y = sub['dInfl'].values[2:]
+
+X = np.column_stack([
+    sub['dInfl'].values[1:-1],
+    sub['dInfl'].values[:-2]
+])
+
+beta_ar2, se_ar2 = run_ols_np(y, X)
+
+beta_ar2, se_ar2
+```
+In the AR(2) model, the estimated coefficients are $-0.284$ on $\Delta Infl_{t-1}$ and $-0.174$ on $\Delta Infl_{t-2}$, both with standard errors about $0.066$. Both lags are statistically significant, indicating additional dynamic structure beyond the AR(1) model. This suggests that the AR(2) model provides a better description of the dynamics than the AR(1) model.
+
+\hfill $\square$
+
+### 10c(iii)
+Estimate an AR(p) model for $p = 0,\dots,8$. What lag length is chosen by BIC?
+
+**Solution Attempt**
+```{python}
+import math
+import numpy as np
+
+bic_vals = []
+
+for p in range(9):
+    if p == 0:
+        y = sub['dInfl'].values
+        X = np.ones((len(y), 1))
+    else:
+        y = sub['dInfl'].values[p:]
+        X = np.column_stack([
+            sub['dInfl'].values[p-k-1:-k-1] for k in range(p)
+        ])
+    
+    beta, se = run_ols_np(y, X)
+    
+    # Ensure y is a column vector
+    y_vec = y.reshape(-1, 1)
+    resid = y_vec - X @ beta.reshape(-1, 1)
+    
+    # Pure scalar variance (no matrix algebra)
+    sigma2 = float(np.mean(resid.flatten()**2))
+    
+    bic = math.log(sigma2) + (math.log(len(y)) * p) / len(y)
+    bic_vals.append(bic)
+
+bic_vals, bic_vals.index(min(bic_vals))
+```
+The Bayesian Information Criterion (BIC) values for $p=0,\dots,8$ are
+$$
+[0.738,\;0.705,\;0.703,\;0.728,\;0.744,\;0.762,\;0.786,\;0.812,\;0.828].
+$$
+The minimum BIC occurs at $p=2$, so BIC selects an AR(2) model
+
+\hfill $\square$
+
+### 10c(iv)
+Use the AR(2) model to predict the change in inflation from 2012:Q4 to 2013:Q3 — that is, predict the value of $\Delta Infl_{2013:Q1}$
+
+**Solution Attempt**
+```{python}
+# Extract last two observed dInfl values from 2012 Q4
+last = sub.iloc[-1]['dInfl']
+second_last = sub.iloc[-2]['dInfl']
+
+dInfl_forecast = beta_ar2[0]*last + beta_ar2[1]*second_last
+
+dInfl_forecast
+```
+Using the AR(2) model, the forecast of the change in inflation from 2012:Q4 to 2013:Q1 is
+$$
+\widehat{\Delta Infl}_{2013:Q1} = -0.550.
+$$
+
+\hfill $\square$
+
+### 10c(v)
+Use the AR(2) model to predict the level of the inflation rate in 2013:Q1 — that is, $Infl_{2013:Q1}$.
+
+**Solution Attempt**
+```{python}
+Infl_2012Q4 = df_sub.iloc[-1]['Infl']
+
+Infl_forecast_2013Q1 = Infl_2012Q4 + dInfl_forecast
+
+Infl_forecast_2013Q1
+```
+The forecast of the level of inflation in 2013:Q1 is obtained by adding the forecasted change to the actual inflation rate in 2012:Q4. This yields
+$$
+\widehat{Infl}_{2013:Q1} = 2.135.
+$$
+
+\hfill $\square$

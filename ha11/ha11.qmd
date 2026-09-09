@@ -218,7 +218,7 @@ Some U.S. states have enacted laws that allow citizens to carry concealed weapon
 
 ```{python}
 import pandas as pd
-df = pd.read_stata('data/Guns (EE 10.1)/Guns.dta')
+df = pd.read_stata('../data/Guns (EE 10.1)/Guns.dta')
 df.columns.tolist()
 ```
 ```{python}
@@ -457,7 +457,7 @@ Do citizens demand more democracy and political freedom as their incomes grow? T
 
 ```{python}
 import pandas as pd
-df = pd.read_stata('data/Income and Democracy (EE 10.2)/income_democracy.dta')
+df = pd.read_stata('../data/Income and Democracy (EE 10.2)/income_democracy.dta')
 df.columns.tolist()
 ```
 
@@ -775,7 +775,7 @@ On the text website, you will find the data file **USMacro_Quarterly**, which co
 import pandas as pd
 
 df = pd.read_csv(
-    'data/US Macro Monthly and Quarterly Data (EE 15.1, 16.1, 16.2, 16.3, 17.1, 17.2)/us_macro_quarterly.csv'
+    '../data/US Macro Monthly and Quarterly Data (EE 15.1, 16.1, 16.2, 16.3, 17.1, 17.2)/us_macro_quarterly.csv'
 )
 
 df.head(), df.columns.tolist()

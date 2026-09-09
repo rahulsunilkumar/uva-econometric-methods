@@ -367,7 +367,7 @@ Lead is toxic, particularly for young children, and for this reason government r
 
 ```{python}
 import pandas as pd
-df = pd.read_stata('data/Lead and Infant Mortality (EE 8.1)/lead_mortality.dta')
+df = pd.read_stata('../data/Lead and Infant Mortality (EE 8.1)/lead_mortality.dta')
 ```
 
 ```{python}
@@ -757,7 +757,7 @@ On the companion website you will a data file `CPS12`, which contains data for f
 
 ```{python}
 import pandas as pd
-df = pd.read_stata('data/CPS2015 (EE 8.2)/CPS2015.dta')
+df = pd.read_stata('../data/CPS2015 (EE 8.2)/CPS2015.dta')
 df
 ```
 
@@ -1688,7 +1688,7 @@ These steps constitute the standard two-stage least squares procedure applied se
 # Problem 8
 ```{python}
 import pandas as pd
-df = pd.read_stata('data/Fertility (EE 12.1)/fertility.dta')
+df = pd.read_stata('../data/Fertility (EE 12.1)/fertility.dta')
 df
 ```
 

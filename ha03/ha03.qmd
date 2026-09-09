@@ -103,7 +103,7 @@ Compute the marginal distribution of `Age`.
 ```{python}
 #| echo: false
 import pandas as pd
-df = pd.read_csv("data/Age and Hourly Earnings (EE 2.1)/age-ahe-clean.csv", index_col="AHE")
+df = pd.read_csv("../data/Age and Hourly Earnings (EE 2.1)/age-ahe-clean.csv", index_col="AHE")
 ```
 ```{python}
 df.sum(axis=0)

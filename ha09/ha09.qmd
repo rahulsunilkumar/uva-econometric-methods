@@ -677,7 +677,7 @@ Use the `Birthweight_Smoking` data set to answer the following questions. To beg
 
 ```{python}
 import pandas as pd
-df = pd.read_stata('data/Birthweight and Smoking (EE 5.3, 6.1, 7.1, 9.2)/birthweight_smoking.dta')
+df = pd.read_stata('../data/Birthweight and Smoking (EE 5.3, 6.1, 7.1, 9.2)/birthweight_smoking.dta')
 ```
 
 ## 8a
@@ -951,7 +951,7 @@ In the empirical exercises on earning and height in homework 6, you estimated a 
 
 ```{python}
 import pandas as pd
-df = pd.read_stata('data/Earnings and Height (EE 4.2, 5.1, 7.2)/Earnings_and_Height.dta')
+df = pd.read_stata('../data/Earnings and Height (EE 4.2, 5.1, 7.2)/Earnings_and_Height.dta')
 ```
 
 ## 9a
@@ -980,7 +980,7 @@ import pandas as pd
 from scipy.stats import t as t_dist
 
 # assume df is already loaded:
-# df = pd.read_stata('data/Earnings and Height (EE 4.2, 5.1, 7.2)/Earnings_and_Height.dta')
+# df = pd.read_stata('../data/Earnings and Height (EE 4.2, 5.1, 7.2)/Earnings_and_Height.dta')
 
 # ---- education dummies ----
 df['LT_HS']    = (df['educ'] < 12).astype(int)
@@ -1119,7 +1119,7 @@ Construct a table that shows the sample mean, standard deviation and minimum and
 
 ```{python}
 import pandas as pd
-df = pd.read_stata('data/Growth (EE 4.1, 5.2, 6.2)/Growth.dta')
+df = pd.read_stata('../data/Growth (EE 4.1, 5.2, 6.2)/Growth.dta')
 
 # Exclude Malta if present (case-insensitive)
 df_no_malta = df[~df['country_name'].str.lower().eq('malta')]
@@ -1234,7 +1234,7 @@ The data file `CollegeDistance` on the companion website contains data from a ra
 
 ```{python}
 import pandas as pd
-df = pd.read_stata('data/CollegeDistance.dta')
+df = pd.read_stata('../data/CollegeDistance.dta')
 
 # ---------------------------
 # Helper OLS function (minimal)

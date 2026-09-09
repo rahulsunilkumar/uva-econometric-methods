@@ -4,13 +4,10 @@ Homework solutions and empirical analyses by Rahul Sunilkumar. Assignments combi
 
 ## Assignments
 
-| Assignment | Source | PDF |
-| --- | --- | --- |
-| HA03 | [Quarto](ha03/ha03.qmd) | [PDF](ha03/ha03.pdf) |
-| HA06 | [Quarto](ha06/ha06.qmd) | [PDF](ha06/ha06.pdf) |
-| HA07 | [Quarto](ha07/ha07.qmd) | [PDF](ha07/ha07.pdf) |
-| HA09 | [Quarto](ha09/ha09.qmd) | [PDF](ha09/ha09.pdf) |
-| HA10 | [Quarto](ha10/ha10.qmd) | [PDF](ha10/ha10.pdf) |
-| HA11 | [Quarto](ha11/ha11.qmd) | [PDF](ha11/ha11.pdf) |
+- [HA03, Probability and Statistical Inference](ha03/ha03.pdf)
+- [HA06, Linear Algebra](ha06/ha06.pdf)
+- [HA07, OLS and Linear Regression Theory](ha07/ha07.pdf)
+- [HA09, Multiple Regression and Omitted Variable Bias](ha09/ha09.pdf)
+- [HA10, Nonlinear Regression and Instrumental Variables](ha10/ha10.pdf)
+- [HA11, Panel Data and Time Series](ha11/ha11.pdf)
 
-Topics include probability and statistical inference, linear algebra, ordinary least squares, multiple regression, nonlinear specifications, instrumental variables, panel data, and time series.
